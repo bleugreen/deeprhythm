@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from utils import load_and_split_audio
 from hcqm import make_specs, compute_hcqm
 from dataset import HDF5Dataset, split_dataset, class_to_bpm
-
+import time
 
 class DeepRhythmModel(nn.Module):
     def __init__(self, num_classes=256):
@@ -148,6 +148,7 @@ def load_model(path, device=None):
 
 
 def predict_global_bpm(input_path, model_path='deeprhythm0.1.pth', model=None, specs=None, device='cpu'):
+    start = time.time()
     if model is None:
         model = load_model(model_path, device=device)
     clips = load_and_split_audio(input_path, sr=22050)
@@ -172,5 +173,5 @@ def predict_global_bpm(input_path, model_path='deeprhythm0.1.pth', model=None, s
         # Find the class with the maximum average probability
         _, predicted_class = torch.max(mean_probabilities, 0)
         predicted_global_bpm = class_to_bpm(predicted_class.item())
-
+    print(f'duration: {time.time()-start:.3f}')
     return predicted_global_bpm
