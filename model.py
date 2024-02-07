@@ -1,21 +1,20 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dataset import HDF5Dataset, split_dataset, class_to_bpm
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from utils import load_and_split_audio
 from hcqm import make_specs, compute_hcqm
+from dataset import HDF5Dataset, split_dataset, class_to_bpm
 
 
 class DeepRhythmModel(nn.Module):
     def __init__(self, num_classes=256):
         super(DeepRhythmModel, self).__init__()
 
-        # Assuming the input shape is (240, 8, 6) which is (φ, b, h)
+        # input shape is (240, 8, 6)
         self.num_classes = num_classes
 
-        # Updated to reflect the simplified flattening size of 5760
         self.conv1 = nn.Conv2d(in_channels=6, out_channels=128, kernel_size=(4, 6), padding='same')
         self.bn1 = nn.BatchNorm2d(128)
 
@@ -28,19 +27,15 @@ class DeepRhythmModel(nn.Module):
         self.conv4 = nn.Conv2d(in_channels=64, out_channels=32, kernel_size=(4, 6), padding='same')
         self.bn4 = nn.BatchNorm2d(32)
 
-        # The kernel size for the last convolutional layer covers the entire φ dimension
         self.conv5 = nn.Conv2d(in_channels=32, out_channels=8, kernel_size=(120, 6))
         self.bn5 = nn.BatchNorm2d(8)
 
-        # The output of the last convolutional layer is (1, 1, 8), so after flattening it becomes 8*1*1 = 8
-        self.fc1 = nn.Linear(2904, 256)  # The flattening size is now 8*1*6 = 48
+        self.fc1 = nn.Linear(2904, 256)
         self.elu = nn.ELU()
 
         self.dropout = nn.Dropout(0.5)
 
         self.fc2 = nn.Linear(256, num_classes)
-
-        # self.softmax = nn.Softmax(dim=1)
 
         # Initialize weights
         self._initialize_weights()
@@ -57,7 +52,6 @@ class DeepRhythmModel(nn.Module):
         x = self.dropout(self.elu(self.fc1(x)))
 
         x = self.fc2(x)
-        # x = self.softmax(x)
 
         return x
 
@@ -148,9 +142,7 @@ def load_model(path, device=None):
     model.load_state_dict(torch.load(path))
     if device is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
     model = model.to(device=device)
-    # Ensure to call model.eval() to set dropout and batch normalization layers to evaluation mode
     model.eval()
     return model
 
@@ -166,7 +158,7 @@ def predict_global_bpm(input_path, model_path='deeprhythm0.1.pth', model=None, s
         stft, band, cqt = specs
     input_batch = compute_hcqm(clips.to(device=model_device), stft, band, cqt).permute(0,3,1,2)
     print(input_batch.shape)
-    model.eval()  # Set the model to evaluation mode
+    model.eval()
     with torch.no_grad():
         # Ensure the batch is on the same device as the model
         input_batch = input_batch.to(device=model_device)

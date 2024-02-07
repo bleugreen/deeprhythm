@@ -25,11 +25,9 @@ def load_and_split_audio(filename, sr=22050, clip_length=8):
     except Exception as e:
         print(e, filename)
 
-    # Stack all clips along a new dimension to form a single tensor
     if clips:
         stacked_clips = torch.stack(clips, dim=0)
     else:
-        # Return an empty tensor if no clips were created (file is shorter than clip_length)
         return None
 
     return stacked_clips

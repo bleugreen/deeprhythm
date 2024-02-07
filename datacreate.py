@@ -9,7 +9,6 @@ import torch
 import time
 from data.fma import utils
 import pandas as pd
-# Ensure torch.multiprocessing is set up correctly for sharing CUDA tensors if needed
 import ffmpeg
 
 def read_mp3(file_path, sample_rate=44100):
@@ -140,8 +139,7 @@ def make_fma_dataset():
 
     tracks['genre'] = tracks.apply(get_genre, axis=1)
 
-    # Directly creating a DataFrame from 'tempo_data' and 'genre'
-    tempo_data = echonest['echonest', 'audio_features']['tempo'].astype(int)  # Ensuring tempo is integer
+    tempo_data = echonest['echonest', 'audio_features']['tempo'].astype(int)
     genre_data = tracks['genre'].dropna()
 
     # Merging on index to align track IDs, ensuring both tempo and genre data match per track ID
@@ -250,19 +248,17 @@ def process_and_save(batch_audio, batch_meta, specs, h5f_path, group_name='data'
     hcqm = compute_hcqm(batch_tensor, stft, band, cqt)  # Assume this returns a tensor of shape [len_batch, f, b, h]
     print('hcqm complete', hcqm.shape)
     torch.cuda.empty_cache()
-    # Ensure thread-safe writing to the HDF5 file
-    with multiprocessing.Lock():
-        with h5py.File(h5f_path, 'a') as h5f:
-            for i, (hcqm_tensor, meta) in enumerate(zip(hcqm, batch_meta)):
-                filename, bpm, genre = meta
-                # Create a unique group for each clip to avoid collisions
-                clip_group = h5f.create_group(f'{group_name}/{os.path.basename(filename)}_{i}')
-                # Save hcqm data
-                clip_group.create_dataset('hcqm', data=hcqm_tensor.cpu().numpy())
-                # Save metadata
-                clip_group.attrs['bpm'] = bpm
-                clip_group.attrs['genre'] = genre
-                clip_group.attrs['filepath'] = filename
+    with h5py.File(h5f_path, 'a') as h5f:
+        for i, (hcqm_tensor, meta) in enumerate(zip(hcqm, batch_meta)):
+            filename, bpm, genre = meta
+            # Create a unique group for each clip to avoid collisions
+            clip_group = h5f.create_group(f'{group_name}/{os.path.basename(filename)}_{i}')
+            # Save hcqm data
+            clip_group.create_dataset('hcqm', data=hcqm_tensor.cpu().numpy())
+            # Save metadata
+            clip_group.attrs['bpm'] = bpm
+            clip_group.attrs['genre'] = genre
+            clip_group.attrs['filepath'] = filename
 
 def consume_and_process(result_queue, data_path, n_workers=32, max_len_batch=2048, group='data'):
     batch_audio = []
@@ -281,13 +277,11 @@ def consume_and_process(result_queue, data_path, n_workers=32, max_len_batch=204
             print(f'producers = {active_producers}')
             continue  # Skip processing and wait for more data or other sentinels
 
-        # Process your data here
         clips, filename, bpm, genre = result
         batch_audio.append(clips)
         total_clips += clips.shape[0]
 
         batch_meta.extend([(filename, bpm, genre)] * clips.shape[0])
-        # print('num clips=', sum(clip.shape[0] for clip in batch_audio))
         if total_clips >= max_len_batch:
             stacked_batch_audio = torch.cat(batch_audio, dim=0).cuda()
             process_and_save(stacked_batch_audio, batch_meta, specs, data_path, group)

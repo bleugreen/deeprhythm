@@ -1,0 +1,7 @@
+librosa
+torch
+ffmpeg-python
+pandas
+numpy
+nnAudio
+h5py
