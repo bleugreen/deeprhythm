@@ -139,7 +139,7 @@ def train(data_path, model_name='deeprhythm'):
 def load_model(path, device=None):
     model = DeepRhythmModel(256)
     # Load the weights
-    model.load_state_dict(torch.load(path))
+    model.load_state_dict(torch.load(path, map_location=torch.device(device)))
     if device is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device=device)
@@ -157,7 +157,6 @@ def predict_global_bpm(input_path, model_path='deeprhythm0.1.pth', model=None, s
     else:
         stft, band, cqt = specs
     input_batch = compute_hcqm(clips.to(device=model_device), stft, band, cqt).permute(0,3,1,2)
-    print(input_batch.shape)
     model.eval()
     with torch.no_grad():
         # Ensure the batch is on the same device as the model

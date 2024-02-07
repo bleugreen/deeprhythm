@@ -1,6 +1,5 @@
 librosa
 torch
-ffmpeg-python
 pandas
 numpy
 nnAudio
