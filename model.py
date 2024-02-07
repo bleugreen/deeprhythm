@@ -147,9 +147,9 @@ def load_model(path, device=None):
     return model
 
 
-def predict_global_bpm(input_path, model_path='deeprhythm0.1.pth', model=None, specs=None):
+def predict_global_bpm(input_path, model_path='deeprhythm0.1.pth', model=None, specs=None, device='cpu'):
     if model is None:
-        model = load_model(model_path)
+        model = load_model(model_path, device=device)
     clips = load_and_split_audio(input_path, sr=22050)
     model_device = next(model.parameters()).device
     if specs is None:
