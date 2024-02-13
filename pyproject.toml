@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "deeprhythm"
-version = "0.0.6"
+version = "0.0.7"
 authors = [
   { name="bleugreen", email="bleugreendesign@gmail.com" },
 ]
@@ -19,6 +19,7 @@ classifiers = [
 dependencies = [
   "torch",
   "torchaudio",
+  "nnaudio==0.3.3",
   "librosa",
   "numpy",
 ]
