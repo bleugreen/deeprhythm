@@ -4,7 +4,6 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from src.dataset.clip_dataset import ClipDataset
 from src.model.frame_cnn import DeepRhythmModel
-from src.model.global_attn import GlobalBPMPredictor
 from src.dataset.song_dataset import SongDataset,song_collate
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
@@ -95,65 +94,3 @@ def train_cnn(data_path, model_name='deeprhythm', start_weights=None, batch_size
     accuracy1 = correct1 / total_predictions
     accuracy2 = correct1 / total_predictions
     print(f"Test Loss: {average_test_loss:.4f}, Accuracy1: {accuracy1:.4f}, Accuracy2: {accuracy2:.4f}")
-
-def train_attn(data_path, model_name='deeperhythm',start_weights=None, batch_size=64, early_stopping_patience=5):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    model_path = 'deeprhythm-5.1-best.pth'
-    global_bpm_predictor = GlobalBPMPredictor(cnn_model_path=model_path, device=device)
-
-    global_bpm_predictor.to(device)
-    if start_weights is not None:
-        global_bpm_predictor.load_state_dict(torch.load(start_weights, map_location=torch.device(device)))
-    train_dataset = SongDataset(data_path, 'train')
-    val_dataset = SongDataset(data_path, 'val')
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=song_collate)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=song_collate)
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(global_bpm_predictor.parameters(), lr=0.001)
-    early_stopping_counter = 0
-    best_validate_loss = float('inf')
-    num_epochs = 40
-    for epoch in range(num_epochs):
-        global_bpm_predictor.train()
-        running_loss = 0.0
-        for i, (inputs, labels) in enumerate(train_loader):
-            inputs = [input_tensor.to(device) for input_tensor in inputs]
-            labels = labels.to(device)
-
-            optimizer.zero_grad()
-
-            outputs = global_bpm_predictor(inputs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-
-            running_loss += loss.item()
-
-        avg_train_loss = running_loss / len(train_loader)
-
-        global_bpm_predictor.eval()
-        val_running_loss = 0.0
-        with torch.no_grad():
-            for inputs, labels in val_loader:
-                inputs = [input_tensor.to(device) for input_tensor in inputs]
-                labels = labels.to(device)
-
-                outputs = global_bpm_predictor(inputs)
-                loss = criterion(outputs, labels)
-
-                val_running_loss += loss.item()
-
-        avg_val_loss = val_running_loss / len(val_loader)
-
-        print(f"Epoch {epoch+1}, Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}")
-
-        if avg_val_loss < best_validate_loss:
-            best_validate_loss = avg_val_loss
-            early_stopping_counter = 0
-            torch.save(global_bpm_predictor.state_dict(), f"{model_name}_best.pth")
-        else:
-            early_stopping_counter += 1
-            if early_stopping_counter >= early_stopping_patience:
-                print("Early stopping triggered.")
-                break

@@ -4,7 +4,6 @@ from src.utils import load_and_split_audio
 from src.audio_proc.hcqm import make_kernels, compute_hcqm
 from src.utils import class_to_bpm
 from src.model.frame_cnn import DeepRhythmModel
-from src.model.global_attn import GlobalBPMPredictor
 
 def load_cnn_model(path='deeprhythm-0.5.pth', device=None):
     model = DeepRhythmModel(256)
@@ -30,38 +29,6 @@ def predict_global_bpm(input_path, model_path='deeprhythm-0.5.pth', model=None, 
     with torch.no_grad():
         input_batch = input_batch.to(device=model_device)
         outputs = model(input_batch)
-        probabilities = torch.softmax(outputs, dim=1)
-        mean_probabilities = probabilities.mean(dim=0)
-        _, predicted_class = torch.max(mean_probabilities, 0)
-        predicted_global_bpm = class_to_bpm(predicted_class.item())
-    return predicted_global_bpm, time.time()-start
-
-
-def load_attn_model(path='deeprhythm-attn-0.5.pth', cnn_model_path='deeprhythm-0.5.pth', device=None):
-    model = GlobalBPMPredictor(cnn_model_path=cnn_model_path)
-    if device is None:
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.load_state_dict(torch.load(path, map_location=torch.device(device)))
-    model = model.to(device=device)
-    model.eval()
-    return model
-
-
-def predict_global_bpm_attn(input_path, model_path='deepattnrhythm_best.pth', model=None, specs=None, device='cpu'):
-    if model is None:
-        model = load_attn_model(model_path, device=device).to('cuda')
-    clips = load_and_split_audio(input_path, sr=22050)
-    model_device = next(model.parameters()).device
-    if specs is None:
-        stft, band, cqt = make_kernels(device=model_device)
-    else:
-        stft, band, cqt = specs
-    input_batch = compute_hcqm(clips.to(device=model_device), stft, band, cqt)
-    model.eval()
-    start = time.time()
-    with torch.no_grad():
-        input_batch = input_batch.to(device=model_device)
-        outputs = model([input_batch])
         probabilities = torch.softmax(outputs, dim=1)
         mean_probabilities = probabilities.mean(dim=0)
         _, predicted_class = torch.max(mean_probabilities, 0)
