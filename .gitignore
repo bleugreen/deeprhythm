@@ -12,3 +12,5 @@ __pycache__/
 *$py.class
 model_weights/
 dist/
+*.whl
+*.tar.gz
