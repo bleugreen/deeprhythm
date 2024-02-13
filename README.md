@@ -37,7 +37,7 @@ To predict the tempo of a song with DeepRhythm:
 ```python
 from deeprhythm import DeepRhythmPredictor
 
-predictor = DeepRhythmPredictor()
+model = DeepRhythmPredictor()
 tempo = model.predict('path/to/song.mp3')
 print(f"Predicted Tempo: {tempo} BPM")
 ```
