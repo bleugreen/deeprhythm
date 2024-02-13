@@ -1,4 +1,4 @@
-# DeepRhythm: High-Speed Tempo Prediction CNN
+# DeepRhythm: High-Speed Tempo Prediction
 
 ## Introduction
 DeepRhythm is a Convolutional Neural Network (CNN) designed for rapid, precise tempo prediction, specifically on modern music.
