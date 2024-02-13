@@ -2,10 +2,10 @@
 import h5py
 import os
 import torch.multiprocessing as multiprocessing
-from src.audio_proc.hcqm import make_kernels, compute_hcqm
+from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 import torch
 import time
-from src.utils import load_and_split_audio
+from deeprhythm.utils import load_and_split_audio
 import csv
 
 NUM_WORKERS = 16

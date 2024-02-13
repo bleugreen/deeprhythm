@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import librosa
-from src.model.infer import predict_global_bpm, make_kernels, load_cnn_model
+from deeprhythm.model.infer import predict_global_bpm, make_kernels, load_cnn_model
 import essentia.standard as es
 import time
 
