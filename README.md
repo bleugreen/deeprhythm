@@ -25,12 +25,8 @@ Audio is batch-processed using a vectorized HCQM, drastically reducing computati
 ## Installation
 To install DeepRhythm, ensure you have Python and pip installed. Then run:
 ```bash
-pip install git+https://github.com/KinWaiCheuk/nnAudio.git#subdirectory=Installation
-
-pip install deeprhythm==0.0.6
+pip install deeprhythm
 ```
-
-Note: nnAudio currently needs to be installed separately since the pip package is out of date. Hopefully this will be resolved soon.
 
 ## Usage
 To predict the tempo of a song with DeepRhythm:
