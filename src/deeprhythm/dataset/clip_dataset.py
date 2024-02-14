@@ -16,6 +16,8 @@ class ClipDataset(Dataset):
         group_data = self.file_ref[group]
         for song_key in group_data.keys():
             song_data = group_data[song_key]
+            if song_data.attrs['source'] == 'fma':
+                continue
             num_clips = song_data['hcqm'].shape[0]
             if num_clips > 5:
                 clip_start = 1

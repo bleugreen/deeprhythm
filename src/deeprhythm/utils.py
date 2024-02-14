@@ -5,9 +5,9 @@ import zipfile
 import os
 import requests
 
-model_url = 'https://github.com/Mitchell57/deeprhythm/raw/main/deeprhythm-0.5.pth'
+model_url = 'https://github.com/Mitchell57/deeprhythm/raw/main/deeprhythm-0.7.pth'
 
-def get_weights(filename="deeprhythm-0.5.pth"):
+def get_weights(filename="deeprhythm-0.7.pth"):
     # Construct the path to save the model weights
     home_dir = os.path.expanduser("~")
     model_dir = os.path.join(home_dir, ".local", "share", "deeprhythm")
@@ -77,5 +77,5 @@ def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
 def class_to_bpm(class_index, min_bpm=30, max_bpm=286, num_classes=256):
     """Map a class index back to a BPM value (to the center of the class interval)."""
     class_width = (max_bpm - min_bpm) / num_classes
-    bpm = min_bpm + class_width * (class_index + 0.5)
+    bpm = min_bpm + class_width * (class_index)
     return bpm

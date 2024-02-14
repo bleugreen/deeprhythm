@@ -1,9 +1,13 @@
 import pandas as pd
 import os
 import librosa
-from deeprhythm.model.infer import predict_global_bpm, make_kernels, load_cnn_model
 import essentia.standard as es
 import time
+import sys
+sys.path.append('/home/bleu/ai/deeprhythm/src')
+
+from deeprhythm.model.infer import predict_global_bpm, make_kernels, load_cnn_model, predict_global_bpm_cont
+
 
 
 def estimate_tempo_essentia_multi(audio_path):
@@ -37,6 +41,11 @@ def estimate_tempo_cnn(audio_path, model, specs):
     print(bpm)
     return bpm
 
+def estimate_tempo_cnn_cont(audio_path, model, specs):
+    bpm= predict_global_bpm_cont(audio_path, model=model, specs=specs)[0]
+    print(bpm)
+    return bpm
+
 def is_within_tolerance(predicted_bpm, true_bpm, tolerance=0.02, multiples=[1]):
     for multiple in multiples:
         if true_bpm * multiple * (1 - tolerance) <= predicted_bpm <= true_bpm * multiple * (1 + tolerance):
@@ -48,6 +57,8 @@ def run_benchmark(test_set, estimation_methods):
     results = {method: {'times': [], 'accuracy1': [], 'accuracy2':[]} for method in estimation_methods}
     for method_name, method_func in estimation_methods.items():
         for _, row in test_set.iterrows():
+            if row['source'] == 'fma':
+                continue
             true_bpm = row['bpm']
             audio_path = os.path.join('/media/bleu/bulkdata2/deeprhythmdata', row['filename'])
             start_time = time.time()
@@ -72,23 +83,35 @@ def generate_report(results):
         print(f"{method:<18}: Acc1 = {accuracy1:.2f}%, Acc2 = {accuracy2:.2f}%, Avg Time = {avg_time:.4f}s, Total={sum(metrics['times']):.2f}s")
 
 if __name__ == '__main__':
+
+    # val_set = pd.read_csv('/media/bleu/bulkdata2/deeprhythmdata/val.csv')
+
     test_set = pd.read_csv('/media/bleu/bulkdata2/deeprhythmdata/test.csv')
-    test_set = test_set[test_set['source'] != 'ballroom']
+    # test_set = pd.concat([test_set, val_set], ignore_index=True)
+    # cpu_model = load_cnn_model(device='cpu')
+    # cpu_specs = make_kernels(device='cpu')
 
-    cpu_model = load_cnn_model(device='cpu')
-    cpu_specs = make_kernels(device='cpu')
+    # cuda_model = load_cnn_model(device='cuda')
+    cuda_model_2 = load_cnn_model('deeprhythm-2.3-best.pth',device='cuda')
 
-    cuda_model = load_cnn_model(device='cuda')
+    cuda_model_big = load_cnn_model('deeprhythm-2-best.pth',device='cuda')
+    # cont_model = load_cnn_model('deeprhythm-cont-best.pth', device='cuda')
+
     cuda_specs = make_kernels(device='cuda')
 
     # Define the estimation methods
     methods = {
-        'Essentia (multi)': lambda audio_path: estimate_tempo_essentia_multi(audio_path),
-        'Essentia (percival)':estimate_tempo_essentia_percival,
-        'Essentia (degara)': lambda audio_path: estimate_tempo_essentia_degara(audio_path),
-        'Librosa': estimate_tempo_librosa,
-        'DeepRhythm (cpu)': lambda audio_path: estimate_tempo_cnn(audio_path, cpu_model, cpu_specs),
-        'DeepRhythm (cuda)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model, cuda_specs),
+        # 'Essentia (multi)': lambda audio_path: estimate_tempo_essentia_multi(audio_path),
+        # 'Essentia (percival)':estimate_tempo_essentia_percival,
+        # 'Essentia (degara)': lambda audio_path: estimate_tempo_essentia_degara(audio_path),
+        # 'Librosa': estimate_tempo_librosa,
+        # 'DeepRhythm (cont)': lambda audio_path: estimate_tempo_cnn_cont(audio_path, cont_model, cuda_specs),
+        'DeepRhythm (2.3)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model_2, cuda_specs),
+        # 'DeepRhythm (1)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model, cuda_specs),
+
+                'DeepRhythm (2.2)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model_big, cuda_specs),
+
+
     }
 
     # Run the benchmark

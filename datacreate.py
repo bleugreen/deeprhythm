@@ -1,4 +1,7 @@
 
+import sys
+sys.path.append('/home/bleu/ai/deeprhythm/src')
+
 import h5py
 import os
 import torch.multiprocessing as multiprocessing
@@ -23,14 +26,12 @@ def producer(task_queue, result_queue, completion_event, queue_condition, queue_
             result_queue.put(None)  # Send termination signal to indicate this producer is done
             completion_event.wait()  # Wait for the signal to exit
             break
-        id, filename, genre, bpm, source = task
-
+        id, filename, genre,  source,num_clips, bpm = task
         with queue_condition:  # Use the condition to wait if the queue is too full before loading audio
             while result_queue.qsize() >= queue_threshold:
                 queue_condition.wait()
         root_dir = '/media/bleu/bulkdata2/deeprhythmdata'
         full_path = os.path.join(root_dir, filename)
-        print(full_path)
         # After ensuring the queue is not full, proceed to load and process audio
         clips = load_and_split_audio(full_path, share_mem=True)
         if clips is not None:
@@ -65,7 +66,7 @@ def init_workers(dataset, data_path, group, n_workers=NUM_WORKERS):
         p.start()
     with h5py.File(data_path, 'r') as h5f:
         for item in dataset:
-            id, filename, genre, bpm, source = item
+            id, filename, genre, bpm, source, _ = item
             if f'{group}/{os.path.basename(filename)}' not in h5f:
                 task_queue.put(item)
 
@@ -92,7 +93,7 @@ def process_and_save(batch_audio, batch_meta, specs, h5f_path, group):
                 return
             clip_group = h5f.create_group(f'{group}/{os.path.basename(filename)}')
             clip_group.create_dataset('hcqm', data=song_clips.cpu().numpy())
-            clip_group.attrs['bpm'] = bpm
+            clip_group.attrs['bpm'] = float(bpm)
             clip_group.attrs['genre'] = genre
             clip_group.attrs['filepath'] = filename
             clip_group.attrs['source'] = source
@@ -152,7 +153,7 @@ def read_csv_to_tuples(csv_file_path):
         reader = csv.reader(csvfile)
         next(reader)  # Skip the header row
         for row in reader:
-            modified_row = row[:-1]
+            modified_row = row
             data_tuples.append(tuple(modified_row))
     return data_tuples
 
@@ -164,7 +165,7 @@ if __name__ == '__main__':
     test_songs = read_csv_to_tuples('/media/bleu/bulkdata2/deeprhythmdata/test.csv')
     val_songs = read_csv_to_tuples('/media/bleu/bulkdata2/deeprhythmdata/val.csv')
     # idx, id, bpm, filename, genre, source
-
+    # print(test_songs[0])
     data_path = '/media/bleu/bulkdata2/deeprhythmdata/hcqm-split.hdf5'
     with h5py.File(data_path, 'w') as hdf5_file:
         # Create groups 'train', 'test', and 'val' within the HDF5 file
