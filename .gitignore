@@ -16,3 +16,4 @@ dist/
 *.tar.gz
 *.csv
 *.pb
+.workspace
