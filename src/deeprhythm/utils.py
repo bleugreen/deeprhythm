@@ -5,7 +5,16 @@ import zipfile
 import os
 import requests
 
-model_url = 'https://github.com/Mitchell57/deeprhythm/raw/main/deeprhythm-0.7.pth'
+model_url = 'https://github.com/Mitchell57/deeprhythm/raw/main/'
+
+
+def get_device():
+    if torch.cuda.is_available():
+        return 'cuda'
+    elif torch.backends.mps.is_available():
+        return 'mps'
+    else:
+        return 'cpu'
 
 def get_weights(filename="deeprhythm-0.7.pth"):
     # Construct the path to save the model weights
@@ -20,7 +29,7 @@ def get_weights(filename="deeprhythm-0.7.pth"):
         print("Downloading model weights...")
         # Download the model weights
         try:
-            r = requests.get(model_url, allow_redirects=True)
+            r = requests.get(model_url+filename, allow_redirects=True)
             if r.status_code == 200:
                 with open(model_path, 'wb') as f:
                     f.write(r.content)

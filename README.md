@@ -24,7 +24,7 @@ Audio is batch-processed using a vectorized HCQM, drastically reducing computati
 - Acc1 = Prediction within +/- 2% of actual bpm
 - Acc2 = Prediction within +/- 2% of actual bpm or a multiple (e.g. 120 ~= 60)
 - Timed from filepath in to bpm out (audio loading, feature extraction, model inference)
-- I could only get TempoCNN to run on cpu (it requires Cuda 10 and I'm not downgrading my Cuda install for curiosity's sake)
+- I could only get TempoCNN to run on cpu (it requires Cuda 10)
 
 ## Installation
 To install DeepRhythm, ensure you have Python and pip installed. Then run:

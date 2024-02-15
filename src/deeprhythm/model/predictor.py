@@ -3,13 +3,13 @@ from deeprhythm.utils import load_and_split_audio
 from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 from deeprhythm.utils import class_to_bpm
 from deeprhythm.model.frame_cnn import DeepRhythmModel
-from deeprhythm.utils import get_weights
+from deeprhythm.utils import get_weights, get_device
 
 class DeepRhythmPredictor:
     def __init__(self, model_path='deeprhythm-0.5.pth', device=None):
         self.model_path = get_weights()
         if device is None:
-            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            self.device = get_device()
         else:
             self.device = torch.device(device)
         self.model = self.load_model()
