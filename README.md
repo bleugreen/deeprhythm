@@ -1,11 +1,11 @@
 # DeepRhythm: High-Speed Tempo Prediction
 
 ## Introduction
-DeepRhythm is a Convolutional Neural Network (CNN) designed for rapid, precise tempo prediction, specifically on modern music.
+DeepRhythm is a convolutional neural network designed for rapid, precise tempo prediction, specifically on modern music.
 
-The implementation is heavily inspired by [1].
+The implementation is heavily inspired by “Deep-Rhythm for Global Tempo Estimation in Music”, by Foroughmand and Peeters [1].
 
-Audio is batch-processed using a vectorized HCQM, drastically reducing computation time by avoiding the common bottlenecks encountered in feature extraction.
+Audio is batch-processed using a vectorized HCQM, drastically reducing computation time by avoiding the usual bottlenecks encountered in feature extraction.
 
 ## Benchmarks
 
@@ -33,7 +33,7 @@ pip install deeprhythm
 ```
 
 ## Usage
-To predict the tempo of a song with DeepRhythm:
+To predict the tempo of a song:
 ```python
 from deeprhythm import DeepRhythmPredictor
 
