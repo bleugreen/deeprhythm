@@ -74,6 +74,7 @@ def run_benchmark(test_set, estimation_methods):
 
 
 def generate_report(results):
+    print('Test Songs:', len(results['DeepRhythm (cpu)']['times']))
     for method, metrics in results.items():
         accuracy1 = sum(metrics['accuracy1']) / len(metrics['accuracy1']) * 100
         accuracy2 = sum(metrics['accuracy2']) / len(metrics['accuracy2']) * 100
@@ -83,33 +84,22 @@ def generate_report(results):
         print(f"{method:<18}: Acc1 = {accuracy1:.2f}%, Acc2 = {accuracy2:.2f}%, Avg Time = {avg_time:.4f}s, Total={sum(metrics['times']):.2f}s")
 
 if __name__ == '__main__':
-
-    # val_set = pd.read_csv('/media/bleu/bulkdata2/deeprhythmdata/val.csv')
-
     test_set = pd.read_csv('/media/bleu/bulkdata2/deeprhythmdata/test.csv')
-    # test_set = pd.concat([test_set, val_set], ignore_index=True)
-    # cpu_model = load_cnn_model(device='cpu')
-    # cpu_specs = make_kernels(device='cpu')
 
-    # cuda_model = load_cnn_model(device='cuda')
-    cuda_model_2 = load_cnn_model('deeprhythm-2.3-best.pth',device='cuda')
+    cpu_model = load_cnn_model(device='cpu')
+    cpu_specs = make_kernels(device='cpu')
 
-    cuda_model_big = load_cnn_model('deeprhythm-2-best.pth',device='cuda')
-    # cont_model = load_cnn_model('deeprhythm-cont-best.pth', device='cuda')
-
+    cuda_model = load_cnn_model(device='cuda')
     cuda_specs = make_kernels(device='cuda')
 
     # Define the estimation methods
     methods = {
-        # 'Essentia (multi)': lambda audio_path: estimate_tempo_essentia_multi(audio_path),
-        # 'Essentia (percival)':estimate_tempo_essentia_percival,
-        # 'Essentia (degara)': lambda audio_path: estimate_tempo_essentia_degara(audio_path),
-        # 'Librosa': estimate_tempo_librosa,
-        # 'DeepRhythm (cont)': lambda audio_path: estimate_tempo_cnn_cont(audio_path, cont_model, cuda_specs),
-        'DeepRhythm (2.3)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model_2, cuda_specs),
-        # 'DeepRhythm (1)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model, cuda_specs),
-
-                'DeepRhythm (2.2)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model_big, cuda_specs),
+        'Essentia (multi)': lambda audio_path: estimate_tempo_essentia_multi(audio_path),
+        'Essentia (percival)':estimate_tempo_essentia_percival,
+        'Essentia (degara)': lambda audio_path: estimate_tempo_essentia_degara(audio_path),
+        'Librosa': estimate_tempo_librosa,
+        'DeepRhythm (cuda)': lambda audio_path: estimate_tempo_cnn(audio_path, cuda_model, cuda_specs),
+        'DeepRhythm (cpu)': lambda audio_path: estimate_tempo_cnn(audio_path, cpu_model, cpu_specs),
 
 
     }

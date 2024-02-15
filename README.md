@@ -11,16 +11,17 @@ Audio is batch-processed using a vectorized HCQM, drastically reducing computati
 
 | Method                | Acc1 (%) | Acc2 (%) | Avg. Time (s) | Total Time (s) |
 |-----------------------|------|------|-----------|------------|
-| Essentia (multifeature) | 79.15 | 94.19 | 2.78 | 1635.48 |
-| Essentia (Percival)   | 80.51 | 94.87 | 1.46 | 851.91 |
-| Essentia (degara)     | 77.26 | 91.97 | 1.40 | 820.85 |
-| Librosa               | 52.82 | 63.93 | 0.51 | 299.68 |
-| DeepRhythm (cpu)      | 90.77 | 96.75 | 0.127 | 74.43 |
-| DeepRhythm (cuda)     | 90.77 | 96.75 | 0.0235 | 13.74 |
+| Essentia (multifeature) | 87.93 | 97.48 | 2.72 | 2595.64 |
+| Essentia (percival)   | 85.83 | 95.07 | 1.35 | 1289.62 |
+| Essentia (degara)     | 86.46 | 97.17 | 1.38 | 1310.69 |
+| Librosa               | 66.84 | 75.13 | 0.48 | 460.52 |
+| DeepRhythm (cpu)      | 95.91 | 96.54 | 0.12 | 115.02 |
+| DeepRhythm (cuda)     | 95.91 | 96.54 | 0.021 | 20.11 |
 
-- Test done on 586 songs, mostly Hip Hop, Electronic, Pop, and Rock
+- Test done on 953 songs, mostly Hip Hop, Electronic, Pop, and Rock
 - Acc1 = Prediction within +/- 2% of actual bpm
 - Acc2 = Prediction within +/- 2% of actual bpm or a multiple (e.g. 120 ~= 60)
+- Timed from filepath in to bpm out (includes loading, feature extraction, model inference)
 
 ## Installation
 To install DeepRhythm, ensure you have Python and pip installed. Then run:

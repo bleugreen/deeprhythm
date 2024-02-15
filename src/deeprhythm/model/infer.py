@@ -5,7 +5,7 @@ from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 from deeprhythm.utils import class_to_bpm
 from deeprhythm.model.frame_cnn import DeepRhythmModel
 
-def load_cnn_model(path='deeprhythm-2.3-best.pth', device=None):
+def load_cnn_model(path='deeprhythm-0.7.pth', device=None):
     model = DeepRhythmModel(256)
     if device is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -14,7 +14,7 @@ def load_cnn_model(path='deeprhythm-2.3-best.pth', device=None):
     model.eval()
     return model
 
-def predict_global_bpm(input_path, model_path='deeprhythm-2.3-best.pth', model=None, specs=None, device='cpu'):
+def predict_global_bpm(input_path, model_path='deeprhythm-0.7.pth', model=None, specs=None, device='cpu'):
     if model is None:
         model = load_cnn_model(model_path, device=device)
     clips = load_and_split_audio(input_path, sr=22050)
