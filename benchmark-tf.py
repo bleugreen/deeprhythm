@@ -49,14 +49,13 @@ def generate_report(results):
 
 if __name__ == '__main__':
     test_set = pd.read_csv('/media/bleu/bulkdata2/deeprhythmdata/test.csv')
-    test_set = test_set[test_set['source'] != 'ballroom']
-
+    fcn_model = TempoClassifier('fcn')
     cnn_model = TempoClassifier('cnn')
 
     # Define the estimation methods
     methods = {
         'TempoCNN (cnn)': lambda audio_path: estimate_tempo_cnn(audio_path, cnn_model),
-
+        'TempoCNN (fcn)': lambda audio_path: estimate_tempo_cnn(audio_path, fcn_model),
     }
 
     # Run the benchmark
