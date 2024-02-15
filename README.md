@@ -11,9 +11,9 @@ Audio is batch-processed using a vectorized HCQM, drastically reducing computati
 
 | Method                | Acc1 (%) | Acc2 (%) | Avg. Time (s) | Total Time (s) |
 |-----------------------|------|------|-----------|------------|
-| DeepRhythm (cuda)     | 95.91 | 96.54 | 0.021 | 20.11 |
-| DeepRhythm (cpu)      | 95.91 | 96.54 | 0.12 | 115.02 |
-| TempoCNN (cnn)        | 84.78 | 97.69 | 1.21 | 1150.43 |
+| DeepRhythm (cuda)     | **95.91** | 96.54 | **0.021** | 20.11 |
+| DeepRhythm (cpu)      | **95.91** | 96.54 | 0.12 | 115.02 |
+| TempoCNN (cnn)        | 84.78 | **97.69** | 1.21 | 1150.43 |
 | TempoCNN (fcn)        | 83.53 | 96.54 | 1.19 | 1131.51 |
 | Essentia (multifeature) | 87.93 | 97.48 | 2.72 | 2595.64 |
 | Essentia (percival)   | 85.83 | 95.07 | 1.35 | 1289.62 |
@@ -23,7 +23,7 @@ Audio is batch-processed using a vectorized HCQM, drastically reducing computati
 - Test done on 953 songs, mostly Electronic, Hip Hop, Pop, and Rock
 - Acc1 = Prediction within +/- 2% of actual bpm
 - Acc2 = Prediction within +/- 2% of actual bpm or a multiple (e.g. 120 ~= 60)
-- Timed from filepath in to bpm out (includes loading, feature extraction, model inference)
+- Timed from filepath in to bpm out (audio loading, feature extraction, model inference)
 - I could only get TempoCNN to run on cpu (it requires Cuda 10 and I'm not downgrading my Cuda install for curiosity's sake)
 
 ## Installation
