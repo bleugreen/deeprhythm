@@ -28,7 +28,7 @@ class DeepRhythmPredictor:
         stft, band, cqt = make_kernels(device=device)
         return stft, band, cqt
 
-    def predict(self, filename):
+    def predict(self, filename, include_confidence=False):
         clips = load_and_split_audio(filename, sr=22050)
         input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0,3,1,2)
         self.model.eval()
@@ -37,8 +37,10 @@ class DeepRhythmPredictor:
             outputs = self.model(input_batch)
             probabilities = torch.softmax(outputs, dim=1)
             mean_probabilities = probabilities.mean(dim=0)
-            _, predicted_class = torch.max(mean_probabilities, 0)
+            confidence_score, predicted_class = torch.max(mean_probabilities, 0)
             predicted_global_bpm = class_to_bpm(predicted_class.item())
+        if include_confidence:
+            return predicted_global_bpm, confidence_score.item(),
         return predicted_global_bpm
 
     def predict_batch(self, dirname):
