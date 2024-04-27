@@ -5,7 +5,7 @@ DeepRhythm is a convolutional neural network designed for rapid, precise tempo p
 
 The implementation is heavily inspired by “Deep-Rhythm for Global Tempo Estimation in Music”, by Foroughmand and Peeters [1].
 
-Audio is batch-processed using a vectorized HCQM, drastically reducing computation time by avoiding the usual bottlenecks encountered in feature extraction.
+Audio is batch-processed using a vectorized Harmonic Constant-Q Modulation (HCQM), drastically reducing computation time by avoiding the usual bottlenecks encountered in feature extraction.
 
 ## Benchmarks
 
