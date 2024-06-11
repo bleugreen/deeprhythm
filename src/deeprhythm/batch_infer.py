@@ -1,9 +1,6 @@
-
-import sys
-sys.path.append('../deeprhythm/src')
 import json
-
 import os
+import sys
 import torch.multiprocessing as multiprocessing
 import torch
 import time
