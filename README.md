@@ -92,7 +92,7 @@ Flags:
 - `-o output_path.jsonl` - provide a custom output path (default 'batch_results.jsonl`)
 - `-c`, `--conf` - include confidence scores
 - `-d`, `--device [cuda/cpu/mps]` - specify model device
-- `-q`, `--quiet` - prints only bpm/conf
+- `-q`, `--quiet` - doesn't print status / logs
 
 ### Python Inference
 
