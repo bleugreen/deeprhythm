@@ -14,7 +14,7 @@ It is normally performed with a hop length around 10-25ms (the window size varie
 
 With the HCQM (Harmonic Constant-Q Modulation), Foroughmand and Peeters creatively repurpose the CQT for rhythm detection. Instead of scanning a few milliseconds, they give it an 8-second window. Rather than the standard 81 bins covering 50 Hz to 1 kHz, it utilizes 256 bins tailored to span from 30 bpm to 286 bpm (approximately 0.5 Hz to 4.76 Hz). This adjustment results in a highly detailed, narrow, and low frequency window, which delineates how prevalent each potential bpm is within the track. For instance, in a song with a tempo of 120 bpm, this method would highlight spikes at 30, 60, 120 (predominantly), and 240 bpm. Each element of the song that recurs on this 8-second scale contributes to peaks in the CQT, e.g. a quarter-notea hi hat would look like a continuous 2 Hz (120 bpm) tone in the transformed data.
 
-Audio is batch-processed using a vectorized HCQM, drastically reducing computation time by avoiding the usual bottlenecks encountered in feature extraction.
+Audio is batch-processed using a vectorized Harmonic Constant-Q Modulation (HCQM), drastically reducing computation time by avoiding the usual bottlenecks encountered in feature extraction.
 
 ## Benchmarks
 
