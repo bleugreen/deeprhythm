@@ -6,8 +6,8 @@ from deeprhythm.model.frame_cnn import DeepRhythmModel
 from deeprhythm.utils import get_weights, get_device
 
 class DeepRhythmPredictor:
-    def __init__(self, model_path='deeprhythm-0.5.pth', device=None):
-        self.model_path = get_weights()
+    def __init__(self, model_path='deeprhythm-0.5.pth', device=None, quiet=False):
+        self.model_path = get_weights(quiet=quiet)
         if device is None:
             self.device = get_device()
         else:

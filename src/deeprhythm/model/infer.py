@@ -1,14 +1,18 @@
 import torch
 import time
+import os
+from deeprhythm.utils import get_weights
 from deeprhythm.utils import load_and_split_audio
 from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 from deeprhythm.utils import class_to_bpm
 from deeprhythm.model.frame_cnn import DeepRhythmModel
 
-def load_cnn_model(path='deeprhythm-0.7.pth', device=None):
+def load_cnn_model(path='deeprhythm-0.7.pth', device=None, quiet=False):
     model = DeepRhythmModel(256)
     if device is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if not os.path.exists(path):
+        path = get_weights(quiet=quiet)
     model.load_state_dict(torch.load(path, map_location=torch.device(device)))
     model = model.to(device=device)
     model.eval()

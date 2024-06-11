@@ -16,7 +16,7 @@ def get_device():
     else:
         return 'cpu'
 
-def get_weights(filename="deeprhythm-0.7.pth"):
+def get_weights(filename="deeprhythm-0.7.pth", quiet=False):
     # Construct the path to save the model weights
     home_dir = os.path.expanduser("~")
     model_dir = os.path.join(home_dir, ".local", "share", "deeprhythm")
@@ -39,7 +39,8 @@ def get_weights(filename="deeprhythm-0.7.pth"):
         except Exception as e:
             print(f"An error occurred during the download: {e}")
     else:
-        print("Model weights already exist.")
+        if not quiet:
+            print("Model weights already exist.")
 
     return model_path
 
