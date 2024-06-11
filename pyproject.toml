@@ -25,5 +25,5 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Mitchell57/deeprhythm"
-Issues = "https://github.com/Mitchell57/deeprhythm/issues"
+Homepage = "https://github.com/bleugreen/deeprhythm"
+Issues = "https://github.com/bleugreen/deeprhythm/issues"
