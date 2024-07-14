@@ -106,10 +106,12 @@ model = DeepRhythmPredictor()
 tempo = model.predict('path/to/song.mp3')
 
 # to include confidence
-tempo, confidence = model.predict('path/to/song.mp3', include_confidence=True)
+tempo, confidence = model.predict('path/to/song', include_confidence=True)
 
 print(f"Predicted Tempo: {tempo} BPM")
 ```
+
+Audio is loaded with librosa, which supports most audio formats
 
 ## References
 
