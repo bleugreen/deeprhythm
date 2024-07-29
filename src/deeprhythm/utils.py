@@ -5,7 +5,7 @@ import zipfile
 import os
 import requests
 
-model_url = 'https://github.com/Mitchell57/deeprhythm/raw/main/'
+model_url = 'https://github.com/bleugreen/deeprhythm/raw/main/'
 
 
 def get_device():
