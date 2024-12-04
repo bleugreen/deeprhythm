@@ -12,8 +12,8 @@ from deeprhythm.utils import class_to_bpm
 from deeprhythm.utils import get_device
 
 
-NUM_WORKERS = 4
-NUM_BATCH = 256
+NUM_WORKERS = 8
+NUM_BATCH = 128
 
 
 def producer(task_queue, result_queue, completion_event, queue_condition, queue_threshold=NUM_BATCH*2):

@@ -4,6 +4,10 @@ from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 from deeprhythm.utils import class_to_bpm
 from deeprhythm.model.frame_cnn import DeepRhythmModel
 from deeprhythm.utils import get_weights, get_device
+from deeprhythm.batch_infer import get_audio_files, main as batch_infer_main
+import json
+import tempfile
+import os
 
 class DeepRhythmPredictor:
     def __init__(self, model_path='deeprhythm-0.5.pth', device=None, quiet=False):
@@ -43,11 +47,50 @@ class DeepRhythmPredictor:
             return predicted_global_bpm, confidence_score.item(),
         return predicted_global_bpm
 
-    def predict_batch(self, dirname):
-        # Placeholder for batch prediction logic
-        # This would involve iterating over files in dirname, using self.predict on each,
-        # and aggregating or returning results as needed.
-        pass
+    def predict_batch(self, dirname, include_confidence=False, workers=8, batch=128, quiet=True):
+        """
+        Predict BPM for all audio files in a directory using efficient batch processing.
+        
+        Args:
+            dirname: Directory containing audio files
+            include_confidence: Whether to include confidence scores in results
+            
+        Returns:
+            dict: Mapping of filenames to their predicted BPMs (and optionally confidence scores)
+        """
+        # Create a temporary file to store batch results
+        with tempfile.NamedTemporaryFile(mode='w+', suffix='.jsonl', delete=False) as tmp_file:
+            temp_path = tmp_file.name
+            
+        try:
+            # Run batch inference
+            batch_infer_main(
+                dataset=get_audio_files(dirname),
+                data_path=temp_path,
+                device=str(self.device),
+                conf=include_confidence,
+                quiet=quiet,
+                n_workers=workers,
+                max_len_batch=batch
+            )
+            
+            # Read and parse results
+            results = {}
+            with open(temp_path, 'r') as f:
+                for line in f:
+                    result = json.loads(line.strip())
+                    filename = result.pop('filename')
+                    if include_confidence:
+                        results[filename] = (result['bpm'], result['confidence'])
+                    else:
+                        results[filename] = result['bpm']
+                        
+            return results
+            
+        finally:
+            # Clean up temporary file
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
 
     def predict_per_frame(self, filename, include_confidence=False):
         clips = load_and_split_audio(filename, sr=22050)
