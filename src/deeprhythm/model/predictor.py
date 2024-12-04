@@ -48,3 +48,18 @@ class DeepRhythmPredictor:
         # This would involve iterating over files in dirname, using self.predict on each,
         # and aggregating or returning results as needed.
         pass
+
+    def predict_per_frame(self, filename, include_confidence=False):
+        clips = load_and_split_audio(filename, sr=22050)
+        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0,3,1,2)
+        self.model.eval()
+        with torch.no_grad():
+            input_batch = input_batch.to(device=self.device)
+            outputs = self.model(input_batch)
+            probabilities = torch.softmax(outputs, dim=1)
+            confidence_scores, predicted_classes = torch.max(probabilities, dim=1)
+            predicted_bpms = [class_to_bpm(cls.item()) for cls in predicted_classes]
+            
+        if include_confidence:
+            return predicted_bpms, confidence_scores.tolist()
+        return predicted_bpms
