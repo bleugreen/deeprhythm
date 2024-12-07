@@ -4,7 +4,7 @@ import librosa
 import requests
 import torch
 
-model_url = 'https://github.com/bleugreen/deeprhythm/raw/main/'
+model_url = 'https://github.com/bleugreen/deeprhythm/raw/main/weights/'
 
 
 class AudioTooShortError(ValueError):
