@@ -5,7 +5,7 @@ import torchaudio
 
 def onset_strength(
     y=None, n_fft=2048, hop_length=512, lag=1, ref=None,
-    detrend=False, center=True,  aggregate=None
+    detrend=False, center=True, aggregate=None
 ):
     """
     Compute the onset strength of an audio signal or a spectrogram.
@@ -50,8 +50,8 @@ def onset_strength(
 
     # Compute difference to reference, spaced by lag
     onset_env = S[..., lag:] - ref[..., :-lag]
-    onset_env = torch.clamp(onset_env, min=0.0)  # Discard negatives
-
+    onset_env = torch.clamp(onset_env, min=0.0)  
+    
     if aggregate is None:
         aggregate = torch.mean
     if callable(aggregate):

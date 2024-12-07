@@ -4,25 +4,21 @@ import torch
 
 def create_log_filter(num_bins, num_bands, device='cuda'):
     """
-    Create a logarithmically spaced filter matrix for audio processing.
-
-    This function generates a filter matrix with logarithmically spaced bands. The filters have
-    unity gain, meaning that the sum of the filter coefficients in each band is equal to one.
+    Create a logarithmically spaced filter matrix.
 
     Parameters
     ----------
     num_bins : int
-        The number of bins in the spectrogram (e.g., the number of frequency bins).
+        Number of frequency bins in the spectrogram
     num_bands : int
-        The number of bands for the filter matrix. These bands are spaced logarithmically.
+        Number of logarithmically spaced bands
     device : str, optional
-        The device on which the filter matrix will be created.
+        Target device for the filter matrix
 
     Returns
     -------
     torch.Tensor
-        A tensor representing the filter matrix with shape (num_bands, num_bins). Each row
-        corresponds to a filter for a specific band.
+        Filter matrix of shape (num_bands, num_bins)
     """
     log_bins = np.logspace(np.log10(1), np.log10(num_bins), num=num_bands+1, base=10.0) - 1
     log_bins = np.unique(np.round(log_bins).astype(int))
@@ -38,25 +34,19 @@ def create_log_filter(num_bins, num_bands, device='cuda'):
 
 def apply_log_filter(stft_output, filter_matrix):
     """
-    Apply the logarithmic filter matrix to the Short-Time Fourier Transform (STFT) output.
-
-    This function applies a precomputed logarithmic filter matrix to the STFT output of an audio signal
-    to reduce its dimensionality and to capture the energy in logarithmically spaced frequency bands.
+    Apply logarithmic filter matrix to STFT output.
 
     Parameters
     ----------
     stft_output : torch.Tensor
-        A tensor representing the STFT output with shape (batch_size, num_bins, num_frames), where
-        num_bins is the number of frequency bins and num_frames is the number of time frames.
+        STFT output of shape (batch_size, num_bins, num_frames)
     filter_matrix : torch.Tensor
-        A tensor representing the logarithmic filter matrix with shape (num_bands, num_bins), where
-        num_bands is the number of logarithmically spaced frequency bands.
+        Filter matrix of shape (num_bands, num_bins)
 
     Returns
     -------
     torch.Tensor
-        A tensor representing the filtered STFT output with shape (batch_size, num_bands, num_frames).
-        Each band contains the aggregated energy from the corresponding set of frequency bins.
+        Filtered output of shape (batch_size, num_bands, num_frames)
     """
     stft_output_transposed = stft_output.transpose(1, 2)
     filtered_output_transposed = torch.matmul(stft_output_transposed, filter_matrix.T)
