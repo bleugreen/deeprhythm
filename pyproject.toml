@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "deeprhythm"
-version = "0.0.12"
+version = "0.0.13"
 authors = [
   { name="bleugreen", email="bleugreendesign@gmail.com" },
 ]
@@ -22,6 +22,7 @@ dependencies = [
   "nnaudio==0.3.3",
   "librosa",
   "numpy",
+  "h5py",
 ]
 
 [project.urls]
