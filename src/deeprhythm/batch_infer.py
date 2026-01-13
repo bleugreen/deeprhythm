@@ -5,7 +5,7 @@ import torch
 import warnings
 import time
 import argparse
-from deeprhythm.utils import load_and_split_audio
+from deeprhythm.utils import load_and_split_audio, AudioTooShortError, AudioLoadError
 from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 from deeprhythm.model.infer import load_cnn_model
 from deeprhythm.utils import class_to_bpm
@@ -30,9 +30,11 @@ def producer(task_queue, result_queue, completion_event, queue_condition, queue_
         with queue_condition:  # Use the condition to wait if the queue is too full before loading audio
             while result_queue.qsize() >= queue_threshold:
                 queue_condition.wait()
-        clips = load_and_split_audio(filename, share_mem=True)
-        if clips is not None:
+        try:
+            clips = load_and_split_audio(filename, share_mem=True)
             result_queue.put((clips, filename))
+        except (AudioTooShortError, AudioLoadError) as e:
+            print(f"Skipping {filename}: {e}")
 
 def init_workers(dataset, n_workers=NUM_WORKERS):
     """

@@ -8,6 +8,16 @@ import requests
 model_url = 'https://github.com/bleugreen/deeprhythm/raw/main/'
 
 
+class AudioTooShortError(ValueError):
+    """Raised when audio file is shorter than minimum required length."""
+    pass
+
+
+class AudioLoadError(IOError):
+    """Raised when audio file cannot be loaded."""
+    pass
+
+
 def get_device():
     if torch.cuda.is_available():
         return 'cuda'
@@ -69,14 +79,21 @@ def load_and_split_audio(filename, sr=22050, clip_length=8, share_mem=False):
         if clips:
             stacked_clips = torch.stack(clips, dim=0)
         else:
-            return None
+            raise AudioTooShortError(
+                f"Audio file must be at least {clip_length} seconds long. "
+                f"File '{filename}' is too short to extract any {clip_length}-second clips."
+            )
 
         if share_mem:
             stacked_clips.share_memory_()
 
         return stacked_clips
+    except AudioTooShortError:
+        raise
     except Exception as e:
-        print(e, filename)
+        raise AudioLoadError(
+            f"Failed to load audio file '{filename}': {str(e)}"
+        ) from e
 
 def split_audio(audio, sr, clip_length=8, share_mem=False):
     """
@@ -101,14 +118,21 @@ def split_audio(audio, sr, clip_length=8, share_mem=False):
         if clips:
             stacked_clips = torch.stack(clips, dim=0)
         else:
-            return None
+            raise AudioTooShortError(
+                f"Audio must be at least {clip_length} seconds long to extract clips. "
+                f"Provided audio has {len(audio)/sr:.2f} seconds."
+            )
 
         if share_mem:
             stacked_clips.share_memory_()
 
         return stacked_clips
+    except AudioTooShortError:
+        raise
     except Exception as e:
-        print(e, audio)
+        raise AudioLoadError(
+            f"Failed to process audio array: {str(e)}"
+        ) from e
 
 def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
     """Map a BPM value to a class index."""
