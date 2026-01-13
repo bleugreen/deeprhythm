@@ -10,8 +10,31 @@ import tempfile
 import os
 
 class DeepRhythmPredictor:
-    def __init__(self, model_path='deeprhythm-0.5.pth', device=None, quiet=False):
-        self.model_path = get_weights(quiet=quiet)
+    """
+    DeepRhythm tempo prediction model.
+
+    Args:
+        model_path (str, optional): Path to a custom model weights file (.pth). 
+            If None, automatically downloads the default model to ~/.local/share/deeprhythm/.
+            Defaults to None.
+        device (str, optional): Device to run inference on ('cpu', 'cuda', 'mps'). 
+            If None, automatically selects best available device.
+        quiet (bool, optional): Suppress download progress messages. Defaults to False.
+    """
+    def __init__(self, model_path=None, device=None, quiet=False):
+        # Handle model path: use provided path or auto-download default
+        if model_path is None:
+            self.model_path = get_weights(quiet=quiet)
+        else:
+            # User provided custom path - validate it exists
+            if not os.path.isfile(model_path):
+                raise FileNotFoundError(
+                    f"Model file not found at: {model_path}\n"
+                    f"Please provide a valid path to a model file, or use model_path=None "
+                    f"to auto-download the default model."
+                )
+            self.model_path = model_path
+        
         if device is None:
             self.device = get_device()
         else:
