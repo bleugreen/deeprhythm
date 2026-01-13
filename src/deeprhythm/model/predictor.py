@@ -1,5 +1,5 @@
 import torch
-from deeprhythm.utils import load_and_split_audio, split_audio
+from deeprhythm.utils import load_and_split_audio, split_audio, AudioTooShortError, AudioLoadError
 from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
 from deeprhythm.utils import class_to_bpm
 from deeprhythm.model.frame_cnn import DeepRhythmModel
