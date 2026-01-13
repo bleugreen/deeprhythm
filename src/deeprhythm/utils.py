@@ -8,6 +8,16 @@ import requests
 model_url = 'https://github.com/bleugreen/deeprhythm/raw/main/'
 
 
+class AudioTooShortError(ValueError):
+    """Raised when audio file is shorter than minimum required length."""
+    pass
+
+
+class AudioLoadError(IOError):
+    """Raised when audio file cannot be loaded."""
+    pass
+
+
 def get_device():
     if torch.cuda.is_available():
         return 'cuda'
