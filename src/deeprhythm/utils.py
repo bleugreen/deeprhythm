@@ -118,14 +118,21 @@ def split_audio(audio, sr, clip_length=8, share_mem=False):
         if clips:
             stacked_clips = torch.stack(clips, dim=0)
         else:
-            return None
+            raise AudioTooShortError(
+                f"Audio must be at least {clip_length} seconds long to extract clips. "
+                f"Provided audio has {len(audio)/sr:.2f} seconds."
+            )
 
         if share_mem:
             stacked_clips.share_memory_()
 
         return stacked_clips
+    except AudioTooShortError:
+        raise
     except Exception as e:
-        print(e, audio)
+        raise AudioLoadError(
+            f"Failed to process audio array: {str(e)}"
+        ) from e
 
 def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
     """Map a BPM value to a class index."""
