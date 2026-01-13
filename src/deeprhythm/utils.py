@@ -79,14 +79,21 @@ def load_and_split_audio(filename, sr=22050, clip_length=8, share_mem=False):
         if clips:
             stacked_clips = torch.stack(clips, dim=0)
         else:
-            return None
+            raise AudioTooShortError(
+                f"Audio file must be at least {clip_length} seconds long. "
+                f"File '{filename}' is too short to extract any {clip_length}-second clips."
+            )
 
         if share_mem:
             stacked_clips.share_memory_()
 
         return stacked_clips
+    except AudioTooShortError:
+        raise
     except Exception as e:
-        print(e, filename)
+        raise AudioLoadError(
+            f"Failed to load audio file '{filename}': {str(e)}"
+        ) from e
 
 def split_audio(audio, sr, clip_length=8, share_mem=False):
     """
