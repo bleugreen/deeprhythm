@@ -30,7 +30,7 @@ class DeepRhythmPredictor:
     def _load_model(self) -> DeepRhythmModel:
         """Load and initialize the model."""
         model = DeepRhythmModel()
-        model.load_state_dict(torch.load(self.model_path, map_location=self.device, weights_only=True))
+        model.load_state_dict(torch.load(self.model_path, map_location=self.device, weights_only=False))
         model = model.to(device=self.device)
         model.eval()
         return model
