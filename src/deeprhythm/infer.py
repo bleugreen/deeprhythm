@@ -4,7 +4,6 @@ import warnings
 from deeprhythm.model.predictor import DeepRhythmPredictor
 from deeprhythm.utils import get_device
 
-
 if __name__ == '__main__':
     warnings.filterwarnings("ignore", category=UserWarning)
     warnings.filterwarnings("ignore", category=FutureWarning)

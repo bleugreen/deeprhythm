@@ -1,6 +1,7 @@
 import torch
-import torchaudio
 import torch.nn.functional as F
+import torchaudio
+
 
 def onset_strength(
     y=None, n_fft=2048, hop_length=512, lag=1, ref=None,

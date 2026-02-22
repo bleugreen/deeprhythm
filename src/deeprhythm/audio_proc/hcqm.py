@@ -1,6 +1,6 @@
+import nnAudio.features as feat
 import numpy as np
 import torch
-import nnAudio.features as feat
 
 from deeprhythm.audio_proc.bandfilter import apply_log_filter, create_log_filter
 from deeprhythm.audio_proc.onset import onset_strength
