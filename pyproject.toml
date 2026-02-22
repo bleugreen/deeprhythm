@@ -22,9 +22,22 @@ dependencies = [
   "nnaudio==0.3.3",
   "librosa",
   "numpy",
-  "h5py",
+  "requests",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
 
 [project.urls]
 Homepage = "https://github.com/bleugreen/deeprhythm"
 Issues = "https://github.com/bleugreen/deeprhythm/issues"
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

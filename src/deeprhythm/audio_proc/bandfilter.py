@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 
+
 def create_log_filter(num_bins, num_bands, device='cuda'):
     """
     Create a logarithmically spaced filter matrix for audio processing.

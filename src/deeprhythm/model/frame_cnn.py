@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class DeepRhythmModel(nn.Module):
     def __init__(self, num_classes=256):
         super(DeepRhythmModel, self).__init__()
