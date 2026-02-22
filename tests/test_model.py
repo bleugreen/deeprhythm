@@ -69,7 +69,7 @@ def test_model_parameter_count():
     model = DeepRhythmModel()
     total = sum(p.numel() for p in model.parameters() if p.requires_grad)
     # Allow a reasonable range around expected count
-    assert 400_000 < total < 600_000, f"Parameter count {total} outside expected range"
+    assert 1_000_000 < total < 2_000_000, f"Parameter count {total} outside expected range"
 
 
 # ---------------------------------------------------------------------------

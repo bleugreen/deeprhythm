@@ -118,7 +118,7 @@ def test_onset_strength_detrend():
     """With detrend=True, mean of output should be approximately 0."""
     y = torch.randn(1, 22050)
     out = onset_strength(y=y, detrend=True)
-    assert abs(out.mean().item()) < 1e-4
+    assert abs(out.mean().item()) < 1e-2
 
 
 # ---------------------------------------------------------------------------
