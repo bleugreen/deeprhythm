@@ -1,1 +1,1 @@
-from deeprhythm.model.predictor import DeepRhythmPredictor
+from deeprhythm.model.predictor import DeepRhythmPredictor as DeepRhythmPredictor
