@@ -8,8 +8,15 @@ import torch
 import torch.multiprocessing as multiprocessing
 
 from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
-from deeprhythm.model.predictor import load_cnn_model
-from deeprhythm.utils import AudioLoadError, AudioTooShortError, class_to_bpm, get_device, load_and_split_audio
+from deeprhythm.model.frame_cnn import DeepRhythmModel
+from deeprhythm.utils import (
+    AudioLoadError,
+    AudioTooShortError,
+    class_to_bpm,
+    get_device,
+    get_weights,
+    load_and_split_audio,
+)
 
 NUM_WORKERS = 8
 NUM_BATCH = 128
@@ -112,7 +119,9 @@ def consume_and_process(
     specs = make_kernels(len_audio, sr, device=device)
     if not quiet:
         print('made kernels')
-    model = load_cnn_model(device=device, quiet=quiet)
+    model = DeepRhythmModel()
+    model.load_state_dict(torch.load(get_weights(quiet=quiet), map_location=torch.device(device), weights_only=False))
+    model = model.to(device=device)
     model.eval()
     if not quiet:
         print('loaded model')
