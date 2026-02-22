@@ -25,11 +25,10 @@ jobs:
       - name: Lint
         run: ruff check src/
 
-      - name: Download model weights
+      - name: Install model weights
         run: |
           mkdir -p ~/.local/share/deeprhythm
-          curl -sL https://github.com/bleugreen/deeprhythm/raw/main/weights/deeprhythm-0.7.pth \
-            -o ~/.local/share/deeprhythm/deeprhythm-0.7.pth
+          cp weights/deeprhythm-0.7.pth ~/.local/share/deeprhythm/
 
       - name: Test
         run: pytest
