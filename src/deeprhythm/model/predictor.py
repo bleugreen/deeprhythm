@@ -1,13 +1,17 @@
-from typing import Union, Tuple, List, Dict, Optional
+import json
+import os
+import tempfile
+from typing import Dict, List, Optional, Tuple, Union
+
 import torch
 from torch import Tensor
-import os
-import json
-import tempfile
-from deeprhythm.utils import load_and_split_audio, split_audio, class_to_bpm, get_weights, get_device
-from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
+
+from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
+from deeprhythm.batch_infer import get_audio_files
+from deeprhythm.batch_infer import main as batch_infer_main
 from deeprhythm.model.frame_cnn import DeepRhythmModel
-from deeprhythm.batch_infer import get_audio_files, main as batch_infer_main
+from deeprhythm.utils import class_to_bpm, get_device, get_weights, load_and_split_audio, split_audio
+
 
 class DeepRhythmPredictor:
     def __init__(self, device: Optional[str] = None, quiet: bool = False):
@@ -69,7 +73,9 @@ class DeepRhythmPredictor:
         clips = load_and_split_audio(filename, sr=22050)
         return self._process_clips(clips, include_confidence)
     
-    def predict_from_audio(self, audio: List[float], sr: int, include_confidence: bool = False) -> Union[float, Tuple[float, float]]:
+    def predict_from_audio(
+        self, audio: List[float], sr: int, include_confidence: bool = False
+    ) -> Union[float, Tuple[float, float]]:
         """Predict BPM from audio tensor.
 
         Args:
@@ -83,7 +89,9 @@ class DeepRhythmPredictor:
         clips = split_audio(audio, sr)
         return self._process_clips(clips, include_confidence)
 
-    def predict_per_frame(self, filename: str, include_confidence: bool = False) -> Union[List[float], Tuple[List[float], List[float]]]:
+    def predict_per_frame(
+        self, filename: str, include_confidence: bool = False
+    ) -> Union[List[float], Tuple[List[float], List[float]]]:
         """Predict BPM for each frame in an audio file.
 
         Args:
