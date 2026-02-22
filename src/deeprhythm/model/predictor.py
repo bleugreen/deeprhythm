@@ -7,8 +7,6 @@ import torch
 from torch import Tensor
 
 from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
-from deeprhythm.batch_infer import get_audio_files
-from deeprhythm.batch_infer import main as batch_infer_main
 from deeprhythm.model.frame_cnn import DeepRhythmModel
 from deeprhythm.utils import class_to_bpm, get_device, get_weights, load_and_split_audio, split_audio
 
@@ -126,6 +124,8 @@ class DeepRhythmPredictor:
         Returns:
             Dictionary mapping filenames to predictions
         """
+        from deeprhythm.batch_infer import get_audio_files, main as batch_infer_main
+
         with tempfile.NamedTemporaryFile(mode='w+', suffix='.jsonl', delete=False) as tmp_file:
             temp_path = tmp_file.name
             
