@@ -1,32 +1,42 @@
-import torch
-from deeprhythm.utils import load_and_split_audio, split_audio, AudioTooShortError, AudioLoadError
-from deeprhythm.audio_proc.hcqm import make_kernels, compute_hcqm
-from deeprhythm.utils import class_to_bpm
-from deeprhythm.model.frame_cnn import DeepRhythmModel
-from deeprhythm.utils import get_weights, get_device
-from deeprhythm.batch_infer import get_audio_files, main as batch_infer_main
 import json
-import tempfile
 import os
+import tempfile
+
+import torch
+
+from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
+from deeprhythm.model.frame_cnn import DeepRhythmModel
+from deeprhythm.utils import class_to_bpm, get_device, get_weights, load_and_split_audio, split_audio
+
+
+def load_cnn_model(path='deeprhythm-0.7.pth', device=None, quiet=False):
+    model = DeepRhythmModel()
+    if device is None:
+        device = get_device()
+    if not os.path.exists(path):
+        path = get_weights(quiet=quiet)
+    model.load_state_dict(torch.load(path, map_location=torch.device(device), weights_only=True))
+    model = model.to(device=device)
+    model.eval()
+    return model
+
 
 class DeepRhythmPredictor:
     """
     DeepRhythm tempo prediction model.
 
     Args:
-        model_path (str, optional): Path to a custom model weights file (.pth). 
+        model_path (str, optional): Path to a custom model weights file (.pth).
             If None, automatically downloads the default model to ~/.local/share/deeprhythm/.
             Defaults to None.
-        device (str, optional): Device to run inference on ('cpu', 'cuda', 'mps'). 
+        device (str, optional): Device to run inference on ('cpu', 'cuda', 'mps').
             If None, automatically selects best available device.
         quiet (bool, optional): Suppress download progress messages. Defaults to False.
     """
     def __init__(self, model_path=None, device=None, quiet=False):
-        # Handle model path: use provided path or auto-download default
         if model_path is None:
             self.model_path = get_weights(quiet=quiet)
         else:
-            # User provided custom path - validate it exists
             if not os.path.isfile(model_path):
                 raise FileNotFoundError(
                     f"Model file not found at: {model_path}\n"
@@ -34,7 +44,7 @@ class DeepRhythmPredictor:
                     f"to auto-download the default model."
                 )
             self.model_path = model_path
-        
+
         if device is None:
             self.device = get_device()
         else:
@@ -44,7 +54,7 @@ class DeepRhythmPredictor:
 
     def load_model(self):
         model = DeepRhythmModel()
-        model.load_state_dict(torch.load(self.model_path, map_location=self.device))
+        model.load_state_dict(torch.load(self.model_path, map_location=self.device, weights_only=True))
         model = model.to(device=self.device)
         model.eval()
         return model
@@ -57,7 +67,7 @@ class DeepRhythmPredictor:
 
     def predict(self, filename, include_confidence=False):
         clips = load_and_split_audio(filename, sr=22050)
-        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0,3,1,2)
+        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0, 3, 1, 2)
         self.model.eval()
         with torch.no_grad():
             input_batch = input_batch.to(device=self.device)
@@ -67,12 +77,12 @@ class DeepRhythmPredictor:
             confidence_score, predicted_class = torch.max(mean_probabilities, 0)
             predicted_global_bpm = class_to_bpm(predicted_class.item())
         if include_confidence:
-            return predicted_global_bpm, confidence_score.item(),
+            return predicted_global_bpm, confidence_score.item()
         return predicted_global_bpm
-    
+
     def predict_from_audio(self, audio, sr, include_confidence=False):
         clips = split_audio(audio, sr)
-        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0,3,1,2)
+        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0, 3, 1, 2)
         self.model.eval()
         with torch.no_grad():
             input_batch = input_batch.to(device=self.device)
@@ -82,26 +92,27 @@ class DeepRhythmPredictor:
             confidence_score, predicted_class = torch.max(mean_probabilities, 0)
             predicted_global_bpm = class_to_bpm(predicted_class.item())
         if include_confidence:
-            return predicted_global_bpm, confidence_score.item(),
+            return predicted_global_bpm, confidence_score.item()
         return predicted_global_bpm
 
     def predict_batch(self, dirname, include_confidence=False, workers=8, batch=128, quiet=True):
         """
         Predict BPM for all audio files in a directory using efficient batch processing.
-        
+
         Args:
             dirname: Directory containing audio files
             include_confidence: Whether to include confidence scores in results
-            
+
         Returns:
             dict: Mapping of filenames to their predicted BPMs (and optionally confidence scores)
         """
-        # Create a temporary file to store batch results
+        from deeprhythm.batch_infer import get_audio_files
+        from deeprhythm.batch_infer import main as batch_infer_main
+
         with tempfile.NamedTemporaryFile(mode='w+', suffix='.jsonl', delete=False) as tmp_file:
             temp_path = tmp_file.name
-            
+
         try:
-            # Run batch inference
             batch_infer_main(
                 dataset=get_audio_files(dirname),
                 data_path=temp_path,
@@ -111,8 +122,7 @@ class DeepRhythmPredictor:
                 n_workers=workers,
                 max_len_batch=batch
             )
-            
-            # Read and parse results
+
             results = {}
             with open(temp_path, 'r') as f:
                 for line in f:
@@ -122,17 +132,16 @@ class DeepRhythmPredictor:
                         results[filename] = (result['bpm'], result['confidence'])
                     else:
                         results[filename] = result['bpm']
-                        
+
             return results
-            
+
         finally:
-            # Clean up temporary file
             if os.path.exists(temp_path):
                 os.remove(temp_path)
 
     def predict_per_frame(self, filename, include_confidence=False):
         clips = load_and_split_audio(filename, sr=22050)
-        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0,3,1,2)
+        input_batch = compute_hcqm(clips.to(device=self.device), *self.specs).permute(0, 3, 1, 2)
         self.model.eval()
         with torch.no_grad():
             input_batch = input_batch.to(device=self.device)
@@ -140,7 +149,7 @@ class DeepRhythmPredictor:
             probabilities = torch.softmax(outputs, dim=1)
             confidence_scores, predicted_classes = torch.max(probabilities, dim=1)
             predicted_bpms = [class_to_bpm(cls.item()) for cls in predicted_classes]
-            
+
         if include_confidence:
             return predicted_bpms, confidence_scores.tolist()
         return predicted_bpms
