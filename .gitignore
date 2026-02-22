@@ -18,3 +18,4 @@ dist/
 *.pb
 .workspace
 .venv
+.DS_Store
