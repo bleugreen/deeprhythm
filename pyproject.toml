@@ -41,3 +41,6 @@ select = ["E", "F", "I"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "slow: tests that require model weights (deselect with '-m \"not slow\"')",
+]
