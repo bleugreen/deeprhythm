@@ -8,7 +8,6 @@ import torch
 
 from deeprhythm.model.frame_cnn import DeepRhythmModel
 
-
 # ---------------------------------------------------------------------------
 # Model Architecture (no weights needed)
 # ---------------------------------------------------------------------------

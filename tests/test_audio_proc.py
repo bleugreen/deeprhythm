@@ -4,7 +4,6 @@ from deeprhythm.audio_proc.bandfilter import apply_log_filter, create_log_filter
 from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
 from deeprhythm.audio_proc.onset import onset_strength
 
-
 # ---------------------------------------------------------------------------
 # Band Filter (bandfilter.py)
 # ---------------------------------------------------------------------------
