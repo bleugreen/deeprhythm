@@ -7,7 +7,6 @@ import pytest
 import requests
 
 import deeprhythm.utils as utils
-
 from deeprhythm.utils import (
     AudioLoadError,
     AudioTooShortError,
