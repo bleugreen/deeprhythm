@@ -130,7 +130,7 @@ def test_get_weights_interrupted_stream_preserves_existing_cache(model_artifact,
     [
         (b"verified model bytes!", "exceed the expected size"),
         (b"short", "have size"),
-        (b"different model bytes", "SHA-256"),
+        (b"tampered model bytes", "SHA-256"),
     ],
 )
 def test_get_weights_rejects_invalid_downloads(download, expected_message, model_artifact, monkeypatch):
