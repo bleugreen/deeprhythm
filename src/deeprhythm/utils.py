@@ -68,7 +68,8 @@ def get_weights(quiet=False):
 
     temporary_path = None
     try:
-        print("Downloading model weights...")
+        if not quiet:
+            print("Downloading model weights...")
         with requests.get(
             MODEL_WEIGHTS_URL,
             stream=True,

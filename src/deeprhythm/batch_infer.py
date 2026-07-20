@@ -14,8 +14,8 @@ from deeprhythm.utils import (
     AudioTooShortError,
     class_to_bpm,
     get_device,
-    get_weights,
     load_and_split_audio,
+    load_weights,
 )
 
 NUM_WORKERS = 8
