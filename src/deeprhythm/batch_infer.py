@@ -120,7 +120,7 @@ def consume_and_process(
     if not quiet:
         print('made kernels')
     model = DeepRhythmModel()
-    model.load_state_dict(torch.load(get_weights(quiet=quiet), map_location=torch.device(device), weights_only=False))
+    model.load_state_dict(load_weights(torch.device(device), quiet=quiet))
     model = model.to(device=device)
     model.eval()
     if not quiet:

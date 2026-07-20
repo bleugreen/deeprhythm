@@ -10,7 +10,7 @@ from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
 from deeprhythm.batch_infer import get_audio_files
 from deeprhythm.batch_infer import main as batch_infer_main
 from deeprhythm.model.frame_cnn import DeepRhythmModel
-from deeprhythm.utils import class_to_bpm, get_device, get_weights, load_and_split_audio, split_audio
+from deeprhythm.utils import class_to_bpm, get_device, load_and_split_audio, load_weights, split_audio
 
 
 class DeepRhythmPredictor:
@@ -22,15 +22,15 @@ class DeepRhythmPredictor:
             device: Device to run inference on ('cuda' or 'cpu')
             quiet: Whether to suppress progress messages
         """
-        self.model_path = get_weights(quiet=quiet)
         self.device = torch.device(device if device else get_device())
+        self.quiet = quiet
         self.model = self._load_model()
         self.specs = self._make_kernels()
 
     def _load_model(self) -> DeepRhythmModel:
         """Load and initialize the model."""
         model = DeepRhythmModel()
-        model.load_state_dict(torch.load(self.model_path, map_location=self.device, weights_only=False))
+        model.load_state_dict(load_weights(self.device, quiet=self.quiet))
         model = model.to(device=self.device)
         model.eval()
         return model

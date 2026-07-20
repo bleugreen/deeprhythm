@@ -1,15 +1,44 @@
+import hashlib
 import os
+import tempfile
 
 import librosa
 import requests
 import torch
 
-model_url = 'https://github.com/bleugreen/deeprhythm/raw/main/weights/'
+MODEL_WEIGHTS_FILENAME = "deeprhythm-0.7.pth"
+MODEL_WEIGHTS_URL = (
+    "https://raw.githubusercontent.com/bleugreen/deeprhythm/"
+    "c3548590d12f5d97ccd39dee27e9591e522c05e2/weights/deeprhythm-0.7.pth"
+)
+MODEL_WEIGHTS_SHA256 = "c7cc8cc0425929cd2bf695474d7ec1fd63ed0d0a4a68f361d4e4b57bd9b3d9c4"
+MODEL_WEIGHTS_SIZE = 5_443_228
+MODEL_DOWNLOAD_CONNECT_TIMEOUT = 10
+MODEL_DOWNLOAD_READ_TIMEOUT = 60
+MODEL_DOWNLOAD_TIMEOUT = (MODEL_DOWNLOAD_CONNECT_TIMEOUT, MODEL_DOWNLOAD_READ_TIMEOUT)
+MODEL_DOWNLOAD_CHUNK_SIZE = 64 * 1024
 
 
 class AudioTooShortError(ValueError):
     """Raised when audio file is shorter than minimum required length."""
     pass
+
+
+class ModelWeightsError(RuntimeError):
+    """Raised when verified model weights cannot be acquired."""
+
+
+def _weights_are_valid(path):
+    try:
+        if os.path.getsize(path) != MODEL_WEIGHTS_SIZE:
+            return False
+        digest = hashlib.sha256()
+        with open(path, "rb") as weights_file:
+            for chunk in iter(lambda: weights_file.read(MODEL_DOWNLOAD_CHUNK_SIZE), b""):
+                digest.update(chunk)
+        return digest.hexdigest() == MODEL_WEIGHTS_SHA256
+    except OSError:
+        return False
 
 
 class AudioLoadError(IOError):
@@ -26,30 +55,75 @@ def get_device():
         return 'cpu'
 
 
-def get_weights(filename="deeprhythm-0.7.pth", quiet=False):
+def get_weights(quiet=False):
     home_dir = os.path.expanduser("~")
     model_dir = os.path.join(home_dir, ".local", "share", "deeprhythm")
-    if not os.path.exists(model_dir):
-        os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, filename)
+    os.makedirs(model_dir, exist_ok=True)
+    model_path = os.path.join(model_dir, MODEL_WEIGHTS_FILENAME)
 
-    if not os.path.isfile(model_path):
-        print("Downloading model weights...")
-        try:
-            r = requests.get(model_url + filename, allow_redirects=True)
-            if r.status_code == 200:
-                with open(model_path, 'wb') as f:
-                    f.write(r.content)
-                print("Model weights downloaded successfully.")
-            else:
-                print(f"Failed to download model weights. HTTP Error: {r.status_code}")
-        except Exception as e:
-            print(f"An error occurred during the download: {e}")
-    else:
+    if _weights_are_valid(model_path):
         if not quiet:
-            print("Model weights already exist.")
+            print("Model weights already exist and are verified.")
+        return model_path
 
-    return model_path
+    temporary_path = None
+    try:
+        print("Downloading model weights...")
+        with requests.get(
+            MODEL_WEIGHTS_URL,
+            stream=True,
+            timeout=MODEL_DOWNLOAD_TIMEOUT,
+        ) as response:
+            response.raise_for_status()
+            digest = hashlib.sha256()
+            downloaded_size = 0
+            with tempfile.NamedTemporaryFile(
+                mode="wb",
+                dir=model_dir,
+                prefix=f".{MODEL_WEIGHTS_FILENAME}.",
+                suffix=".tmp",
+                delete=False,
+            ) as temporary_file:
+                temporary_path = temporary_file.name
+                for chunk in response.iter_content(chunk_size=MODEL_DOWNLOAD_CHUNK_SIZE):
+                    if not chunk:
+                        continue
+                    downloaded_size += len(chunk)
+                    if downloaded_size > MODEL_WEIGHTS_SIZE:
+                        raise ModelWeightsError(
+                            f"Model weights exceed the expected size of {MODEL_WEIGHTS_SIZE} bytes"
+                        )
+                    digest.update(chunk)
+                    temporary_file.write(chunk)
+
+        if downloaded_size != MODEL_WEIGHTS_SIZE:
+            raise ModelWeightsError(
+                f"Model weights have size {downloaded_size} bytes; expected {MODEL_WEIGHTS_SIZE}"
+            )
+        if digest.hexdigest() != MODEL_WEIGHTS_SHA256:
+            raise ModelWeightsError("Model weights failed SHA-256 verification")
+
+        os.replace(temporary_path, model_path)
+        temporary_path = None
+        if not quiet:
+            print("Model weights downloaded and verified successfully.")
+        return model_path
+    except requests.RequestException as exc:
+        raise ModelWeightsError(f"Failed to download model weights: {exc}") from exc
+    except OSError as exc:
+        raise ModelWeightsError(f"Failed to install model weights: {exc}") from exc
+    finally:
+        if temporary_path is not None:
+            try:
+                os.unlink(temporary_path)
+            except FileNotFoundError:
+                pass
+
+
+def load_weights(device, quiet=False):
+    """Acquire verified weights and safely deserialize their state dictionary."""
+    path = get_weights(quiet=quiet)
+    return torch.load(path, map_location=device, weights_only=True)
 
 
 def split_audio(audio, sr, clip_length=8, share_mem=False):
