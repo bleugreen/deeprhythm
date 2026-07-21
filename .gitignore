@@ -1,4 +1,6 @@
-data/
+data/*
+!data/splits/
+!data/splits/**
 data/fma
 experiments/
 *.hdf5
