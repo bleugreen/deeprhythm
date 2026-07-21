@@ -34,8 +34,9 @@ and the MPS backend. The evaluated weights have SHA-256
 | GiantSteps v2 subset | 386 | DeepRhythm 0.7 | 66.32% | 92.23% | 70.98% | 98.45% | 20.51 s |
 | GiantSteps v2 subset | 386 | Librosa | 20.73% | 36.53% | 35.23% | 51.55% | 4.64 s |
 
-Timing covers audio loading, feature extraction, and inference after imports and model setup. Dataset audio was warm
-in the operating-system cache for both methods, so these timings compare compute paths rather than cold disk access.
+Timing starts after imports. DeepRhythm's time includes model and feature-kernel initialization as well as audio loading,
+feature extraction, and inference. Dataset audio was warm in the operating-system cache for both methods, so these
+timings compare compute paths rather than cold disk access.
 
 ## Dataset provenance and exclusions
 
