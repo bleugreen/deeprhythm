@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from deeprhythm.partitions import _assign_ballroom, _ballroom_group, validate_partitions
+from deeprhythm.partitions import _assign_ballroom, _ballroom_group, validate_checksums, validate_partitions
 
 
 def row(path, group, fold, fingerprint):
@@ -46,3 +46,4 @@ def test_committed_manifests_are_valid_and_consistent():
         validate_partitions(dataset_rows)
         rows.extend(dataset_rows)
     assert {row_["dataset"] for row_ in rows} == {"giantsteps", "gtzan", "ballroom"}
+    validate_checksums(root)

@@ -47,6 +47,22 @@ def write_rows(path, rows):
     path.write_text("".join(serialized))
 
 
+def write_checksums(root):
+    lines = []
+    for path in sorted(root.glob("**/*.jsonl")):
+        checksum = hashlib.sha256(path.read_bytes()).hexdigest()
+        lines.append(f"{checksum}  {path.relative_to(root)}\n")
+    (root / "SHA256SUMS").write_text("".join(lines))
+
+
+def validate_checksums(root):
+    for line in (root / "SHA256SUMS").read_text().splitlines():
+        expected, relative = line.split("  ", 1)
+        actual = hashlib.sha256((root / relative).read_bytes()).hexdigest()
+        if actual != expected:
+            raise ValueError(f"manifest checksum mismatch: {relative}")
+
+
 def validate_partitions(rows):
     """Reject paths, group keys, or duplicate fingerprints crossing partitions."""
     required = {"dataset", "audio_path", "md5", "tempo", "group_key", "fold", "fingerprint", "provenance"}
@@ -253,6 +269,7 @@ def main(argv=None):
             for path in args.output.glob(pattern):
                 rows.extend(json.loads(line) for line in path.read_text().splitlines())
         validate_partitions(rows)
+        validate_checksums(args.output)
         return
     sources = args.output / "sources" / "gtzan"
     built = {
@@ -268,6 +285,7 @@ def main(argv=None):
     write_rows(archive / "giantsteps.jsonl", historical_rows("giantsteps", args.datasets_root / "giantsteps_tempo"))
     write_rows(archive / "gtzan.jsonl", historical_rows("gtzan", args.datasets_root / "gtzan_genre"))
     write_rows(archive / "ballroom.jsonl", historical_rows("ballroom", args.datasets_root / "ballroom" / "B_1.0"))
+    write_checksums(args.output)
 
 
 if __name__ == "__main__":
