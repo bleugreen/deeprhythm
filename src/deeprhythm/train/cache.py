@@ -6,8 +6,8 @@ import os
 from pathlib import Path
 from typing import Callable, Iterable, Mapping, Optional, Sequence
 
-import numpy as np
 import librosa
+import numpy as np
 import torch
 from torch.utils.data import Dataset
 
