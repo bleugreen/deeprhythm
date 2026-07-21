@@ -170,7 +170,7 @@ def _assign_ballroom(groups):
                     value = counts[fold][key] + (contribution[key] if fold == candidate else 0)
                     score += ((value - targets[fold] * total) / max(total, 1)) ** 2
                 size = sum(counts[fold].values()) + (len(tracks) if fold == candidate else 0)
-                score += ((size - targets[fold] * total_tracks) / total_tracks) ** 2
+                score += 25 * ((size - targets[fold] * total_tracks) / total_tracks) ** 2
             return score
         fold = min(FOLDS, key=lambda name: (cost(name), name))
         result[group] = fold
