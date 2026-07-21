@@ -57,7 +57,8 @@ def onset_periodicity_features(
     audio = torch.as_tensor(waveform, dtype=torch.float32).flatten()
     if audio.numel() < n_fft:
         audio = torch.nn.functional.pad(audio, (0, n_fft - audio.numel()))
-    spectrum = torch.stft(audio, n_fft=n_fft, hop_length=hop_length, return_complex=True)
+    window = torch.hann_window(n_fft, dtype=audio.dtype, device=audio.device)
+    spectrum = torch.stft(audio, n_fft=n_fft, hop_length=hop_length, window=window, return_complex=True)
     magnitude = spectrum.abs()
     flux = torch.relu(magnitude[:, 1:] - magnitude[:, :-1]).mean(dim=0)
     envelope = flux.cpu().numpy().astype(float)
@@ -71,7 +72,8 @@ def onset_periodicity_features(
     high = float(mean_spectrum[split:].mean()) if split < mean_spectrum.numel() else 0.0
     spectral_balance = np.log1p(high) - np.log1p(low)
     positive = np.maximum(envelope, 0)
-    onset_rate = float((positive > positive.mean() + positive.std()).sum() * sample_rate / hop_length / max(audio.numel(), 1))
+    onset_count = (positive > positive.mean() + positive.std()).sum()
+    onset_rate = float(onset_count * sample_rate / hop_length / max(audio.numel(), 1))
     return np.asarray(periodicity + [spectral_balance, onset_rate, float(positive.mean()), float(positive.std())])
 
 

@@ -86,7 +86,10 @@ def run_experiment(train_rows, val_rows):
         start = time.perf_counter()
         predictions = [functions[name](detail, parameter) for detail in val_details]
         elapsed = time.perf_counter() - start
-        output[name] = {"selected_parameter": parameter, **evaluate_rows(val_rows, predictions, latency_seconds=elapsed)}
+        output[name] = {
+            "selected_parameter": parameter,
+            **evaluate_rows(val_rows, predictions, latency_seconds=elapsed),
+        }
 
     if all(row["features"] is not None for row in train_rows + val_rows):
         classifier = FactorClassifier().fit(

@@ -111,3 +111,28 @@ tempo was used for each included track.
 The README's historical 953-track benchmark describes its genre mix but does not publish an obtainable manifest or
 reference annotations. It remains useful historical context, but the results above are the public, independently
 reproducible benchmark.
+
+## Metrical-level correction experiments
+
+`deeprhythm-correction` is the canonical train/validation selection tool for octave-correction experiments. It
+consumes inference details sidecars and reports identity, global tempo threshold, top-k candidate-mass ratio,
+per-clip disagreement, and a small learned factor classifier. The learned path accepts precomputed onset-periodicity
+feature JSONL rows containing `filename` and `features`.
+
+The feature extractor is `deeprhythm.correction.onset_periodicity_features`. It computes onset-envelope
+autocorrelation at the five metrical candidates from `model/results.py`, plus spectral-balance and onset-rate
+statistics. It uses the existing PyTorch and NumPy dependencies. The learned model is multinomial logistic regression.
+
+~~~bash
+deeprhythm-correction \
+  --train-manifest data/splits/giantsteps/train.jsonl --train-details results/train/details.jsonl \
+  --val-manifest data/splits/giantsteps/val.jsonl --val-details results/val/details.jsonl \
+  --train-features results/train/onset-features.jsonl --val-features results/val/onset-features.jsonl \
+  --output results/giantsteps/correction-validation.json
+~~~
+
+The command rejects any manifest row whose `fold` is `test`. Parameter and model selection are train/validation
+operations. Final held-out evaluation remains a separate, one-shot reporting step after configuration is frozen.
+
+Every variant reports Acc1 and Acc2 at 2% and 4%, metrical error taxonomy, genre/style slices, and added correction
+latency. The learned classifier also reports confidence reliability bins and expected calibration error.
