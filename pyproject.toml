@@ -31,6 +31,7 @@ dev = ["pytest", "ruff"]
 [project.scripts]
 deeprhythm-benchmark = "deeprhythm.bench.tempo:main"
 deeprhythm-taxonomy = "deeprhythm.bench.taxonomy:main"
+deeprhythm-correction = "deeprhythm.bench.correction:main"
 
 [project.urls]
 Homepage = "https://github.com/bleugreen/deeprhythm"
