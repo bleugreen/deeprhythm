@@ -76,7 +76,8 @@ def _gtzan_index(path):
             continue
         parts = line.split(" ::: ", 2)
         filename, artist = parts[:2]
-        result[filename] = artist.strip()
+        artist = artist.strip()
+        result[filename] = artist if artist.strip(": ") else "?"
     return result
 
 
