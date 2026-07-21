@@ -15,9 +15,11 @@ official split but **does not establish artist disjointness**; no artist identit
 
 ## GTZAN
 
-Tempo comes from the checked-out `gtzan_tempo_beat` annotations. Selection and folds are the fault-filtered
+Tempo comes from the checked-out `gtzan_tempo_beat` annotations. Selection starts from the fault-filtered
 Kereliuk–Sturm–Larsen partition at GTZAN metadata commit `fedc781`: 443 training, 197 validation, and 290 test
-entries before the historical DeepRhythm exclusions. Artist keys are parsed verbatim from Sturm's `index.txt`.
+entries before the historical DeepRhythm exclusions. Those files still cross some artist keys in the current index,
+so every known artist is moved wholly to its most protected source fold (test before validation before training).
+Artist keys are parsed verbatim from Sturm's `index.txt`.
 Rows whose index artist is `?` receive a per-track key rather than an invented identity. `jazz.00054` and
 `reggae.00086` remain excluded for continuity with the v0.7 benchmark.
 

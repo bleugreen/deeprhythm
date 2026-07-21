@@ -105,6 +105,15 @@ def build_gtzan(root, sources):
                      "tempo": read_tempo(annotation), "group_key": group, "fold": fold,
                      "source_fold": f"kereliuk-{fold}", "fingerprint": f"md5:{md5}",
                      "provenance": "Sturm GTZAN fedc781; gtzan_tempo_beat"})
+    priority = {"train": 0, "val": 1, "test": 2}
+    artist_fold = {}
+    for row in rows:
+        if row["group_key"].startswith("artist:"):
+            previous = artist_fold.get(row["group_key"], "train")
+            artist_fold[row["group_key"]] = max((previous, row["fold"]), key=priority.get)
+    for row in rows:
+        if row["group_key"] in artist_fold:
+            row["fold"] = artist_fold[row["group_key"]]
     return rows
 
 
