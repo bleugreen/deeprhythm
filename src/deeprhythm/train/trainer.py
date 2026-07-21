@@ -82,7 +82,8 @@ def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, 
         for parameter in model.fc2.parameters():
             parameter.requires_grad = True
     criterion = nn.CrossEntropyLoss()
-    optimizer = Adam((parameter for parameter in model.parameters() if parameter.requires_grad), lr=config.learning_rate)
+    trainable_parameters = (parameter for parameter in model.parameters() if parameter.requires_grad)
+    optimizer = Adam(trainable_parameters, lr=config.learning_rate)
     scheduler = ReduceLROnPlateau(optimizer, mode="min", patience=2, factor=0.5)
     best_loss, stale, history = float("inf"), 0, []
     output_path = Path(output_path)
