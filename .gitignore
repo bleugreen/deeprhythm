@@ -6,6 +6,7 @@ experiments/
 *.hdf5
 *.json
 !docs/research/results/*.json
+!docs/research/results/**/*.jsonl
 __pycache__
 *.pyc
 *.pyo
