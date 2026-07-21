@@ -5,6 +5,7 @@ data/fma
 experiments/
 *.hdf5
 *.json
+!docs/research/results/*.json
 __pycache__
 *.pyc
 *.pyo
