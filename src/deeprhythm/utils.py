@@ -122,7 +122,7 @@ def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
 
 
 def class_to_bpm(class_index, min_bpm=30, max_bpm=286, num_classes=256):
-    """Map a class index back to a BPM value (to the center of the class interval)."""
+    """Map a class index to the lower edge of its BPM class interval."""
     class_width = (max_bpm - min_bpm) / num_classes
     bpm = min_bpm + class_width * (class_index)
     return bpm

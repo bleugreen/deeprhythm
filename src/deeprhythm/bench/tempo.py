@@ -57,9 +57,11 @@ def predict_librosa(audio_paths, workers=8):
         return list(executor.map(predict, audio_paths))
 
 
-def predict_deeprhythm(audio_paths, output_path, device, workers=8, batch_size=128):
+def predict_deeprhythm(audio_paths, output_path, device, workers=8, batch_size=128, details_path=None):
     output_path = Path(output_path)
     output_path.unlink(missing_ok=True)
+    if details_path is not None:
+        Path(details_path).unlink(missing_ok=True)
     run_deeprhythm(
         audio_paths,
         n_workers=workers,
@@ -68,6 +70,7 @@ def predict_deeprhythm(audio_paths, output_path, device, workers=8, batch_size=1
         device=device,
         conf=True,
         quiet=True,
+        details_path=str(details_path) if details_path is not None else None,
     )
     by_path = {}
     for line in output_path.read_text().splitlines():
@@ -107,7 +110,8 @@ def main(argv=None):
 
     start = time.perf_counter()
     predictions = predict_deeprhythm(
-        audio_paths, output_dir / "deeprhythm-predictions.jsonl", args.device, args.workers, args.batch_size
+        audio_paths, output_dir / "deeprhythm-predictions.jsonl", args.device, args.workers, args.batch_size,
+        output_dir / "deeprhythm-details.jsonl"
     )
     results["deeprhythm"] = evaluate(predictions, references, time.perf_counter() - start, args.tolerance)
 
