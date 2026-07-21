@@ -25,6 +25,7 @@ class TrainingConfig:
     balance_bin_width: float = 10.0
     tolerance: float = 0.04
     balance_domains: bool = False
+    freeze_feature_extractor: bool = False
 
 
 def evaluate_validation(model, loader, criterion, device, tolerance):
@@ -75,8 +76,13 @@ def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, 
     model = DeepRhythmModel().to(device)
     if start_weights:
         model.load_state_dict(torch.load(start_weights, map_location=device, weights_only=True))
+    if config.freeze_feature_extractor:
+        for parameter in model.parameters():
+            parameter.requires_grad = False
+        for parameter in model.fc2.parameters():
+            parameter.requires_grad = True
     criterion = nn.CrossEntropyLoss()
-    optimizer = Adam(model.parameters(), lr=config.learning_rate)
+    optimizer = Adam((parameter for parameter in model.parameters() if parameter.requires_grad), lr=config.learning_rate)
     scheduler = ReduceLROnPlateau(optimizer, mode="min", patience=2, factor=0.5)
     best_loss, stale, history = float("inf"), 0, []
     output_path = Path(output_path)
