@@ -13,7 +13,7 @@ from deeprhythm.bench.tempo import tempo_accuracy
 from deeprhythm.model.frame_cnn import DeepRhythmModel
 from deeprhythm.train.cache import ClipDataset, HcqmCache
 from deeprhythm.train.sampling import TempoBalancedSampler
-from deeprhythm.utils import class_to_bpm
+from deeprhythm.utils import bpm_to_class, class_to_bpm
 
 
 @dataclass(frozen=True)
@@ -32,7 +32,7 @@ def evaluate_validation(model, loader, criterion, device, tolerance):
     with torch.no_grad():
         for inputs, tempos in loader:
             inputs, tempos = inputs.to(device), tempos.to(device)
-            labels = torch.tensor([__import__("deeprhythm.utils", fromlist=["bpm_to_class"]).bpm_to_class(x) for x in tempos.tolist()], device=device)
+            labels = torch.tensor([bpm_to_class(x) for x in tempos.tolist()], device=device)
             outputs = model(inputs)
             losses.append(criterion(outputs, labels).item())
             predictions.extend(class_to_bpm(value) for value in outputs.argmax(1).tolist())
