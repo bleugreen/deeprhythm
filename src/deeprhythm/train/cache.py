@@ -14,11 +14,17 @@ from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
 from deeprhythm.utils import bpm_to_class, load_and_split_audio
 
 CACHE_VERSION = 1
-MANIFEST_ID_FIELDS = ("audio_path", "filename", "md5", "checksum", "tempo", "split")
+MANIFEST_ID_FIELDS = ("audio_path", "filename", "md5", "checksum", "tempo")
 
 
 def _canonical_row(row: Mapping) -> dict:
     value = {key: row[key] for key in MANIFEST_ID_FIELDS if key in row}
+    fold = row.get("fold", row.get("split", "train"))
+    if "fold" in row and "split" in row and row["fold"] != row["split"]:
+        raise ValueError("manifest fold and split disagree")
+    if fold not in {"train", "val", "test"}:
+        raise ValueError(f"unknown manifest fold: {fold}")
+    value["fold"] = fold
     if "audio_path" not in value and "filename" not in value:
         raise ValueError("manifest row requires audio_path or filename")
     if "tempo" not in value or float(value["tempo"]) <= 0:
@@ -114,7 +120,7 @@ def build_hcqm_cache(
         entries[key] = {
             "path": str(destination.relative_to(cache.root)),
             "tempo": float(row["tempo"]),
-            "split": str(row.get("split", "train")),
+            "fold": str(row["fold"]),
             "source": path,
             "clips": int(np.load(destination, mmap_mode="r").shape[0]),
         }
@@ -133,7 +139,7 @@ class ClipDataset(Dataset):
         self.return_track = return_track
         self.entries = []
         for key, entry in self.cache.load_index()["entries"].items():
-            if entry["split"] != split:
+            if entry["fold"] != split:
                 continue
             count = int(entry["clips"])
             indices = range(1, count - 1) if trim_edges and count > 5 else range(count)

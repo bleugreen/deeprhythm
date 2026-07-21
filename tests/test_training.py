@@ -22,6 +22,7 @@ def test_manifest_key_invalidates_annotation_and_checksum_changes():
     assert manifest_key(row) == manifest_key(dict(reversed(list(row.items()))))
     assert manifest_key(row) != manifest_key({**row, "tempo": 121})
     assert manifest_key(row) != manifest_key({**row, "md5": "b"})
+    assert manifest_key(row) != manifest_key({**row, "split": "val"})
 
 
 def test_cache_is_incremental_and_dataset_is_memory_backed(tmp_path):
@@ -58,6 +59,16 @@ def test_cache_rebuild_drops_rows_removed_from_manifest(tmp_path):
     build_hcqm_cache(rows[:1], tmp_path, extractor=lambda _path: fake_hcqm(1))
     assert len(HcqmCache(tmp_path).load_index()["entries"]) == 1
     assert len(ClipDataset(tmp_path, "val")) == 0
+
+
+def test_canonical_fold_manifests_build_train_and_validation_sets(tmp_path):
+    rows = [
+        {"audio_path": "train.wav", "tempo": 120, "fold": "train", "md5": "a"},
+        {"audio_path": "validation.wav", "tempo": 90, "fold": "val", "md5": "b"},
+    ]
+    build_hcqm_cache(rows, tmp_path, extractor=lambda _path: fake_hcqm(1))
+    assert len(ClipDataset(tmp_path, "train")) == 3
+    assert len(ClipDataset(tmp_path, "val")) == 3
 
 
 def test_corrupt_cache_version_is_rejected(tmp_path):
