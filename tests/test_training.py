@@ -86,6 +86,12 @@ def test_tempo_balanced_sampler_equalizes_bin_mass():
     assert sum(weights[:3]) == pytest.approx(weights[3])
 
 
+def test_tempo_balanced_sampler_equalizes_domain_mass():
+    sampler = TempoBalancedSampler([60, 61, 120, 90], domains=["public", "public", "public", "soulseek"])
+    weights = sampler.weights.tolist()
+    assert sum(weights[:3]) == pytest.approx(weights[3])
+
+
 def test_time_stretch_relabels_and_enforces_model_range():
     audio = np.sin(np.linspace(0, 8 * np.pi, 1000)).astype(np.float32)
     stretched, tempo = stretch_audio_and_tempo(audio, 100, 1.25)

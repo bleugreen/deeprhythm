@@ -24,6 +24,7 @@ class TrainingConfig:
     early_stopping_patience: int = 5
     balance_bin_width: float = 10.0
     tolerance: float = 0.04
+    balance_domains: bool = False
 
 
 def evaluate_validation(model, loader, criterion, device, tolerance):
@@ -64,7 +65,11 @@ def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, 
     validation_set = ClipDataset(cache_dir, "val", return_tempo=True, return_track=True)
     if not train_set or not validation_set:
         raise ValueError("cache requires non-empty train and val splits")
-    sampler = TempoBalancedSampler(train_set.tempos, bin_width=config.balance_bin_width)
+    sampler = TempoBalancedSampler(
+        train_set.tempos,
+        domains=train_set.domains if config.balance_domains else None,
+        bin_width=config.balance_bin_width,
+    )
     train_loader = DataLoader(train_set, batch_size=config.batch_size, sampler=sampler)
     validation_loader = DataLoader(validation_set, batch_size=config.batch_size)
     model = DeepRhythmModel().to(device)

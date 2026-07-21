@@ -11,15 +11,24 @@ from torch.utils.data import WeightedRandomSampler
 class TempoBalancedSampler(WeightedRandomSampler):
     """Sample clips inversely to their occupied tempo-bin frequency."""
 
-    def __init__(self, tempos, *, bin_width=10.0, num_samples=None, replacement=True, generator=None):
+    def __init__(self, tempos, *, domains=None, bin_width=10.0, num_samples=None, replacement=True, generator=None):
         tempos = np.asarray(tempos, dtype=float)
         if tempos.ndim != 1 or tempos.size == 0 or np.any(tempos <= 0):
             raise ValueError("tempos must be a non-empty sequence of positive values")
         if bin_width <= 0:
             raise ValueError("bin_width must be positive")
         bins = np.floor(tempos / bin_width).astype(int)
-        counts = Counter(bins.tolist())
-        weights = torch.tensor([1.0 / counts[value] for value in bins], dtype=torch.double)
+        if domains is None:
+            counts = Counter(bins.tolist())
+            weights = [1.0 / counts[value] for value in bins]
+        else:
+            if len(domains) != len(tempos):
+                raise ValueError("domains and tempos must be aligned")
+            cells = list(zip(domains, bins.tolist()))
+            counts = Counter(cells)
+            occupied = Counter(domain for domain, _bin in set(cells))
+            weights = [1.0 / (counts[cell] * occupied[cell[0]]) for cell in cells]
+        weights = torch.tensor(weights, dtype=torch.double)
         super().__init__(weights, num_samples or len(tempos), replacement, generator=generator)
 
 
