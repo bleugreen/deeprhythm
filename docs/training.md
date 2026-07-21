@@ -1,0 +1,7 @@
+# Training foundation
+
+Training is manifest-driven and lives in `deeprhythm.train`. Each manifest row must contain a positive `tempo`, an `audio_path` (or `filename`), and should contain `split` plus an audio checksum. `build_hcqm_cache` precomputes the existing eight-second HCQM representation into individual NumPy arrays. The cache key incorporates the source path, checksum, tempo, split, and cache format version, so corrected annotations and changed audio cannot silently reuse stale features. Arrays are loaded with memory mapping by `ClipDataset`.
+
+`fit` trains only the declared `train` split and selects checkpoints only with `val`. It intentionally has no test loader or test-evaluation option. Final test-fold evaluation belongs to the benchmark workflow after the experiment configuration is frozen. Validation Acc1 and Acc2 call `deeprhythm.bench.tempo.tempo_accuracy`; this replaces the historical training script's independent and incorrect Acc2 calculation.
+
+The default sampler weights occupied 10 BPM bins inversely by clip count. Audio-domain time-stretch augmentation is exposed as `stretch_audio_and_tempo`; callers must apply it before HCQM extraction and cache the resulting feature with its relabeled tempo. Augmentations outside the model's 30–285 BPM range are rejected.
