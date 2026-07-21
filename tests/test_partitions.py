@@ -54,4 +54,5 @@ def test_committed_manifests_are_valid_and_consistent():
         validate_partitions(dataset_rows)
         rows.extend(dataset_rows)
     assert {row_["dataset"] for row_ in rows} == {"giantsteps", "gtzan", "ballroom"}
+    validate_partitions(rows)
     validate_checksums(root)
