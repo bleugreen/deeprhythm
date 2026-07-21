@@ -3,13 +3,14 @@
 The manifests in `data/splits` are the canonical v0.8 train, validation, and test selection. Generate them with
 `python -m deeprhythm.partitions --datasets-root ~/mir_datasets`; use `--validate-only` to check committed files
 without access to audio. Rows contain the dataset-relative `audio_path`, audio MD5, reference `tempo`, `group_key`,
-fold, source fold, duplicate fingerprint, and annotation provenance.
+fold, source fold, duplicate fingerprint, and annotation provenance. `SHA256SUMS` identifies every committed JSONL
+manifest and is verified by `--validate-only`.
 
 ## GiantSteps
 
 The source is `giantsteps-tempo-dataset` commit `0b7d47b`, using its canonical audio MD5 files and crowdsourced v2
 tempo annotations. Official folds 1–7 are training, fold 8 is validation, and folds 9–10 are test. Three official
-entries without usable audio plus v2 annotation are omitted, leaving 661 of 664 entries. GiantSteps supplies no
+entries with non-positive v2 tempo (`1327052`, `3041381`, and `3041383`) are omitted, leaving 661 of 664 entries. GiantSteps supplies no
 artist identity in the checked metadata, so its group key is the Beatport track identifier. This preserves the
 official split but **does not establish artist disjointness**; no artist identities are inferred.
 
@@ -17,11 +18,12 @@ official split but **does not establish artist disjointness**; no artist identit
 
 Tempo comes from the checked-out `gtzan_tempo_beat` annotations. Selection starts from the fault-filtered
 Kereliuk–Sturm–Larsen partition at GTZAN metadata commit `fedc781`: 443 training, 197 validation, and 290 test
-entries before the historical DeepRhythm exclusions. Those files still cross some artist keys in the current index,
-so every known artist is moved wholly to its most protected source fold (test before validation before training).
-Artist keys are parsed verbatim from Sturm's `index.txt`.
-Rows whose index artist is `?` receive a per-track key rather than an invented identity. `jazz.00054` and
-`reggae.00086` remain excluded for continuity with the v0.7 benchmark.
+entries before the historical DeepRhythm exclusions. `jazz.00054` is removed explicitly; `reggae.00086` is already
+absent from the fault-filtered source. Those files still cross some artist keys in the current index, so every known
+artist is moved wholly to its most protected source fold (test before validation before training). Artist keys are
+parsed verbatim from Sturm's `index.txt`. Rows whose index artist is unavailable receive a per-track key rather than
+an invented identity. The final split is 422 training, 194 validation, and 313 test tracks. Twenty-four tracks move
+from their source fold to coalesce artists, and 14 entries use per-track keys.
 
 ## Ballroom
 
@@ -29,7 +31,8 @@ Audio and tempo annotations are Ballroom B_1.0. The CPJKU annotation README repo
 recording replicas; the second item of every published pair is excluded. Remaining tracks are grouped by the only
 identity evidence encoded locally: the `Albums-<album>-<track>` album token or the first four digits of the
 six-digit `Media-` identifier. These are album/media groups, **not claimed artist identities**. Groups are assigned
-deterministically while balancing dance style and 20-BPM tempo bins toward 70/10/20 percent.
+deterministically while balancing dance style and 20-BPM tempo bins toward 70/10/20 percent. The 53 indivisible
+groups yield 502 training, 49 validation, and 134 test tracks after 13 published-replica exclusions.
 
 Chromaprint is not installed in the reproducible environment and the source does not ship Extended Ballroom's
 fingerprints. The `fingerprint` field therefore detects byte-identical audio through MD5, while the published
