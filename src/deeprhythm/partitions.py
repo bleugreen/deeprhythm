@@ -158,13 +158,21 @@ def _ballroom_group(stem):
 def _assign_ballroom(groups):
     targets = {"train": 0.7, "val": 0.1, "test": 0.2}
     totals = Counter(key for tracks in groups.values() for key in tracks)
+    total_tracks = sum(totals.values())
     counts = {fold: Counter() for fold in FOLDS}
     result = {}
     for group, tracks in sorted(groups.items(), key=lambda item: (-len(item[1]), item[0])):
         contribution = Counter(tracks)
-        def cost(fold):
-            return sum(((counts[fold][key] + contribution[key]) / max(totals[key], 1) - targets[fold]) ** 2 for key in contribution)
-        fold = min(FOLDS, key=lambda name: (cost(name), sum(counts[name].values()) / targets[name], name))
+        def cost(candidate):
+            score = 0.0
+            for fold in FOLDS:
+                for key, total in totals.items():
+                    value = counts[fold][key] + (contribution[key] if fold == candidate else 0)
+                    score += ((value - targets[fold] * total) / max(total, 1)) ** 2
+                size = sum(counts[fold].values()) + (len(tracks) if fold == candidate else 0)
+                score += ((size - targets[fold] * total_tracks) / total_tracks) ** 2
+            return score
+        fold = min(FOLDS, key=lambda name: (cost(name), name))
         result[group] = fold
         counts[fold].update(contribution)
     return result
