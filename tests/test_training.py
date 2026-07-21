@@ -23,6 +23,7 @@ def test_manifest_key_invalidates_annotation_and_checksum_changes():
     assert manifest_key(row) != manifest_key({**row, "tempo": 121})
     assert manifest_key(row) != manifest_key({**row, "md5": "b"})
     assert manifest_key(row) != manifest_key({**row, "split": "val"})
+    assert manifest_key(row) != manifest_key({**row, "stretch_rate": 1.25, "tempo": 150})
 
 
 def test_cache_is_incremental_and_dataset_is_memory_backed(tmp_path):

@@ -7,14 +7,15 @@ from pathlib import Path
 from typing import Callable, Iterable, Mapping, Optional, Sequence
 
 import numpy as np
+import librosa
 import torch
 from torch.utils.data import Dataset
 
 from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
-from deeprhythm.utils import bpm_to_class, load_and_split_audio
+from deeprhythm.utils import bpm_to_class, load_and_split_audio, split_audio
 
 CACHE_VERSION = 1
-MANIFEST_ID_FIELDS = ("audio_path", "filename", "md5", "checksum", "tempo")
+MANIFEST_ID_FIELDS = ("audio_path", "filename", "md5", "checksum", "tempo", "stretch_rate")
 
 
 def _canonical_row(row: Mapping) -> dict:
@@ -81,8 +82,16 @@ class HcqmCache:
         os.replace(temporary, self.index_path)
 
 
-def _default_extract(path: str, specs) -> np.ndarray:
-    audio = load_and_split_audio(path).to(device=specs[0].wsin.device)
+def _default_extract(path: str, specs, stretch_rate: float = 1.0) -> np.ndarray:
+    if stretch_rate <= 0:
+        raise ValueError("stretch_rate must be positive")
+    if stretch_rate == 1.0:
+        audio = load_and_split_audio(path)
+    else:
+        waveform, _ = librosa.load(path, sr=22050, mono=True)
+        waveform = librosa.effects.time_stretch(waveform, rate=stretch_rate)
+        audio = split_audio(waveform, 22050)
+    audio = audio.to(device=specs[0].wsin.device)
     with torch.no_grad():
         hcqm = compute_hcqm(audio, *specs).permute(0, 3, 1, 2)
     return hcqm.cpu().numpy()
@@ -110,7 +119,7 @@ def build_hcqm_cache(
         path = str(Path(row.get("audio_path", row.get("filename"))).expanduser())
         destination = cache.path_for(key)
         if not destination.exists():
-            clips = extractor(path) if extractor else _default_extract(path, specs)
+            clips = extractor(path) if extractor else _default_extract(path, specs, float(row.get("stretch_rate", 1.0)))
             clips = np.asarray(clips)
             if clips.ndim != 4 or tuple(clips.shape[1:]) != (6, 240, 8):
                 raise ValueError("HCQM extractor must return (clips, 6, 240, 8)")
@@ -123,6 +132,7 @@ def build_hcqm_cache(
             "fold": str(row["fold"]),
             "source": path,
             "dataset": str(source_row.get("dataset", "unknown")),
+            "stretch_rate": float(row.get("stretch_rate", 1.0)),
             "clips": int(np.load(destination, mmap_mode="r").shape[0]),
         }
     index["entries"] = entries
