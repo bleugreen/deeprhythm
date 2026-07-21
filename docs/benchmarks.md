@@ -25,7 +25,7 @@ These results were measured on 2026-07-20 on an Apple M4 Max with 128 GiB RAM, P
 and the MPS backend. The evaluated weights have SHA-256
 `c7cc8cc0425929cd2bf695474d7ec1fd63ed0d0a4a68f361d4e4b57bd9b3d9c4`.
 
-| Dataset | Evaluated | Method | Acc1, 2% | Acc2, 2% | Acc1, 4% | Acc2, 4% | Total | ms/audio |
+| Dataset | Evaluated | Method | Acc1, 2% | Acc2, 2% | Acc1, 4% | Acc2, 4% | Batch total | Batch ms/audio |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Ballroom | 698 | DeepRhythm 0.7 | 56.02% | 79.23% | 61.17% | 86.96% | 9.35 s | 13.40 |
 | Ballroom | 698 | Librosa | 49.57% | 68.77% | 62.61% | 86.39% | 3.61 s | 5.18 |
@@ -34,27 +34,43 @@ and the MPS backend. The evaluated weights have SHA-256
 | GiantSteps v2 | 661 | DeepRhythm 0.7 | 66.72% | 92.59% | 71.26% | 98.49% | 36.09 s | 54.35 |
 | GiantSteps v2 | 661 | Librosa | 22.09% | 37.22% | 36.46% | 52.19% | 15.79 s | 23.77 |
 
-Timing starts after imports. DeepRhythm's time includes model and feature-kernel initialization as well as audio loading,
-feature extraction, and inference. Dataset audio was warm in the operating-system cache for both methods, so these
-timings compare compute paths rather than cold disk access.
+The dataset totals measure warm-cache, parallel batch throughput, not single-file latency. DeepRhythm processes up to
+128 eight-second clips per accelerator batch, while Librosa uses eight CPU threads. DeepRhythm's total includes model
+and feature-kernel initialization once per dataset. The per-audio values are total wall time divided by files processed;
+they must not be interpreted as the latency of calling `predict` for one file.
+
+### Single-file latency
+
+Single-file latency was measured separately on GTZAN. The warm measurement uses a genre-balanced sample of 20
+30-second tracks, processes them serially, and follows one unmeasured warm-up call. The cold measurement uses a fresh
+Python process and one hip-hop track. Times start after imports.
+
+| Method | Fresh-process first call | Warm serial mean | Warm serial median | Warm serial p95 |
+| --- | ---: | ---: | ---: | ---: |
+| DeepRhythm 0.7 | 2.790 s | 32.62 ms | 32.64 ms | 33.44 ms |
+| Librosa | 5.093 s | 17.17 ms | 17.12 ms | 17.59 ms |
+
+The first call includes lazy backend compilation. The warm measurement is the appropriate latency comparison for a
+long-running application; the batch table is the appropriate throughput comparison for dataset processing.
 
 ### GTZAN by genre
 
-The aggregate GTZAN score hides the model's intended-domain performance. Each row below was run independently, so
-the wall time includes a fresh DeepRhythm model and kernel initialization. Librosa has no equivalent model setup.
+The aggregate GTZAN score hides the model's intended-domain performance. Genre rows use the same predictions as the
+full GTZAN run; timing is intentionally reported only at the full-dataset level because model initialization and batch
+occupancy cannot be assigned meaningfully to individual genres.
 
-| Genre | Tracks | DeepRhythm Acc1 / Acc2 | DeepRhythm time | Librosa Acc1 / Acc2 | Librosa time |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Blues | 100 | 51% / 73% | 4.81 s | 51% / 69% | 0.61 s |
-| Classical | 100 | 35% / 51% | 3.62 s | 30% / 40% | 0.58 s |
-| Country | 100 | 51% / 89% | 3.65 s | 57% / 86% | 0.55 s |
-| Disco | 100 | **96% / 98%** | 3.62 s | 81% / 84% | 0.59 s |
-| Hip-hop | 100 | **92% / 95%** | 3.75 s | 68% / 77% | 0.61 s |
-| Jazz | 99 | 42.42% / 79.80% | 3.86 s | 45.45% / 67.68% | 0.55 s |
-| Metal | 100 | 48% / 81% | 3.68 s | 50% / 71% | 0.58 s |
-| Pop | 100 | **80% / 95%** | 3.72 s | 63% / 75% | 0.62 s |
-| Reggae | 99 | 64.65% / 97.98% | 3.72 s | 52.53% / 72.73% | 0.59 s |
-| Rock | 100 | 77% / 94% | 3.72 s | 68% / 78% | 0.59 s |
+| Genre | Tracks | DeepRhythm Acc1 / Acc2 | Librosa Acc1 / Acc2 |
+| --- | ---: | ---: | ---: |
+| Blues | 100 | 51% / 73% | 51% / 69% |
+| Classical | 100 | 35% / 51% | 30% / 40% |
+| Country | 100 | 51% / 89% | 57% / 86% |
+| Disco | 100 | **96% / 98%** | 81% / 84% |
+| Hip-hop | 100 | **92% / 95%** | 68% / 77% |
+| Jazz | 99 | 42.42% / 79.80% | 45.45% / 67.68% |
+| Metal | 100 | 48% / 81% | 50% / 71% |
+| Pop | 100 | **80% / 95%** | 63% / 75% |
+| Reggae | 99 | 64.65% / 97.98% | 52.53% / 72.73% |
+| Rock | 100 | 77% / 94% | 68% / 78% |
 
 ## Dataset provenance and exclusions
 

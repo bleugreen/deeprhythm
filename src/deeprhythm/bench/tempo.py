@@ -81,7 +81,7 @@ def evaluate(predictions, references, elapsed_seconds):
     results = {
         "tracks": len(references),
         "elapsed_seconds": elapsed_seconds,
-        "milliseconds_per_track": elapsed_seconds * 1000 / len(references),
+        "batched_milliseconds_per_track": elapsed_seconds * 1000 / len(references),
     }
     for tolerance in (0.02, 0.04):
         scores = tempo_accuracy(predictions, references, tolerance)

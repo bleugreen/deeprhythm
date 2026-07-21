@@ -37,4 +37,4 @@ def test_evaluate_reports_total_and_per_track_timing():
 
     assert results["tracks"] == 2
     assert results["elapsed_seconds"] == 0.05
-    assert results["milliseconds_per_track"] == 25.0
+    assert results["batched_milliseconds_per_track"] == 25.0
