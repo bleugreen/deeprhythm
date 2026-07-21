@@ -96,6 +96,7 @@ def build_hcqm_cache(
     """
     cache = HcqmCache(cache_dir)
     index = cache.load_index()
+    entries = {}
     specs = None if extractor else make_kernels(device=device)
     for source_row in rows:
         row = _canonical_row(source_row)
@@ -110,13 +111,14 @@ def build_hcqm_cache(
             if len(clips) == 0:
                 raise ValueError(f"no clips extracted from {path}")
             cache.store(key, clips)
-        index["entries"][key] = {
+        entries[key] = {
             "path": str(destination.relative_to(cache.root)),
             "tempo": float(row["tempo"]),
             "split": str(row.get("split", "train")),
             "source": path,
             "clips": int(np.load(destination, mmap_mode="r").shape[0]),
         }
+    index["entries"] = entries
     index["manifest_hash"] = manifest_hash(rows)
     cache.write_index(index)
     return index
@@ -125,9 +127,10 @@ def build_hcqm_cache(
 class ClipDataset(Dataset):
     """Lazy, memory-mapped HCQM clips from one declared manifest split."""
 
-    def __init__(self, cache_dir, split="train", *, trim_edges=True, return_tempo=False):
+    def __init__(self, cache_dir, split="train", *, trim_edges=True, return_tempo=False, return_track=False):
         self.cache = HcqmCache(cache_dir)
         self.return_tempo = return_tempo
+        self.return_track = return_track
         self.entries = []
         for key, entry in self.cache.load_index()["entries"].items():
             if entry["split"] != split:
@@ -148,5 +151,6 @@ class ClipDataset(Dataset):
         clips = np.load(self.cache.path_for(key), mmap_mode="r")
         clip = torch.from_numpy(np.array(clips[clip_index], copy=True)).float()
         if self.return_tempo:
-            return clip, torch.tensor(tempo, dtype=torch.float32)
+            result = (clip, torch.tensor(tempo, dtype=torch.float32))
+            return (*result, key) if self.return_track else result
         return clip, torch.tensor(bpm_to_class(tempo), dtype=torch.long)

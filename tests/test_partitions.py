@@ -5,8 +5,8 @@ import pytest
 from deeprhythm.partitions import _assign_ballroom, _ballroom_group, validate_checksums, validate_partitions
 
 
-def row(path, group, fold, fingerprint):
-    return {"dataset": "example", "audio_path": path, "md5": "0" * 32, "tempo": 120,
+def row(path, group, fold, fingerprint, dataset="example"):
+    return {"dataset": dataset, "audio_path": path, "md5": "0" * 32, "tempo": 120,
             "group_key": group, "fold": fold, "fingerprint": fingerprint, "provenance": "test"}
 
 
@@ -20,6 +20,14 @@ def test_validation_rejects_leakage(field):
     second = row("b.wav", "artist:a" if field == "group" else "artist:b", "test", "fp:a")
     with pytest.raises(ValueError, match="spans"):
         validate_partitions([first, second])
+
+
+def test_validation_rejects_cross_dataset_fingerprint_leakage():
+    with pytest.raises(ValueError, match="fingerprint.*spans"):
+        validate_partitions([
+            row("external.wav", "artist:a", "train", "fp:same", dataset="external"),
+            row("test.wav", "artist:b", "test", "fp:same", dataset="ballroom"),
+        ])
 
 
 def test_ballroom_group_uses_only_filename_metadata():

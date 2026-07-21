@@ -79,7 +79,7 @@ def validate_partitions(rows):
             raise ValueError(f"duplicate audio path: {path_key}")
         seen_paths.add(path_key)
         for field, by_value in ownership.items():
-            key = (row["dataset"], row[field])
+            key = (row["dataset"], row[field]) if field == "group_key" else row[field]
             previous = by_value.setdefault(key, row["fold"])
             if previous != row["fold"]:
                 raise ValueError(f"{field} {row[field]!r} spans {previous} and {row['fold']}")

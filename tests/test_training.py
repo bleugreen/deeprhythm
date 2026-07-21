@@ -49,6 +49,17 @@ def test_cache_is_incremental_and_dataset_is_memory_backed(tmp_path):
     assert validation[0][1].item() == 90
 
 
+def test_cache_rebuild_drops_rows_removed_from_manifest(tmp_path):
+    rows = [
+        {"audio_path": "one.wav", "tempo": 120, "split": "train"},
+        {"audio_path": "two.wav", "tempo": 90, "split": "val"},
+    ]
+    build_hcqm_cache(rows, tmp_path, extractor=lambda _path: fake_hcqm(1))
+    build_hcqm_cache(rows[:1], tmp_path, extractor=lambda _path: fake_hcqm(1))
+    assert len(HcqmCache(tmp_path).load_index()["entries"]) == 1
+    assert len(ClipDataset(tmp_path, "val")) == 0
+
+
 def test_corrupt_cache_version_is_rejected(tmp_path):
     tmp_path.mkdir(exist_ok=True)
     (tmp_path / "index.json").write_text(json.dumps({"version": 99, "entries": {}}))
@@ -83,9 +94,25 @@ class FixedModel(nn.Module):
 def test_validation_acc2_reuses_benchmark_scoring():
     reference_tempos = torch.tensor([120.0, 100.0])
     predicted_classes = torch.tensor([bpm_to_class(60), bpm_to_class(100)], dtype=torch.float32).unsqueeze(1)
-    loader = DataLoader(TensorDataset(predicted_classes, reference_tempos), batch_size=2)
+    dataset = [(predicted_classes[i], reference_tempos[i], f"track-{i}") for i in range(2)]
+    loader = DataLoader(dataset, batch_size=2)
     metrics = evaluate_validation(FixedModel(), loader, nn.CrossEntropyLoss(), torch.device("cpu"), 0.04)
     predicted_tempos = [float(int(60)), float(int(100))]
     expected = tempo_accuracy(predicted_tempos, reference_tempos.tolist(), 0.04)
     assert metrics["acc1"] == expected["acc1"] == 0.5
     assert metrics["acc2"] == expected["acc2"] == 1.0
+
+
+def test_validation_aggregates_probabilities_per_track():
+    reference = torch.tensor(120.0)
+    slow = float(bpm_to_class(60))
+    correct = float(bpm_to_class(120))
+    dataset = [
+        (torch.tensor([slow]), reference, "same-track"),
+        (torch.tensor([correct]), reference, "same-track"),
+        (torch.tensor([correct]), reference, "same-track"),
+    ]
+    metrics = evaluate_validation(
+        FixedModel(), DataLoader(dataset, batch_size=3), nn.CrossEntropyLoss(), torch.device("cpu"), 0.04
+    )
+    assert metrics["acc1"] == 1.0

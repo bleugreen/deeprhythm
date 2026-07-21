@@ -28,17 +28,30 @@ class TrainingConfig:
 
 def evaluate_validation(model, loader, criterion, device, tolerance):
     model.eval()
-    losses, predictions, references = [], [], []
+    losses, by_track = [], {}
     with torch.no_grad():
-        for inputs, tempos in loader:
+        for batch in loader:
+            if len(batch) != 3:
+                raise ValueError("validation loader must return clip, tempo, and track identity")
+            inputs, tempos, track_ids = batch
             inputs, tempos = inputs.to(device), tempos.to(device)
             labels = torch.tensor([bpm_to_class(x) for x in tempos.tolist()], device=device)
             outputs = model(inputs)
             losses.append(criterion(outputs, labels).item())
-            predictions.extend(class_to_bpm(value) for value in outputs.argmax(1).tolist())
-            references.extend(tempos.tolist())
+            probabilities = torch.softmax(outputs, dim=1).cpu()
+            for probability, tempo, track_id in zip(probabilities, tempos.cpu().tolist(), track_ids):
+                record = by_track.setdefault(track_id, {"probabilities": [], "tempo": tempo})
+                if record["tempo"] != tempo:
+                    raise ValueError(f"track {track_id} has inconsistent reference tempos")
+                record["probabilities"].append(probability)
     if not losses:
         raise ValueError("validation split has no clips")
+    predictions = []
+    references = []
+    for record in by_track.values():
+        predicted_class = torch.stack(record["probabilities"]).mean(0).argmax().item()
+        predictions.append(class_to_bpm(predicted_class))
+        references.append(record["tempo"])
     metrics = tempo_accuracy(predictions, references, tolerance=tolerance)
     metrics["loss"] = sum(losses) / len(losses)
     return metrics
@@ -48,7 +61,7 @@ def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, 
     """Fit on ``train`` and select on ``val``; never opens or evaluates ``test``."""
     device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
     train_set = ClipDataset(cache_dir, "train", return_tempo=False)
-    validation_set = ClipDataset(cache_dir, "val", return_tempo=True)
+    validation_set = ClipDataset(cache_dir, "val", return_tempo=True, return_track=True)
     if not train_set or not validation_set:
         raise ValueError("cache requires non-empty train and val splits")
     sampler = TempoBalancedSampler(train_set.tempos, bin_width=config.balance_bin_width)
