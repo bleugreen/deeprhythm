@@ -34,10 +34,28 @@ and the MPS backend. The evaluated weights have SHA-256
 | GiantSteps v2 | 661 | DeepRhythm 0.7 | 71.26% | 98.49% | 36.09 s | 54.35 |
 | GiantSteps v2 | 661 | Librosa | 36.46% | 52.19% | 15.79 s | 23.77 |
 
-The dataset totals measure warm-cache, parallel batch throughput, not single-file latency. DeepRhythm processes up to
-128 eight-second clips per accelerator batch, while Librosa uses eight CPU threads. DeepRhythm's total includes model
-and feature-kernel initialization once per dataset. The per-audio values are total wall time divided by files processed;
-they must not be interpreted as the latency of calling `predict` for one file.
+The dataset totals measure warm-cache, parallel batch throughput, not single-file latency. This benchmark uses
+128 eight-second clips per accelerator batch and eight audio-loader workers; Librosa uses eight CPU threads.
+DeepRhythm's total includes model and feature-kernel initialization once per dataset. The per-audio values are total
+wall time divided by files processed; they must not be interpreted as the latency of calling `predict` for one file.
+
+### Batch-size selection
+
+The 128-clip setting is not a memory limit. Historical scripts used 256 clips for training and Librosa preprocessing,
+and 1,024 clips with 16 workers for offline CUDA HCQM generation. A two-run sweep on the full 999-file GTZAN audio
+workload produced:
+
+| Clips per batch | Mean wall time |
+| ---: | ---: |
+| 128 | 12.45 s |
+| 256 | 12.43 s |
+| 512 | 12.37 s |
+| 1,024 | 14.10 s |
+
+All batch sizes produced identical BPM predictions. Larger batches fit in the M4 Max's unified memory but do not improve
+MPS throughput; 1,024 is measurably slower. A separate loader sweep found eight workers faster and more stable than
+four or sixteen. The benchmark therefore keeps 128 as the conservative default and exposes `--batch-size` for
+device-specific tuning.
 
 ### Single-file latency
 
