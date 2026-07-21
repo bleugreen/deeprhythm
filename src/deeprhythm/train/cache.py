@@ -76,7 +76,7 @@ class HcqmCache:
 
 
 def _default_extract(path: str, specs) -> np.ndarray:
-    audio = load_and_split_audio(path)
+    audio = load_and_split_audio(path).to(device=specs[0].wsin.device)
     with torch.no_grad():
         hcqm = compute_hcqm(audio, *specs).permute(0, 3, 1, 2)
     return hcqm.cpu().numpy()
