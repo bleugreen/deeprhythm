@@ -1,13 +1,159 @@
-import numpy as np
+import hashlib
+from pathlib import Path
+from unittest.mock import Mock
 
+import numpy as np
+import pytest
+import requests
+
+import deeprhythm.utils as utils
 from deeprhythm.utils import (
     AudioLoadError,
     AudioTooShortError,
     bpm_to_class,
     class_to_bpm,
     get_device,
+    get_weights,
+    load_weights,
     split_audio,
 )
+
+
+class StreamedResponse:
+    def __init__(self, chunks=(), error=None):
+        self.chunks = chunks
+        self.error = error
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+    def raise_for_status(self):
+        if self.error:
+            raise self.error
+
+    def iter_content(self, chunk_size):
+        assert chunk_size == utils.MODEL_DOWNLOAD_CHUNK_SIZE
+        yield from self.chunks
+
+
+@pytest.fixture
+def model_artifact(monkeypatch, tmp_path):
+    payload = b"verified model bytes"
+    monkeypatch.setenv("HOME", str(tmp_path))
+    monkeypatch.setattr(utils, "MODEL_WEIGHTS_SIZE", len(payload))
+    monkeypatch.setattr(utils, "MODEL_WEIGHTS_SHA256", hashlib.sha256(payload).hexdigest())
+    cache_dir = tmp_path / ".local" / "share" / "deeprhythm"
+    destination = cache_dir / utils.MODEL_WEIGHTS_FILENAME
+    return payload, cache_dir, destination
+
+
+def test_get_weights_accepts_valid_cache_without_network(model_artifact, monkeypatch):
+    payload, cache_dir, destination = model_artifact
+    cache_dir.mkdir(parents=True)
+    destination.write_bytes(payload)
+    request = Mock(side_effect=AssertionError("network must not be used"))
+    monkeypatch.setattr(utils.requests, "get", request)
+
+    assert get_weights(quiet=True) == str(destination)
+    request.assert_not_called()
+
+
+def test_get_weights_downloads_from_pinned_url_and_atomically_replaces_corrupt_cache(
+    model_artifact, monkeypatch
+):
+    payload, cache_dir, destination = model_artifact
+    cache_dir.mkdir(parents=True)
+    destination.write_bytes(b"corrupt")
+    request = Mock(return_value=StreamedResponse([payload[:5], payload[5:]]))
+    monkeypatch.setattr(utils.requests, "get", request)
+    real_replace = utils.os.replace
+    replace = Mock(side_effect=real_replace)
+    monkeypatch.setattr(utils.os, "replace", replace)
+
+    assert get_weights(quiet=True) == str(destination)
+    request.assert_called_once_with(
+        utils.MODEL_WEIGHTS_URL,
+        stream=True,
+        timeout=(utils.MODEL_DOWNLOAD_CONNECT_TIMEOUT, utils.MODEL_DOWNLOAD_READ_TIMEOUT),
+    )
+    source, target = replace.call_args.args
+    assert target == str(destination)
+    assert destination.read_bytes() == payload
+    assert not Path(source).exists()
+    assert list(cache_dir.glob("*.tmp")) == []
+
+
+@pytest.mark.parametrize(
+    ("response", "expected_message"),
+    [
+        (StreamedResponse(error=requests.HTTPError("500 Server Error")), "Failed to download"),
+        (StreamedResponse([b"partial"], requests.Timeout("timed out")), "Failed to download"),
+    ],
+)
+def test_get_weights_network_failures_do_not_publish(
+    response, expected_message, model_artifact, monkeypatch
+):
+    _, cache_dir, destination = model_artifact
+    monkeypatch.setattr(utils.requests, "get", Mock(return_value=response))
+
+    with pytest.raises(utils.ModelWeightsError, match=expected_message):
+        get_weights(quiet=True)
+
+    assert not destination.exists()
+    assert list(cache_dir.glob("*.tmp")) == []
+
+
+def test_get_weights_interrupted_stream_preserves_existing_cache(model_artifact, monkeypatch):
+    payload, cache_dir, destination = model_artifact
+    cache_dir.mkdir(parents=True)
+    destination.write_bytes(b"existing corrupt bytes")
+
+    class InterruptedResponse(StreamedResponse):
+        def iter_content(self, chunk_size):
+            yield payload[:5]
+            raise requests.ConnectionError("stream interrupted")
+
+    monkeypatch.setattr(utils.requests, "get", Mock(return_value=InterruptedResponse()))
+
+    with pytest.raises(utils.ModelWeightsError, match="stream interrupted"):
+        get_weights(quiet=True)
+
+    assert destination.read_bytes() == b"existing corrupt bytes"
+    assert list(cache_dir.glob("*.tmp")) == []
+
+
+@pytest.mark.parametrize(
+    ("download", "expected_message"),
+    [
+        (b"verified model bytes!", "exceed the expected size"),
+        (b"short", "have size"),
+        (b"tampered model bytes", "SHA-256"),
+    ],
+)
+def test_get_weights_rejects_invalid_downloads(download, expected_message, model_artifact, monkeypatch):
+    _, cache_dir, destination = model_artifact
+    monkeypatch.setattr(utils.requests, "get", Mock(return_value=StreamedResponse([download])))
+
+    with pytest.raises(utils.ModelWeightsError, match=expected_message):
+        get_weights(quiet=True)
+
+    assert not destination.exists()
+    assert list(cache_dir.glob("*.tmp")) == []
+
+
+def test_load_weights_uses_safe_torch_deserialization(monkeypatch):
+    state_dict = {"layer": "weights"}
+    monkeypatch.setattr(utils, "get_weights", Mock(return_value="/verified/model.pth"))
+    torch_load = Mock(return_value=state_dict)
+    monkeypatch.setattr(utils.torch, "load", torch_load)
+
+    assert load_weights("cpu", quiet=True) == state_dict
+    torch_load.assert_called_once_with(
+        "/verified/model.pth", map_location="cpu", weights_only=True
+    )
 
 # ---------------------------------------------------------------------------
 # BPM <-> class conversion
