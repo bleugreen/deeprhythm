@@ -118,13 +118,16 @@ def build_giantsteps(root):
         audio = root / "audio_canonical" / filename
         if not annotation.exists() or not audio.exists():
             continue
+        tempo = float(annotation.read_text().strip())
+        if tempo <= 0:
+            continue
         expected = (repository / "md5" / filename.replace(".mp3", ".md5")).read_text().split()[0]
         actual = digest(audio)
         if actual != expected:
             raise ValueError(f"GiantSteps checksum mismatch: {filename}")
         track = filename.split(".", 1)[0]
         rows.append({"dataset": "giantsteps", "audio_path": str(audio.relative_to(root)), "md5": actual,
-                     "tempo": read_tempo(annotation), "group_key": f"track:{track}", "fold": fold,
+                     "tempo": tempo, "group_key": f"track:{track}", "fold": fold,
                      "source_fold": f"official-fold{number:02d}", "fingerprint": f"md5:{actual}",
                      "provenance": "GiantSteps tempo dataset 0b7d47b; v2 crowd annotation"})
     return rows
@@ -192,7 +195,8 @@ def historical_rows(dataset, root):
     else:
         repository = next(root.glob("giantsteps-tempo-dataset-*"))
         files = sorted((root / "audio_canonical").glob("*.mp3"))
-        files = [p for p in files if (repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm")).exists()]
+        files = [p for p in files if (repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm")).exists()
+                 and float((repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm")).read_text()) > 0]
         tempo = lambda p: read_tempo(repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm"))
     for path in files:
         rows.append({"audio_path": str(path.relative_to(root)), "tempo": tempo(path), "historical": "deeprhythm-0.7-full-set"})
