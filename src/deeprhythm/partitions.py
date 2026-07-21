@@ -92,7 +92,8 @@ def build_gtzan(root, sources):
             continue
         genre, filename = relative.split("/")
         audio = root / "gtzan_genre" / "genres" / relative
-        annotation = root / "gtzan_tempo_beat-main" / "tempo" / f"gtzan_{genre}_{filename[6:11]}.bpm"
+        track_number = Path(filename).stem[-5:]
+        annotation = root / "gtzan_tempo_beat-main" / "tempo" / f"gtzan_{genre}_{track_number}.bpm"
         artist = index.get(filename)
         if not artist or artist == "?":
             group = f"track:{filename}"
