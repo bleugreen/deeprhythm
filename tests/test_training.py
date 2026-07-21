@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 from deeprhythm.bench.tempo import tempo_accuracy
 from deeprhythm.train.cache import ClipDataset, HcqmCache, build_hcqm_cache, manifest_key
 from deeprhythm.train.sampling import TempoBalancedSampler, stretch_audio_and_tempo
-from deeprhythm.train.trainer import evaluate_validation
+from deeprhythm.train.trainer import evaluate_validation, mixed_supervision_loss
 from deeprhythm.utils import bpm_to_class
 
 
@@ -69,6 +69,31 @@ def test_canonical_fold_manifests_build_train_and_validation_sets(tmp_path):
     build_hcqm_cache(rows, tmp_path, extractor=lambda _path: fake_hcqm(1))
     assert len(ClipDataset(tmp_path, "train")) == 3
     assert len(ClipDataset(tmp_path, "val")) == 3
+
+
+def test_dataset_can_return_training_domain(tmp_path):
+    rows = [{"audio_path": "replay.wav", "tempo": 120, "fold": "train", "dataset": "replay"}]
+    build_hcqm_cache(rows, tmp_path, extractor=lambda _path: fake_hcqm(1))
+    _clip, _label, domain = ClipDataset(tmp_path, "train", return_domain=True)[0]
+    assert domain == "replay"
+
+
+def test_mixed_supervision_distills_only_preservation_domains():
+    labels = torch.tensor([0, 1])
+    student = torch.zeros((2, 3), requires_grad=True)
+    teacher = torch.tensor([[100.0, 0.0, 0.0], [0.0, 100.0, 0.0]])
+    loss = mixed_supervision_loss(
+        student,
+        labels,
+        ["human", "replay"],
+        teacher,
+        preservation_domains=("replay",),
+        distillation_weight=2.0,
+        temperature=1.0,
+    )
+    loss.backward()
+    assert student.grad[0].argmin().item() == 0
+    assert student.grad[1].argmin().item() == 1
 
 
 def test_corrupt_cache_version_is_rejected(tmp_path):

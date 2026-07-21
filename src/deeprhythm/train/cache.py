@@ -134,10 +134,20 @@ def build_hcqm_cache(
 class ClipDataset(Dataset):
     """Lazy, memory-mapped HCQM clips from one declared manifest split."""
 
-    def __init__(self, cache_dir, split="train", *, trim_edges=True, return_tempo=False, return_track=False):
+    def __init__(
+        self,
+        cache_dir,
+        split="train",
+        *,
+        trim_edges=True,
+        return_tempo=False,
+        return_track=False,
+        return_domain=False,
+    ):
         self.cache = HcqmCache(cache_dir)
         self.return_tempo = return_tempo
         self.return_track = return_track
+        self.return_domain = return_domain
         self.entries = []
         for key, entry in self.cache.load_index()["entries"].items():
             if entry["fold"] != split:
@@ -162,7 +172,11 @@ class ClipDataset(Dataset):
         key, clip_index, tempo = self.entries[index]
         clips = np.load(self.cache.path_for(key), mmap_mode="r")
         clip = torch.from_numpy(np.array(clips[clip_index], copy=True)).float()
+        domain = self.cache.load_index()["entries"][key].get("dataset", "unknown")
         if self.return_tempo:
             result = (clip, torch.tensor(tempo, dtype=torch.float32))
-            return (*result, key) if self.return_track else result
-        return clip, torch.tensor(bpm_to_class(tempo), dtype=torch.long)
+            if self.return_track:
+                result = (*result, key)
+            return (*result, domain) if self.return_domain else result
+        result = (clip, torch.tensor(bpm_to_class(tempo), dtype=torch.long))
+        return (*result, domain) if self.return_domain else result

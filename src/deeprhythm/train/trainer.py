@@ -5,6 +5,7 @@ from pathlib import Path
 
 import torch
 from torch import nn
+from torch.nn import functional as F
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
@@ -26,6 +27,36 @@ class TrainingConfig:
     tolerance: float = 0.04
     balance_domains: bool = False
     freeze_feature_extractor: bool = False
+    distillation_weight: float = 0.0
+    distillation_temperature: float = 2.0
+    preservation_domains: tuple[str, ...] = ()
+
+
+def mixed_supervision_loss(
+    student_logits,
+    labels,
+    domains,
+    teacher_logits,
+    *,
+    preservation_domains,
+    distillation_weight,
+    temperature,
+):
+    """Combine hard human supervision with teacher preservation on declared domains."""
+    preserve = torch.tensor(
+        [domain in preservation_domains for domain in domains], device=student_logits.device, dtype=torch.bool
+    )
+    losses = []
+    if (~preserve).any():
+        losses.append(F.cross_entropy(student_logits[~preserve], labels[~preserve]))
+    if preserve.any():
+        scaled_student = F.log_softmax(student_logits[preserve] / temperature, dim=1)
+        scaled_teacher = F.softmax(teacher_logits[preserve] / temperature, dim=1)
+        distillation = F.kl_div(scaled_student, scaled_teacher, reduction="batchmean") * temperature**2
+        losses.append(distillation_weight * distillation)
+    if not losses:
+        raise ValueError("batch has neither supervised nor preservation examples")
+    return sum(losses)
 
 
 def evaluate_validation(model, loader, criterion, device, tolerance):
@@ -62,7 +93,8 @@ def evaluate_validation(model, loader, criterion, device, tolerance):
 def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, device=None):
     """Fit on ``train`` and select on ``val``; never opens or evaluates ``test``."""
     device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
-    train_set = ClipDataset(cache_dir, "train", return_tempo=False)
+    use_distillation = bool(config.preservation_domains and config.distillation_weight > 0)
+    train_set = ClipDataset(cache_dir, "train", return_tempo=False, return_domain=use_distillation)
     validation_set = ClipDataset(cache_dir, "val", return_tempo=True, return_track=True)
     if not train_set or not validation_set:
         raise ValueError("cache requires non-empty train and val splits")
@@ -76,6 +108,15 @@ def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, 
     model = DeepRhythmModel().to(device)
     if start_weights:
         model.load_state_dict(torch.load(start_weights, map_location=device, weights_only=True))
+    teacher = None
+    if use_distillation:
+        if not start_weights:
+            raise ValueError("preservation distillation requires start_weights")
+        teacher = DeepRhythmModel().to(device)
+        teacher.load_state_dict(torch.load(start_weights, map_location=device, weights_only=True))
+        teacher.eval()
+        for parameter in teacher.parameters():
+            parameter.requires_grad = False
     if config.freeze_feature_extractor:
         for parameter in model.parameters():
             parameter.requires_grad = False
@@ -90,10 +131,26 @@ def fit(cache_dir, output_path, *, config=TrainingConfig(), start_weights=None, 
     for epoch in range(config.epochs):
         model.train()
         train_losses = []
-        for inputs, labels in train_loader:
+        for batch in train_loader:
+            inputs, labels = batch[:2]
             inputs, labels = inputs.to(device), labels.to(device)
             optimizer.zero_grad()
-            loss = criterion(model(inputs), labels)
+            outputs = model(inputs)
+            if use_distillation:
+                domains = batch[2]
+                with torch.no_grad():
+                    teacher_outputs = teacher(inputs)
+                loss = mixed_supervision_loss(
+                    outputs,
+                    labels,
+                    domains,
+                    teacher_outputs,
+                    preservation_domains=config.preservation_domains,
+                    distillation_weight=config.distillation_weight,
+                    temperature=config.distillation_temperature,
+                )
+            else:
+                loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
             train_losses.append(loss.item())
