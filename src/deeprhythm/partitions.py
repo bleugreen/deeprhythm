@@ -74,7 +74,8 @@ def _gtzan_index(path):
     for line in path.read_text(errors="replace").splitlines():
         if line.startswith("#") or " ::: " not in line:
             continue
-        filename, artist, _title = line.split(" ::: ", 2)
+        parts = line.split(" ::: ", 2)
+        filename, artist = parts[:2]
         result[filename] = artist.strip()
     return result
 
