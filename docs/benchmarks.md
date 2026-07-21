@@ -25,7 +25,7 @@ These results were measured on 2026-07-20 on an Apple M4 Max with 128 GiB RAM, P
 and the MPS backend. The evaluated weights have SHA-256
 `c7cc8cc0425929cd2bf695474d7ec1fd63ed0d0a4a68f361d4e4b57bd9b3d9c4`.
 
-| Dataset | Evaluated | Method | Acc1, 2% | Acc2, 2% | Acc1, 4% | Acc2, 4% | Total | ms/track |
+| Dataset | Evaluated | Method | Acc1, 2% | Acc2, 2% | Acc1, 4% | Acc2, 4% | Total | ms/audio |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Ballroom | 698 | DeepRhythm 0.7 | 56.02% | 79.23% | 61.17% | 86.96% | 9.35 s | 13.40 |
 | Ballroom | 698 | Librosa | 49.57% | 68.77% | 62.61% | 86.39% | 3.61 s | 5.18 |
@@ -65,8 +65,9 @@ invalid and it cannot be decoded; `reggae.00086` was excluded because the tempo 
 
 GiantSteps annotations and MD5 manifests came from the canonical dataset repository. Its original Beatport preview
 endpoint now returns 404, but the canonical JKU backup still serves all 664 audio files. Every download was verified
-against its published MD5 checksum. Three tracks do not have usable v2 annotations, leaving 661 evaluated tracks.
-The highest-confidence v2 reference tempo was used for each included track.
+against its published MD5 checksum. Three tracks do not have usable v2 annotations, leaving 661 evaluated tracks. Timing covers inference over all 664
+downloaded files, so the reported per-audio time uses 664 as its denominator. The highest-confidence v2 reference
+tempo was used for each included track.
 
 The README's historical 953-track benchmark describes its genre mix but does not publish an obtainable manifest or
 reference annotations. It remains useful historical context, but the results above are the public, independently
