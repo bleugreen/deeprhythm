@@ -21,6 +21,8 @@ def tempo_accuracy(predictions, references, tolerance=0.02):
         raise ValueError("predictions and references must be equally sized one-dimensional sequences")
     if predicted.size == 0:
         raise ValueError("at least one prediction is required")
+    if not 0 < tolerance < 1:
+        raise ValueError("tolerance must be between zero and one")
     if np.any(predicted <= 0) or np.any(reference <= 0):
         raise ValueError("tempos must be positive")
 
@@ -77,16 +79,14 @@ def predict_deeprhythm(audio_paths, output_path, device, workers=8, batch_size=1
     return [by_path[path] for path in audio_paths]
 
 
-def evaluate(predictions, references, elapsed_seconds):
+def evaluate(predictions, references, elapsed_seconds, tolerance=0.04):
     results = {
         "tracks": len(references),
         "elapsed_seconds": elapsed_seconds,
         "batched_milliseconds_per_track": elapsed_seconds * 1000 / len(references),
     }
-    for tolerance in (0.02, 0.04):
-        scores = tempo_accuracy(predictions, references, tolerance)
-        suffix = f"_{int(tolerance * 100)}pct"
-        results.update({f"{key}{suffix}": value for key, value in scores.items()})
+    results["tolerance"] = tolerance
+    results.update(tempo_accuracy(predictions, references, tolerance))
     return results
 
 
@@ -97,6 +97,7 @@ def main(argv=None):
     parser.add_argument("--device", default=get_device())
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--batch-size", type=int, default=128)
+    parser.add_argument("--tolerance", type=float, default=0.04)
     args = parser.parse_args(argv)
 
     audio_paths, references = load_manifest(args.manifest)
@@ -108,11 +109,11 @@ def main(argv=None):
     predictions = predict_deeprhythm(
         audio_paths, output_dir / "deeprhythm-predictions.jsonl", args.device, args.workers, args.batch_size
     )
-    results["deeprhythm"] = evaluate(predictions, references, time.perf_counter() - start)
+    results["deeprhythm"] = evaluate(predictions, references, time.perf_counter() - start, args.tolerance)
 
     start = time.perf_counter()
     predictions = predict_librosa(audio_paths, args.workers)
-    results["librosa"] = evaluate(predictions, references, time.perf_counter() - start)
+    results["librosa"] = evaluate(predictions, references, time.perf_counter() - start, args.tolerance)
 
     result_path = output_dir / "summary.json"
     result_path.write_text(json.dumps(results, indent=2) + "\n")

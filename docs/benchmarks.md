@@ -15,9 +15,9 @@ Run a benchmark with:
 deeprhythm-benchmark ballroom.jsonl --device mps --output-dir benchmark-results/ballroom
 ```
 
-Acc1 accepts predictions within 2% of the reference. Acc2 additionally accepts half, double, one-third, and triple
-metrical levels. The output also includes 4% variants because that tolerance is common in tempo-estimation papers;
-the 2% figures remain directly comparable with this project's historical README benchmark.
+Acc1 accepts predictions within 4% of the reference, the conventional tolerance in tempo-estimation literature. Acc2
+additionally accepts half, double, one-third, and triple metrical levels. The tolerance is configurable with
+`--tolerance`; use `--tolerance 0.02` only when comparing with this project's historical README benchmark.
 
 ## DeepRhythm 0.7 results
 
@@ -25,14 +25,14 @@ These results were measured on 2026-07-20 on an Apple M4 Max with 128 GiB RAM, P
 and the MPS backend. The evaluated weights have SHA-256
 `c7cc8cc0425929cd2bf695474d7ec1fd63ed0d0a4a68f361d4e4b57bd9b3d9c4`.
 
-| Dataset | Evaluated | Method | Acc1, 2% | Acc2, 2% | Acc1, 4% | Acc2, 4% | Batch total | Batch ms/audio |
-| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Ballroom | 698 | DeepRhythm 0.7 | 56.02% | 79.23% | 61.17% | 86.96% | 9.35 s | 13.40 |
-| Ballroom | 698 | Librosa | 49.57% | 68.77% | 62.61% | 86.39% | 3.61 s | 5.18 |
-| GTZAN | 998 | DeepRhythm 0.7 | 63.73% | 85.37% | 68.44% | 91.78% | 12.10 s | 12.11 |
-| GTZAN | 998 | Librosa | 56.61% | 72.04% | 68.44% | 87.68% | 4.91 s | 4.92 |
-| GiantSteps v2 | 661 | DeepRhythm 0.7 | 66.72% | 92.59% | 71.26% | 98.49% | 36.09 s | 54.35 |
-| GiantSteps v2 | 661 | Librosa | 22.09% | 37.22% | 36.46% | 52.19% | 15.79 s | 23.77 |
+| Dataset | Evaluated | Method | Acc1 | Acc2 | Batch total | Batch ms/audio |
+| --- | ---: | --- | ---: | ---: | ---: | ---: |
+| Ballroom | 698 | DeepRhythm 0.7 | 61.17% | 86.96% | 9.35 s | 13.40 |
+| Ballroom | 698 | Librosa | 62.61% | 86.39% | 3.61 s | 5.18 |
+| GTZAN | 998 | DeepRhythm 0.7 | 68.44% | 91.78% | 12.10 s | 12.11 |
+| GTZAN | 998 | Librosa | 68.44% | 87.68% | 4.91 s | 4.92 |
+| GiantSteps v2 | 661 | DeepRhythm 0.7 | 71.26% | 98.49% | 36.09 s | 54.35 |
+| GiantSteps v2 | 661 | Librosa | 36.46% | 52.19% | 15.79 s | 23.77 |
 
 The dataset totals measure warm-cache, parallel batch throughput, not single-file latency. DeepRhythm processes up to
 128 eight-second clips per accelerator batch, while Librosa uses eight CPU threads. DeepRhythm's total includes model
@@ -61,16 +61,16 @@ occupancy cannot be assigned meaningfully to individual genres.
 
 | Genre | Tracks | DeepRhythm Acc1 / Acc2 | Librosa Acc1 / Acc2 |
 | --- | ---: | ---: | ---: |
-| Blues | 100 | 51% / 73% | 51% / 69% |
-| Classical | 100 | 35% / 51% | 30% / 40% |
-| Country | 100 | 51% / 89% | 57% / 86% |
-| Disco | 100 | **96% / 98%** | 81% / 84% |
-| Hip-hop | 100 | **92% / 95%** | 68% / 77% |
-| Jazz | 99 | 42.42% / 79.80% | 45.45% / 67.68% |
-| Metal | 100 | 48% / 81% | 50% / 71% |
-| Pop | 100 | **80% / 95%** | 63% / 75% |
-| Reggae | 99 | 64.65% / 97.98% | 52.53% / 72.73% |
-| Rock | 100 | 77% / 94% | 68% / 78% |
+| Blues | 100 | 63% / 90% | 65% / 85% |
+| Classical | 100 | 46% / 64% | 44% / 62% |
+| Country | 100 | 54% / 93% | 69% / 99% |
+| Disco | 100 | **96% / 98%** | 93% / 97% |
+| Hip-hop | 100 | **97% / 100%** | 76% / 88% |
+| Jazz | 99 | 45.45% / 87.88% | 54.55% / 81.82% |
+| Metal | 100 | 56% / 91% | 63% / 89% |
+| Pop | 100 | **80% / 96%** | 73% / 89% |
+| Reggae | 99 | 64.65% / 98.99% | 70.71% / 96.97% |
+| Rock | 100 | 82% / 99% | 76% / 89% |
 
 ## Dataset provenance and exclusions
 

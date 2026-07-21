@@ -16,6 +16,8 @@ def test_tempo_accuracy_rejects_invalid_inputs():
         tempo_accuracy([120], [120, 130])
     with pytest.raises(ValueError, match="positive"):
         tempo_accuracy([0], [120])
+    with pytest.raises(ValueError, match="tolerance"):
+        tempo_accuracy([120], [120], tolerance=0)
 
 
 def test_load_manifest_resolves_paths_and_rejects_duplicates(tmp_path):
@@ -38,3 +40,6 @@ def test_evaluate_reports_total_and_per_track_timing():
     assert results["tracks"] == 2
     assert results["elapsed_seconds"] == 0.05
     assert results["batched_milliseconds_per_track"] == 25.0
+    assert results["tolerance"] == 0.04
+    assert results["acc1"] == 0.5
+    assert results["acc2"] == 1.0
