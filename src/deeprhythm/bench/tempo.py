@@ -78,7 +78,11 @@ def predict_deeprhythm(audio_paths, output_path, device, workers=8, batch_size=1
 
 
 def evaluate(predictions, references, elapsed_seconds):
-    results = {"tracks": len(references), "elapsed_seconds": elapsed_seconds}
+    results = {
+        "tracks": len(references),
+        "elapsed_seconds": elapsed_seconds,
+        "milliseconds_per_track": elapsed_seconds * 1000 / len(references),
+    }
     for tolerance in (0.02, 0.04):
         scores = tempo_accuracy(predictions, references, tolerance)
         suffix = f"_{int(tolerance * 100)}pct"

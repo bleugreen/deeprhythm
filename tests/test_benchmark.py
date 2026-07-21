@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from deeprhythm.bench.tempo import load_manifest, tempo_accuracy
+from deeprhythm.bench.tempo import evaluate, load_manifest, tempo_accuracy
 
 
 def test_tempo_accuracy_distinguishes_exact_and_metrical_matches():
@@ -31,3 +31,10 @@ def test_load_manifest_resolves_paths_and_rejects_duplicates(tmp_path):
     manifest.write_text(json.dumps(row) + "\n" + json.dumps(row) + "\n")
     with pytest.raises(ValueError, match="unique"):
         load_manifest(manifest)
+
+def test_evaluate_reports_total_and_per_track_timing():
+    results = evaluate([120, 60], [120, 120], elapsed_seconds=0.05)
+
+    assert results["tracks"] == 2
+    assert results["elapsed_seconds"] == 0.05
+    assert results["milliseconds_per_track"] == 25.0
