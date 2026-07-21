@@ -43,7 +43,8 @@ def read_tempo(path):
 
 def write_rows(path, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in sorted(rows, key=lambda r: r["audio_path"])))
+    serialized = (json.dumps(row, sort_keys=True) + "\n" for row in sorted(rows, key=lambda r: r["audio_path"]))
+    path.write_text("".join(serialized))
 
 
 def validate_partitions(rows):
@@ -84,7 +85,8 @@ def _gtzan_index(path):
 def build_gtzan(root, sources):
     index = _gtzan_index(sources / "index.txt")
     assignment = {}
-    for fold, filename in (("train", "train_filtered.txt"), ("val", "valid_filtered.txt"), ("test", "test_filtered.txt")):
+    source_folds = (("train", "train_filtered.txt"), ("val", "valid_filtered.txt"), ("test", "test_filtered.txt"))
+    for fold, filename in source_folds:
         for line in (sources / filename).read_text().splitlines():
             assignment[line.strip()] = fold
     rows = []
@@ -207,19 +209,35 @@ def historical_rows(dataset, root):
     rows = []
     if dataset == "ballroom":
         files = sorted((root / "audio").glob("*/*.wav"))
-        tempo = lambda p: read_tempo(next((root / "annotations" / "tempo").glob(f"**/{p.stem}.bpm")))
+
+        def tempo(path):
+            return read_tempo(next((root / "annotations" / "tempo").glob(f"**/{path.stem}.bpm")))
     elif dataset == "gtzan":
         files = sorted((root / "gtzan_genre" / "genres").glob("*/*.wav"))
-        files = [p for p in files if str(p.relative_to(root / "gtzan_genre" / "genres")) not in GTZAN_HISTORICAL_EXCLUSIONS]
-        tempo = lambda p: read_tempo(root / "gtzan_tempo_beat-main" / "tempo" / f"gtzan_{p.parent.name}_{p.stem[-5:]}.bpm")
+        audio_root = root / "gtzan_genre" / "genres"
+        files = [p for p in files if str(p.relative_to(audio_root)) not in GTZAN_HISTORICAL_EXCLUSIONS]
+
+        def tempo(path):
+            annotation = root / "gtzan_tempo_beat-main" / "tempo" / f"gtzan_{path.parent.name}_{path.stem[-5:]}.bpm"
+            return read_tempo(annotation)
     else:
         repository = next(root.glob("giantsteps-tempo-dataset-*"))
         files = sorted((root / "audio_canonical").glob("*.mp3"))
-        files = [p for p in files if (repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm")).exists()
-                 and float((repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm")).read_text()) > 0]
-        tempo = lambda p: read_tempo(repository / "annotations_v2" / "tempo" / p.name.replace(".mp3", ".bpm"))
+        annotation_root = repository / "annotations_v2" / "tempo"
+        files = [
+            p for p in files
+            if (annotation_root / p.name.replace(".mp3", ".bpm")).exists()
+            and float((annotation_root / p.name.replace(".mp3", ".bpm")).read_text()) > 0
+        ]
+
+        def tempo(path):
+            return read_tempo(annotation_root / path.name.replace(".mp3", ".bpm"))
     for path in files:
-        rows.append({"audio_path": str(path.relative_to(root)), "tempo": tempo(path), "historical": "deeprhythm-0.7-full-set"})
+        rows.append({
+            "audio_path": str(path.relative_to(root)),
+            "tempo": tempo(path),
+            "historical": "deeprhythm-0.7-full-set",
+        })
     return rows
 
 
@@ -230,8 +248,10 @@ def main(argv=None):
     parser.add_argument("--validate-only", action="store_true")
     args = parser.parse_args(argv)
     if args.validate_only:
-        rows = [json.loads(line) for path in args.output.glob("*/train.jsonl") for line in path.read_text().splitlines()]
-        rows += [json.loads(line) for pattern in ("*/val.jsonl", "*/test.jsonl") for path in args.output.glob(pattern) for line in path.read_text().splitlines()]
+        rows = []
+        for pattern in ("*/train.jsonl", "*/val.jsonl", "*/test.jsonl"):
+            for path in args.output.glob(pattern):
+                rows.extend(json.loads(line) for line in path.read_text().splitlines())
         validate_partitions(rows)
         return
     sources = args.output / "sources" / "gtzan"
@@ -244,9 +264,10 @@ def main(argv=None):
         validate_partitions(rows)
         for fold in FOLDS:
             write_rows(args.output / dataset / f"{fold}.jsonl", [row for row in rows if row["fold"] == fold])
-    write_rows(args.output / "archive-v0.7" / "giantsteps.jsonl", historical_rows("giantsteps", args.datasets_root / "giantsteps_tempo"))
-    write_rows(args.output / "archive-v0.7" / "gtzan.jsonl", historical_rows("gtzan", args.datasets_root / "gtzan_genre"))
-    write_rows(args.output / "archive-v0.7" / "ballroom.jsonl", historical_rows("ballroom", args.datasets_root / "ballroom" / "B_1.0"))
+    archive = args.output / "archive-v0.7"
+    write_rows(archive / "giantsteps.jsonl", historical_rows("giantsteps", args.datasets_root / "giantsteps_tempo"))
+    write_rows(archive / "gtzan.jsonl", historical_rows("gtzan", args.datasets_root / "gtzan_genre"))
+    write_rows(archive / "ballroom.jsonl", historical_rows("ballroom", args.datasets_root / "ballroom" / "B_1.0"))
 
 
 if __name__ == "__main__":
