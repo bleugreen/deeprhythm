@@ -14,7 +14,7 @@ from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
 from deeprhythm.utils import bpm_to_class, load_and_split_audio
 
 CACHE_VERSION = 1
-MANIFEST_ID_FIELDS = ("audio_path", "filename", "md5", "checksum", "tempo", "dataset")
+MANIFEST_ID_FIELDS = ("audio_path", "filename", "md5", "checksum", "tempo")
 
 
 def _canonical_row(row: Mapping) -> dict:
@@ -122,7 +122,7 @@ def build_hcqm_cache(
             "tempo": float(row["tempo"]),
             "fold": str(row["fold"]),
             "source": path,
-            "dataset": str(row.get("dataset", "unknown")),
+            "dataset": str(source_row.get("dataset", "unknown")),
             "clips": int(np.load(destination, mmap_mode="r").shape[0]),
         }
     index["entries"] = entries
