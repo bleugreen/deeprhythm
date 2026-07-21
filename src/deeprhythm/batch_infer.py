@@ -13,7 +13,6 @@ from deeprhythm.model.results import shape_prediction
 from deeprhythm.utils import (
     AudioLoadError,
     AudioTooShortError,
-    class_to_bpm,
     get_device,
     get_weights,
     load_and_split_audio,
