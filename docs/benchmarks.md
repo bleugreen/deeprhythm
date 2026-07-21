@@ -71,6 +71,10 @@ Python process and one hip-hop track. Times start after imports.
 The first call includes lazy backend compilation. The warm measurement is the appropriate latency comparison for a
 long-running application; the batch table is the appropriate throughput comparison for dataset processing.
 
+For a device comparison, DeepRhythm processed the full 999-file GTZAN audio workload in 12.45 seconds on MPS and
+33.39 seconds on CPU with the same 128-clip batch and eight loaders. MPS is 2.68 times faster for throughput. Warm
+serial latency is closer: 32.62 ms on MPS versus 36.94 ms on CPU. CPU and MPS produced identical BPM predictions.
+
 ### GTZAN by genre
 
 The aggregate GTZAN score hides the model's intended-domain performance. Genre rows use the same predictions as the
