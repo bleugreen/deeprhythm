@@ -86,6 +86,17 @@ def split_audio(audio, sr, clip_length=8, share_mem=False):
     return stacked_clips
 
 
+def load_audio(filename, sr=22050):
+    """Load mono audio at the model sampling rate."""
+    try:
+        audio, _ = librosa.load(filename, sr=sr, mono=True)
+        return audio
+    except Exception as e:
+        raise AudioLoadError(
+            f"Failed to load audio file '{filename}': {str(e)}"
+        ) from e
+
+
 def load_and_split_audio(filename, sr=22050, clip_length=8, share_mem=False):
     """
     Load an audio file and split it into fixed-length clips.
@@ -103,15 +114,8 @@ def load_and_split_audio(filename, sr=22050, clip_length=8, share_mem=False):
     AudioTooShortError: If audio is too short for even one clip.
     AudioLoadError: If the audio file cannot be loaded.
     """
-    try:
-        audio, _ = librosa.load(filename, sr=sr)
-        return split_audio(audio, sr, clip_length=clip_length, share_mem=share_mem)
-    except AudioTooShortError:
-        raise
-    except Exception as e:
-        raise AudioLoadError(
-            f"Failed to load audio file '{filename}': {str(e)}"
-        ) from e
+    audio = load_audio(filename, sr=sr)
+    return split_audio(audio, sr, clip_length=clip_length, share_mem=share_mem)
 
 
 def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
