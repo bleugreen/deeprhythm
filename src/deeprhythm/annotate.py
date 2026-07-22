@@ -42,7 +42,9 @@ def active_excerpt(audio, sample_rate, duration=15.0):
     window = max(1, int(duration * sample_rate / hop))
     energy = np.convolve(onset, np.ones(window), mode="valid")
     frame = int(np.argmax(energy))
-    start = frame * hop
+    # Onset frames are centered around an analysis window; step back one FFT radius
+    # so the transient that selected the excerpt is not clipped off its front.
+    start = max(0, frame * hop - 1024)
     return start / sample_rate, audio[start : start + samples]
 
 
