@@ -70,7 +70,7 @@ class AnnotationStore:
         return load_jsonl(self.annotations_path)
 
     def completed_ids(self):
-        return {row["id"] for row in self.annotations() if row["label"] != "skip"}
+        return {row["id"] for row in self.annotations()}
 
     def append(self, item_id, label):
         if label not in LABELS:
