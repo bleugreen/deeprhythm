@@ -1,5 +1,7 @@
 """Prepare and serve a local metrical-level annotation harness."""
 
+# ruff: noqa: E501  # Embedded self-contained HTML/JavaScript is intentionally compact.
+
 import argparse
 import hashlib
 import json
