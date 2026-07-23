@@ -20,6 +20,11 @@ from deeprhythm.utils import get_device, load_audio, split_audio
 WEIGHT_DIR = Path(__file__).resolve().parent.parent / "weights"
 
 
+def _trim_edge_clips(clips):
+    """Match the edge-trimmed track aggregation used to train v0.8."""
+    return clips[1:-1] if len(clips) > 5 else clips
+
+
 class MetricalDeepRhythmPredictor:
     """Predict tempo with the frozen, reproducible shared-STFT v0.8 model."""
 
@@ -55,16 +60,17 @@ class MetricalDeepRhythmPredictor:
         return self.predict_from_audio(audio, include_details=include_details)
 
     def predict_from_audio(self, audio, include_details=False):
-        clips = split_audio(audio, 22050, max_clips=8)
-        real_clips = len(clips)
-        if real_clips < 4:
+        clips = split_audio(audio, 22050)
+        available_clips = len(clips)
+        if available_clips < 4:
             padded = np.pad(np.asarray(audio)[: 32 * 22050], (0, max(0, 32 * 22050 - len(audio))))
             phase_clips = torch.from_numpy(padded.astype(np.float32)).view(4, 8 * 22050)
-            clips = torch.cat([clips, phase_clips[real_clips:]], dim=0)
+            clips = torch.cat([clips, phase_clips[available_clips:]], dim=0)
         clips = clips.to(self.device)
         with torch.no_grad():
             magnitude = self.specs[0](clips)
-            hcqm = compute_hcqm_from_stft(magnitude[:real_clips], self.specs[1], self.specs[2])
+            track_magnitude = _trim_edge_clips(magnitude[:available_clips])
+            hcqm = compute_hcqm_from_stft(track_magnitude, self.specs[1], self.specs[2])
             embedding = self.hierarchical.backbone.encode(hcqm.permute(0, 3, 1, 2).to(self.device))
             base_probability = F.softmax(self.hierarchical.base_head(embedding), dim=1).mean(0)
             level_logits = self.hierarchical.level_head(embedding)
@@ -84,7 +90,7 @@ class MetricalDeepRhythmPredictor:
             "bpm": bpm,
             "base_bpm": 60 + 0.5 * int(base_class),
             "level_factor": (0.5, 1.0, 2.0, 4.0)[int(level)],
-            "num_clips": real_clips,
+            "num_clips": len(track_magnitude),
             "base_probability": base_probability.cpu().tolist(),
             "level_probability": level_probability.cpu().tolist(),
         }

@@ -1,7 +1,7 @@
 import torch
 
 from deeprhythm.model.metrical import MetricalFusion, temporal_metrical_features
-from deeprhythm.model.metrical_predictor import MetricalDeepRhythmPredictor
+from deeprhythm.model.metrical_predictor import MetricalDeepRhythmPredictor, _trim_edge_clips
 
 
 def test_metrical_features_match_fusion_contract():
@@ -24,3 +24,10 @@ def test_packaged_v08_bundle_loads_on_cpu():
     assert predictor.alpha == 0.4
     assert predictor.hierarchical.training is False
     assert predictor.temporal.training is False
+
+
+def test_v08_track_aggregation_matches_training_edge_trim():
+    clips = torch.arange(15)
+
+    assert torch.equal(_trim_edge_clips(clips), clips[1:-1])
+    assert torch.equal(_trim_edge_clips(clips[:5]), clips[:5])

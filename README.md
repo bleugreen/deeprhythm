@@ -65,7 +65,9 @@ details = predictor.predict("/path/to/song.wav", include_details=True)
 
 The original `DeepRhythmPredictor` remains unchanged. v0.8 is opt-in because
 its measured metrical correction is a modest net improvement and can still
-change an individually correct octave decision.
+change an individually correct octave decision. It aggregates every complete
+eight-second clip after removing the first and last clips from tracks longer
+than 40 seconds, matching the frozen model's training and evaluation path.
 
 ### CLI Inference
 
