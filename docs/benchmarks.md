@@ -1,10 +1,18 @@
 ### Beat-rate fusion preprocessing
 
-The temporal beat-rate branch reuses the waveform already decoded for HCQM
-inference. Its 30-second, 81-band log spectrum is computed with
-`deeprhythm.audio_proc.log_spectrum.compute_log_spectrum`, avoiding a second
-decode/resample and a separate librosa STFT. On the same 20-track warm sample,
-this reduced median experimental two-tower latency from 366 ms to 226 ms.
+The temporal beat-rate branch reuses both the waveform and magnitude STFT
+already computed for HCQM inference. Four eight-second nnAudio clip spectra are
+converted to 81 logarithmic bands, concatenated along time, and trimmed to the
+branch's 30-second context by
+`deeprhythm.audio_proc.log_spectrum.compute_log_spectrum_from_clips`. This
+removes both the second decode and the second STFT. On the same 20-track warm
+sample, shared decoding first reduced median experimental two-tower latency
+from 366 ms to 226 ms; sharing the HCQM STFT and applying the eight-clip budget
+reduced it further to 116 ms.
+
+The frozen shared-STFT path scored 79.07% Acc1 on the canonical combined test,
+78.57% on Groove, and 80.00% on Slakh, with no Acc2 change. It therefore does
+not require temporal-branch retraining.
 
 An eight-clip HCQM budget is also available through
 `load_and_split_audio(..., max_clips=8)`. The research evaluation found the
