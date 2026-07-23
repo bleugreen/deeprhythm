@@ -1,7 +1,11 @@
 import torch
 
 from deeprhythm.model.metrical import MetricalFusion, temporal_metrical_features
-from deeprhythm.model.metrical_predictor import MetricalDeepRhythmPredictor, _trim_edge_clips
+from deeprhythm.model.metrical_predictor import (
+    MetricalDeepRhythmPredictor,
+    _fusion_cache_precision,
+    _trim_edge_clips,
+)
 
 
 def test_metrical_features_match_fusion_contract():
@@ -31,3 +35,10 @@ def test_v08_track_aggregation_matches_training_edge_trim():
 
     assert torch.equal(_trim_edge_clips(clips), clips[1:-1])
     assert torch.equal(_trim_edge_clips(clips[:5]), clips[:5])
+
+
+def test_v08_fusion_inputs_match_training_cache_precision():
+    value = torch.tensor([1.0001], dtype=torch.float32)
+
+    assert _fusion_cache_precision(value).item() == 1.0
+    assert _fusion_cache_precision(value).dtype == torch.float32

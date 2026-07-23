@@ -25,6 +25,11 @@ def _trim_edge_clips(clips):
     return clips[1:-1] if len(clips) > 5 else clips
 
 
+def _fusion_cache_precision(tensor):
+    """Reproduce the float16 feature cache on which the frozen fusion was fit."""
+    return tensor.to(torch.float16).to(torch.float32)
+
+
 class MetricalDeepRhythmPredictor:
     """Predict tempo with the frozen, reproducible shared-STFT v0.8 model."""
 
@@ -77,6 +82,9 @@ class MetricalDeepRhythmPredictor:
             level_logits += self.residual_scale * self.hierarchical.level_residual(embedding)
             level_probability = F.softmax(level_logits, dim=1).mean(0)
             spectrum = compute_log_spectrum_from_clips(magnitude[:4], filter_matrix=self.temporal_filter)
+            base_probability = _fusion_cache_precision(base_probability)
+            level_probability = _fusion_cache_precision(level_probability)
+            spectrum = _fusion_cache_precision(spectrum)
             temporal = self.temporal(spectrum[None])
             phase = self.beat_decoder(temporal)
             features = temporal_metrical_features(temporal, phase, base_probability, level_probability)
