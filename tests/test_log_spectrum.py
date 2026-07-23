@@ -6,7 +6,7 @@ from deeprhythm.audio_proc.log_spectrum import (
     compute_log_spectrum,
     make_log_spectrum_filter,
 )
-from deeprhythm.utils import load_and_split_audio
+from deeprhythm.utils import load_and_split_audio, split_audio
 
 
 def test_log_spectrum_shape_and_range():
@@ -41,4 +41,11 @@ def test_load_and_split_audio_uses_canonical_loader(monkeypatch):
     clips = load_and_split_audio("track.wav")
 
     assert calls == [("track.wav", 22050)]
+    assert clips.shape == (2, 8 * 22050)
+
+
+def test_split_audio_honors_clip_budget():
+    audio = np.zeros(20 * 22050, dtype=np.float32)
+    clips = split_audio(audio, 22050, max_clips=2)
+
     assert clips.shape == (2, 8 * 22050)

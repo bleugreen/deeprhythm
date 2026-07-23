@@ -1,3 +1,18 @@
+### Beat-rate fusion preprocessing
+
+The temporal beat-rate branch reuses the waveform already decoded for HCQM
+inference. Its 30-second, 81-band log spectrum is computed with
+`deeprhythm.audio_proc.log_spectrum.compute_log_spectrum`, avoiding a second
+decode/resample and a separate librosa STFT. On the same 20-track warm sample,
+this reduced median experimental two-tower latency from 366 ms to 226 ms.
+
+An eight-clip HCQM budget is also available through
+`load_and_split_audio(..., max_clips=8)`. The research evaluation found the
+eight-clip aggregate identical to the all-clip aggregate on the frozen
+canonical, Groove, and Slakh test sets, while bounding HCQM work to 64 seconds
+of audio. The default remains unlimited so existing inference output does not
+change implicitly.
+
 # Tempo benchmarks
 
 The canonical benchmark entry point is `deeprhythm-benchmark`. It evaluates the current model and Librosa's beat
