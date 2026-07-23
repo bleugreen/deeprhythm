@@ -1,0 +1,55 @@
+{
+  "checkpoint_sha256": "0658bf34d1243f0dc0ecd6a19afa9bd219c2a621960c970bd45b75e5c4a4f19c",
+  "lineage": {
+    "shared_feature_cache_sha256": "a8b9f5107d27c1e0ef301c114c3c9d5d05624993b0e316893e6356941ff0e9fc",
+    "phase_checkpoint_sha256": "8ab487d268adae4137a958e8f19b14c69e5f310d775777d1c54a9a46c5761a98",
+    "row_count": 3802
+  },
+  "alpha": 0.4,
+  "best_epoch": 2,
+  "validation": {
+    "soulseek-human": 0.8756756756756757,
+    "gtzan": 0.7061855670103093,
+    "crec-human-hard": 0.7272727272727273,
+    "ballroom": 0.9591836734693877,
+    "groove": 0.8780487804878049,
+    "giantsteps": 0.9242424242424242
+  },
+  "tests": {
+    "canonical-test": {
+      "baseline": {
+        "acc1": 0.7785467128027682,
+        "acc2": 0.9429065743944637
+      },
+      "fusion": {
+        "acc1": 0.7837370242214533,
+        "acc2": 0.9429065743944637
+      },
+      "by_dataset": {
+        "gtzan": 0.6869009584664537,
+        "ballroom": 0.9029850746268657,
+        "giantsteps": 0.8931297709923665
+      }
+    },
+    "groove-test": {
+      "baseline": {
+        "acc1": 0.7285714285714285,
+        "acc2": 0.9857142857142858
+      },
+      "fusion": {
+        "acc1": 0.7428571428571429,
+        "acc2": 0.9857142857142858
+      }
+    },
+    "slakh-test": {
+      "baseline": {
+        "acc1": 0.76,
+        "acc2": 0.9733333333333334
+      },
+      "fusion": {
+        "acc1": 0.78,
+        "acc2": 0.9733333333333334
+      }
+    }
+  }
+}
