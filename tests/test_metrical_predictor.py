@@ -13,6 +13,8 @@ def test_metrical_features_match_fusion_contract():
     features = temporal_metrical_features(temporal, phase, base, level)
 
     assert features.shape == (162,)
+    expected_confidence = phase[0].norm(p=-1)
+    assert torch.equal(features[[146, 149, 152, 155]], expected_confidence.repeat(4))
     assert MetricalFusion()(features[None]).shape == (1, 4)
 
 
