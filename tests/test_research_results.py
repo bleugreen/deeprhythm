@@ -21,3 +21,18 @@ def test_v07_apples_to_apples_rows_are_frozen_on_canonical_tests():
         baseline = result["datasets"][dataset]["baseline"]["uncorrected"]
         assert baseline["tracks"] == len((root / "data/splits" / dataset / "test.jsonl").read_text().splitlines())
         assert baseline["metrics_4pct"]["acc1"] == acc1
+
+
+def test_packaged_v08_qualification_matches_bundled_weights():
+    root = Path(__file__).parents[1]
+    result = json.loads((root / "docs/research/results/production-v08-qualification.json").read_text())
+
+    assert result["tracks"] == 798
+    assert len(result["predictions"]) == result["tracks"]
+    assert result["summary"]["canonical-test"]["overall"]["acc1"] == 0.7820069204152249
+    for filename, digest in result["weights"].items():
+        weights = root / "src/deeprhythm/weights" / filename
+        assert hashlib.sha256(weights.read_bytes()).hexdigest() == digest
+    bundle = root / "src/deeprhythm/weights/v0.8-bundle.json"
+    assert hashlib.sha256(bundle.read_bytes()).hexdigest() == result["bundle_manifest_sha256"]
+    assert all(row["equal"] for row in result["cpu_accelerator_parity"])
