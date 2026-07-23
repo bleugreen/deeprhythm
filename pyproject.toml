@@ -39,6 +39,9 @@ deeprhythm-annotate = "deeprhythm.annotate:main"
 Homepage = "https://github.com/bleugreen/deeprhythm"
 Issues = "https://github.com/bleugreen/deeprhythm/issues"
 
+[tool.hatch.build]
+artifacts = ["src/deeprhythm/weights/*.json"]
+
 [tool.ruff]
 line-length = 120
 target-version = "py38"
