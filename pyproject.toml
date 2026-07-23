@@ -23,6 +23,7 @@ dependencies = [
   "librosa",
   "numpy",
   "requests",
+  "pytorch-tcn",
 ]
 
 [project.optional-dependencies]
