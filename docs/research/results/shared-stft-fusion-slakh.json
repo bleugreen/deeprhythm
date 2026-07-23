@@ -1,0 +1,58 @@
+{
+  "checkpoint_sha256": "08b41deb5343f054f486286e56dfe78535040eb754a75091c710cb1baba07153",
+  "lineage": {
+    "shared_feature_cache_sha256": "a8b9f5107d27c1e0ef301c114c3c9d5d05624993b0e316893e6356941ff0e9fc",
+    "shared_slakh_cache_sha256": "e3b816ba25e7c93fe8cf233a099c534f3601c4c90deab7f7d18c942d43cb0822",
+    "phase_checkpoint_sha256": "8ab487d268adae4137a958e8f19b14c69e5f310d775777d1c54a9a46c5761a98",
+    "canonical_rows": 3802,
+    "slakh_rows": 602
+  },
+  "alpha": 0.05,
+  "best_epoch": 46,
+  "validation": {
+    "soulseek-human": 0.8756756756756757,
+    "gtzan": 0.711340206185567,
+    "crec-human-hard": 0.6590909090909091,
+    "ballroom": 0.9795918367346939,
+    "groove": 0.8780487804878049,
+    "giantsteps": 0.9393939393939394,
+    "slakh-train": 0.7280701754385965
+  },
+  "tests": {
+    "canonical-test": {
+      "baseline": {
+        "acc1": 0.7785467128027682,
+        "acc2": 0.9429065743944637
+      },
+      "fusion": {
+        "acc1": 0.7820069204152249,
+        "acc2": 0.9429065743944637
+      },
+      "by_dataset": {
+        "gtzan": 0.6837060702875399,
+        "ballroom": 0.9029850746268657,
+        "giantsteps": 0.8931297709923665
+      }
+    },
+    "groove-test": {
+      "baseline": {
+        "acc1": 0.7285714285714285,
+        "acc2": 0.9857142857142858
+      },
+      "fusion": {
+        "acc1": 0.7285714285714285,
+        "acc2": 0.9857142857142858
+      }
+    },
+    "slakh-test": {
+      "baseline": {
+        "acc1": 0.76,
+        "acc2": 0.9733333333333334
+      },
+      "fusion": {
+        "acc1": 0.76,
+        "acc2": 0.9733333333333334
+      }
+    }
+  }
+}
