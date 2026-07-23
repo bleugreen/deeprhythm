@@ -17,7 +17,6 @@ from deeprhythm.model.metrical import (
 )
 from deeprhythm.utils import get_device, load_audio, split_audio
 
-
 WEIGHT_DIR = Path(__file__).resolve().parent.parent / "weights"
 
 
@@ -34,7 +33,11 @@ class MetricalDeepRhythmPredictor:
         self.temporal = TemporalBeatEncoder().to(self.device)
         self.beat_decoder = CircularBeatDecoder().to(self.device)
         temporal = torch.load(WEIGHT_DIR / "temporal-beat-v0.8.pt", map_location=self.device, weights_only=False)
-        temporal_state = {k: v for k, v in temporal["model"].items() if k.startswith(("feature_extraction.", "tcn_beat."))}
+        temporal_state = {
+            key: value
+            for key, value in temporal["model"].items()
+            if key.startswith(("feature_extraction.", "tcn_beat."))
+        }
         self.temporal.load_state_dict(temporal_state)
         self.beat_decoder.load_state_dict(temporal["beat"])
 
