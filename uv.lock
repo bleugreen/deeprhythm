@@ -608,6 +608,7 @@ dependencies = [
     { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "pytorch-tcn" },
     { name = "requests", version = "2.32.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "requests", version = "2.32.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
     { name = "requests", version = "2.34.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
@@ -631,6 +632,7 @@ requires-dist = [
     { name = "nnaudio", specifier = "==0.3.3" },
     { name = "numpy" },
     { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytorch-tcn" },
     { name = "requests" },
     { name = "ruff", marker = "extra == 'dev'" },
     { name = "torch" },
@@ -2547,6 +2549,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e4/47/b9efed96c114afcfa3c9d3fe98a76a1d14c74a9e266d397cf6eb64be5e01/pytest-9.1.1.tar.gz", hash = "sha256:1088fbde8f2b49d95a549a195707afa7a76a3ce9bcadc26b6d71f0ffda5fe313", size = 1636369, upload-time = "2026-06-19T10:58:32.857Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl", hash = "sha256:37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c", size = 386536, upload-time = "2026-06-19T10:58:31.347Z" },
+]
+
+[[package]]
+name = "pytorch-tcn"
+version = "1.2.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy", version = "1.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "torch", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "torch", version = "2.8.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
+    { name = "torch", version = "2.13.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c1/8c/28f0a2bb34ff3a8095481990fc85d7836703e39b7d24fd4b6152a06119a9/pytorch_tcn-1.2.3.tar.gz", hash = "sha256:41e16600aae72691b2af82c87b56b18fd8c46bd98e0a2af8f109c0de1fc6da9b", size = 21754, upload-time = "2025-04-07T18:11:20.904Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/00/81/9b72e375a4c5b12d5fb3fffad2fa78d61807e4579b2ec586f9c0b1f530e5/pytorch_tcn-1.2.3-py3-none-any.whl", hash = "sha256:949dd478c7a7c04e2ba0d79e19afe4a34f083141ef908019d19e9edd729ea2ec", size = 18776, upload-time = "2025-04-07T18:11:19.2Z" },
 ]
 
 [[package]]
