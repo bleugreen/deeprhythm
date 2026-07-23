@@ -64,3 +64,42 @@ def compute_log_spectrum(
     spectrum = filter_matrix.to(audio.device) @ decibels
     minimum = spectrum.amin()
     return (spectrum - minimum) / (spectrum.amax() - minimum).clamp_min(1e-6)
+
+
+def compute_log_spectrum_from_clips(
+    magnitude,
+    *,
+    sample_rate=22050,
+    duration=30,
+    hop_length=512,
+    filter_matrix=None,
+):
+    """Build a temporal spectrum by concatenating existing clip STFT frames.
+
+    Magnitude has shape (clips, frequency, frames) and should contain four
+    eight-second clips. The independently centered clip frames are kept: the
+    temporal model is robust to those boundaries, and dropping them would
+    create a larger timing discontinuity.
+    """
+    if magnitude.ndim != 3 or magnitude.shape[0] == 0:
+        raise ValueError(
+            "magnitude must have shape (clips, frequency, frames)"
+        )
+    if filter_matrix is None:
+        n_fft = (magnitude.shape[1] - 1) * 2
+        filter_matrix = make_log_spectrum_filter(
+            n_fft=n_fft, device=magnitude.device
+        )
+    decibels = 10 * torch.log10(magnitude.clamp_min(1e-5))
+    bands = torch.einsum(
+        "bf,cft->cbt", filter_matrix.to(magnitude.device), decibels
+    )
+    spectrum = bands.permute(1, 0, 2).reshape(bands.shape[1], -1)
+    target_frames = 1 + duration * sample_rate // hop_length
+    spectrum = spectrum[:, :target_frames]
+    if spectrum.shape[1] < target_frames:
+        spectrum = torch.nn.functional.pad(
+            spectrum, (0, target_frames - spectrum.shape[1])
+        )
+    minimum = spectrum.amin()
+    return (spectrum - minimum) / (spectrum.amax() - minimum).clamp_min(1e-6)
