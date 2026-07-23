@@ -87,7 +87,10 @@ def temporal_metrical_features(temporal, raw_phase, base_probability, level_prob
     temporal = temporal[0]
     raw_phase = raw_phase[0]
     hidden = torch.cat([temporal.mean(0), temporal.std(0), temporal.amax(0), temporal.amin(0)])
-    confidence = raw_phase.norm(dim=-1)
+    # The frozen fusion checkpoint was trained with a global p=-1 norm. This
+    # intentionally preserves that feature contract; changing it requires
+    # retraining and versioning the fusion weights.
+    confidence = raw_phase.norm(p=-1)
     unit = F.normalize(raw_phase, dim=-1)
     phase = torch.complex(unit[:, 0], unit[:, 1])
     times = torch.arange(len(phase), device=phase.device) / frame_rate
