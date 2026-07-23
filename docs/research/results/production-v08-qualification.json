@@ -1,5 +1,5 @@
 {
-  "bundle_manifest_sha256": "0264ccd196866f9d916cae9943b59bed882fbd05a81b63dc23177a74f1b40756",
+  "bundle_manifest_sha256": "d076ef86fa70f8d411a75403661154444e3de6267970f534149d2fb57dc1bb0f",
   "weights": {
     "hierarchical-v0.8.pt": "0376ceb3754a7fed328163910ad7f089896a336dde10e013948707f0da2ed1f9",
     "shared-fusion-v0.8.pt": "0658bf34d1243f0dc0ecd6a19afa9bd219c2a621960c970bd45b75e5c4a4f19c",
