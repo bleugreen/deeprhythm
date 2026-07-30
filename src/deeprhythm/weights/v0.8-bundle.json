@@ -13,8 +13,8 @@
       "sha256": "8ab487d268adae4137a958e8f19b14c69e5f310d775777d1c54a9a46c5761a98"
     },
     "shared-fusion-v0.8.pt": {
-      "bytes": 90669,
-      "sha256": "0658bf34d1243f0dc0ecd6a19afa9bd219c2a621960c970bd45b75e5c4a4f19c"
+      "bytes": 89587,
+      "sha256": "c6dbca521383eb80713352997d9d00f55d40db45d5d1625fb0820639e5ef613f"
     }
   },
   "evaluation": "docs/research/results/production-v08-qualification.json"

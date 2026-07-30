@@ -1,0 +1,90 @@
+{
+  "method": "beat-rate teacher distilled into the existing shared-STFT MetricalFusion branch; no teacher is required at inference",
+  "teacher": {
+    "checkpoint_sha256": "a8b725fdb569c36f2c1001a206ffe4dbd2f1c8effd677ab51e31e43450f668b2",
+    "alpha": 0.85
+  },
+  "student": {
+    "weights_sha256": "c6dbca521383eb80713352997d9d00f55d40db45d5d1625fb0820639e5ef613f",
+    "seed": 7,
+    "distillation_weight": 2.0,
+    "epoch": 13,
+    "alpha": 0.4
+  },
+  "validation_baseline": {
+    "soulseek-human": 0.8756756756756757,
+    "gtzan": 0.7061855670103093,
+    "crec-human-hard": 0.7272727272727273,
+    "ballroom": 0.9591836734693877,
+    "groove": 0.8780487804878049,
+    "giantsteps": 0.9242424242424242,
+    "slakh-train": 0.7280701754385965
+  },
+  "validation": {
+    "soulseek-human": 0.8864864864864865,
+    "gtzan": 0.7371134020618557,
+    "crec-human-hard": 0.7727272727272727,
+    "ballroom": 0.9591836734693877,
+    "groove": 0.8536585365853658,
+    "giantsteps": 0.9242424242424242,
+    "slakh-train": 0.8157894736842105
+  },
+  "cached_test_results": {
+    "canonical-test": {
+      "baseline": {
+        "acc1": 0.7820069204152249,
+        "acc2": 0.9429065743944637
+      },
+      "distilled": {
+        "acc1": 0.7993079584775087,
+        "acc2": 0.9429065743944637
+      }
+    },
+    "groove-test": {
+      "baseline": {
+        "acc1": 0.7428571428571429,
+        "acc2": 0.9857142857142858
+      },
+      "distilled": {
+        "acc1": 0.7714285714285715,
+        "acc2": 0.9857142857142858
+      }
+    },
+    "slakh-test": {
+      "baseline": {
+        "acc1": 0.7666666666666667,
+        "acc2": 0.9733333333333334
+      },
+      "distilled": {
+        "acc1": 0.84,
+        "acc2": 0.9733333333333334
+      }
+    }
+  },
+  "audio_heldout": {
+    "soulseek-human-manifest-831.jsonl": {
+      "n": 97,
+      "packaged": {
+        "acc1": 0.9484536082474226,
+        "acc2": 1.0
+      },
+      "distilled": {
+        "acc1": 0.9381443298969072,
+        "acc2": 1.0
+      },
+      "changed": 1
+    },
+    "crec-human-hard-manifest-300.jsonl": {
+      "n": 46,
+      "packaged": {
+        "acc1": 0.6739130434782609,
+        "acc2": 0.9782608695652174
+      },
+      "distilled": {
+        "acc1": 0.7608695652173914,
+        "acc2": 1.0
+      },
+      "changed": 7
+    }
+  }
+}
