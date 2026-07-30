@@ -23,6 +23,7 @@ dependencies = [
   "librosa",
   "numpy",
   "requests",
+  "pytorch-tcn",
 ]
 
 [project.optional-dependencies]
@@ -30,10 +31,16 @@ dev = ["pytest", "ruff"]
 
 [project.scripts]
 deeprhythm-benchmark = "deeprhythm.bench.tempo:main"
+deeprhythm-taxonomy = "deeprhythm.bench.taxonomy:main"
+deeprhythm-correction = "deeprhythm.bench.correction:main"
+deeprhythm-annotate = "deeprhythm.annotate:main"
 
 [project.urls]
 Homepage = "https://github.com/bleugreen/deeprhythm"
 Issues = "https://github.com/bleugreen/deeprhythm/issues"
+
+[tool.hatch.build]
+artifacts = ["src/deeprhythm/weights/*.json"]
 
 [tool.ruff]
 line-length = 120

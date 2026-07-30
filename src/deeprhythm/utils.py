@@ -52,7 +52,7 @@ def get_weights(filename="deeprhythm-0.7.pth", quiet=False):
     return model_path
 
 
-def split_audio(audio, sr, clip_length=8, share_mem=False):
+def split_audio(audio, sr, clip_length=8, share_mem=False, max_clips=None):
     """
     Split audio into fixed-length clips and return a stacked tensor.
 
@@ -61,6 +61,8 @@ def split_audio(audio, sr, clip_length=8, share_mem=False):
     - sr: Sampling rate.
     - clip_length: Length of each clip in seconds.
     - share_mem: Whether to put the tensor in shared memory (for multiprocessing).
+    - max_clips: Optional maximum number of clips to retain.
+    - max_clips: Optional processing budget. Clips are retained from the start.
 
     Returns:
     A tensor of shape [num_clips, clip_samples].
@@ -74,6 +76,8 @@ def split_audio(audio, sr, clip_length=8, share_mem=False):
         if i + clip_samples <= len(audio):
             clip_tensor = torch.tensor(audio[i:i + clip_samples], dtype=torch.float32)
             clips.append(clip_tensor)
+            if max_clips is not None and len(clips) >= max_clips:
+                break
     if not clips:
         raise AudioTooShortError(
             f"Audio must be at least {clip_length} seconds long to extract clips. "
@@ -86,7 +90,20 @@ def split_audio(audio, sr, clip_length=8, share_mem=False):
     return stacked_clips
 
 
-def load_and_split_audio(filename, sr=22050, clip_length=8, share_mem=False):
+def load_audio(filename, sr=22050):
+    """Load mono audio at the model sampling rate."""
+    try:
+        audio, _ = librosa.load(filename, sr=sr, mono=True)
+        return audio
+    except Exception as e:
+        raise AudioLoadError(
+            f"Failed to load audio file '{filename}': {str(e)}"
+        ) from e
+
+
+def load_and_split_audio(
+    filename, sr=22050, clip_length=8, share_mem=False, max_clips=None
+):
     """
     Load an audio file and split it into fixed-length clips.
 
@@ -103,15 +120,14 @@ def load_and_split_audio(filename, sr=22050, clip_length=8, share_mem=False):
     AudioTooShortError: If audio is too short for even one clip.
     AudioLoadError: If the audio file cannot be loaded.
     """
-    try:
-        audio, _ = librosa.load(filename, sr=sr)
-        return split_audio(audio, sr, clip_length=clip_length, share_mem=share_mem)
-    except AudioTooShortError:
-        raise
-    except Exception as e:
-        raise AudioLoadError(
-            f"Failed to load audio file '{filename}': {str(e)}"
-        ) from e
+    audio = load_audio(filename, sr=sr)
+    return split_audio(
+        audio,
+        sr,
+        clip_length=clip_length,
+        share_mem=share_mem,
+        max_clips=max_clips,
+    )
 
 
 def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
@@ -122,7 +138,7 @@ def bpm_to_class(bpm, min_bpm=30, max_bpm=286, num_classes=256):
 
 
 def class_to_bpm(class_index, min_bpm=30, max_bpm=286, num_classes=256):
-    """Map a class index back to a BPM value (to the center of the class interval)."""
+    """Map a class index to the lower edge of its BPM class interval."""
     class_width = (max_bpm - min_bpm) / num_classes
     bpm = min_bpm + class_width * (class_index)
     return bpm

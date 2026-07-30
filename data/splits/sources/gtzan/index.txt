@@ -1,0 +1,1033 @@
+## ## ## ##
+## This is an index of the contents of the GTZAN dataset
+## For each wav file in the dataset we identify the artist and the song
+## created in 2014 by Bob L. Sturm at the Centre for Digital Music (C4DM) 
+## Queen Mary University of London, U.K.
+##
+## ## ## ##
+## Please cite:
+##
+## B. L. Sturm, “The state of the art ten years after a state of the art:
+## Future research in music information retrieval,” J. New Music Research,
+## vol. 43, no. 2, pp. 147–172, 2014.
+##
+## ## ## ##
+## If you have any information regarding the missing entries,
+## or correcting existing ones, please contact me, and you 
+## will be added to list below.
+## ## ## ##
+## Many thanks to:
+## Cynthia Liem for identifying Classical 80, 81, 97 (Nov. 6, 2012)
+## Clemens Hage for identifying Classical 00 -- 02 (Dec. 12, 2012)
+## Dan Ellis for corrections to pop.00069 and pop.00085 (Oct. 26 2014) 
+## Elio Quinton for identifying Metal 17, which led to IDing Metal 16, 18-20
+##    (Mar. 9 2015)
+## Matthew Davies for identifying Disco 36 and 58 (Mar. 20 2015) 
+## Robert Farrimond for identifying Metal 35 (Aug. 30 2017)
+## Francisco Rodriguez-Algarra for identifying several tracks, bringing the unknowns to 23 tracks from 73 (Jan. 23 2018)
+## Francisco Rodriguez-Algarra for making this index more consistent (Jan. 26 2018)
+## Leonard in 't Veen for identifying Disco 80-81, Hiphop 52-54, Reggae 51 (Jan. 8 2024)
+##
+## Currently missing information for 17 tracks
+##
+
+blues.00000.wav ::: John Lee Hooker ::: One Bourbon, One Scotch And One Beer
+blues.00001.wav ::: John Lee Hooker ::: I'm In The Mood For Love
+blues.00002.wav ::: John Lee Hooker ::: Think Twice Before You Go
+blues.00003.wav ::: John Lee Hooker ::: I'm Bad Like Jesse James
+blues.00004.wav ::: John Lee Hooker ::: Walkin' the Boogie
+blues.00005.wav ::: John Lee Hooker ::: Sugar Mama
+blues.00006.wav ::: John Lee Hooker ::: Dreamin' Blues
+blues.00007.wav ::: John Lee Hooker ::: Ground Hog Blues
+blues.00008.wav ::: John Lee Hooker ::: Shake It Baby
+blues.00009.wav ::: John Lee Hooker ::: It's My Own Fault
+blues.00010.wav ::: John Lee Hooker ::: Lonely Boy Boogie
+blues.00011.wav ::: John Lee Hooker ::: It Serves Me Right To Suffer
+blues.00012.wav ::: Robert Johnson ::: Cross Road Blues
+blues.00013.wav ::: Robert Johnson ::: Terraplane Blues
+blues.00014.wav ::: Robert Johnson ::: Come On In My Kitchen
+blues.00015.wav ::: Robert Johnson ::: Walking blues
+blues.00016.wav ::: Robert Johnson ::: Last Fair Deal Gone Down
+blues.00017.wav ::: Robert Johnson ::: 32-20 Blues
+blues.00018.wav ::: Robert Johnson ::: Kind Hearted Woman Blues
+blues.00019.wav ::: Robert Johnson ::: If I Had Possession Over Judgement Day
+blues.00020.wav ::: Robert Johnson ::: Preachin' Blues
+blues.00021.wav ::: Robert Johnson ::: When You Got A Good Friend
+blues.00022.wav ::: Robert Johnson ::: Ramblin' On My Mind
+blues.00023.wav ::: Robert Johnson ::: Stones In My Passway
+blues.00024.wav ::: Robert Johnson ::: Traveling Riverside Blues
+blues.00025.wav ::: Robert Johnson ::: Milkcow's Calf Blues
+blues.00026.wav ::: Robert Johnson ::: Me And The Devil Blues
+blues.00027.wav ::: Robert Johnson ::: Hell Hound On My Trail
+blues.00028.wav ::: Robert Johnson ::: Traveling Riverside Blues
+blues.00029.wav ::: Kelly Joe Phelps ::: The House Carpenter
+blues.00030.wav ::: Kelly Joe Phelps ::: River Rat Jimmy
+blues.00031.wav ::: Kelly Joe Phelps ::: Hobo's Son
+blues.00032.wav ::: Kelly Joe Phelps ::: Katy
+blues.00033.wav ::: Kelly Joe Phelps ::: Wandering Away
+blues.00034.wav ::: Kelly Joe Phelps ::: Dock Boggs Country Blues
+blues.00035.wav ::: Kelly Joe Phelps ::: Capman Bootman
+blues.00036.wav ::: Kelly Joe Phelps ::: Train Carried My Girl From Town
+blues.00037.wav ::: Kelly Joe Phelps ::: Piece By Piece
+blues.00038.wav ::: Kelly Joe Phelps ::: Many A Time
+blues.00039.wav ::: Kelly Joe Phelps ::: Goodnight Irene
+blues.00040.wav ::: Stevie Ray Vaughan ::: Love Struck Baby
+blues.00041.wav ::: Stevie Ray Vaughan ::: Pride and Joy
+blues.00042.wav ::: Stevie Ray Vaughan ::: Texas Flood
+blues.00043.wav ::: Stevie Ray Vaughan ::: Tell Me
+blues.00044.wav ::: Stevie Ray Vaughan ::: Testify
+blues.00045.wav ::: Stevie Ray Vaughan ::: Rude Mood
+blues.00046.wav ::: Stevie Ray Vaughan ::: Mary Had A Little Lamb
+blues.00047.wav ::: Stevie Ray Vaughan ::: Dirty Pool
+blues.00048.wav ::: Stevie Ray Vaughan ::: I'm Cryin'
+blues.00049.wav ::: Stevie Ray Vaughan ::: Lenny
+blues.00050.wav ::: Magic Slim & The Teardrops ::: What's Wrong
+blues.00051.wav ::: Magic Slim & The Teardrops ::: Snakebite
+blues.00052.wav ::: Magic Slim & The Teardrops ::: Please Don't Dog Me
+blues.00053.wav ::: Magic Slim & The Teardrops ::: Key To Your Door
+blues.00054.wav ::: Magic Slim & The Teardrops ::: Shake It
+blues.00055.wav ::: Magic Slim & The Teardrops ::: I Ain't Looking for No Love
+blues.00056.wav ::: Magic Slim & The Teardrops ::: Country Boy
+blues.00057.wav ::: Magic Slim & The Teardrops ::: Lump On Your Stump
+blues.00058.wav ::: Magic Slim & The Teardrops ::: Lonesome Trouble
+blues.00059.wav ::: Magic Slim & The Teardrops ::: The Man You Need
+blues.00060.wav ::: Magic Slim & The Teardrops ::: Mind Your Own Business
+blues.00061.wav ::: Clifton Chenier ::: Boppin' The Rock
+blues.00062.wav ::: Clifton Chenier ::: The Things I Did for You
+blues.00063.wav ::: Clifton Chenier ::: Yesterday (I Lost My Best Friend)
+blues.00064.wav ::: Clifton Chenier ::: Clifton's Squeeze-box Boogie
+blues.00065.wav ::: Clifton Chenier ::: I'm On My Way (Back Home To You)
+blues.00066.wav ::: Clifton Chenier ::: Ay-Te Te Fee
+blues.00067.wav ::: Clifton Chenier ::: All Night Long
+blues.00068.wav ::: Clifton Chenier ::: Opelousas Hop
+blues.00069.wav ::: Clifton Chenier ::: I'm On My Way, Part 2
+blues.00070.wav ::: Clifton Chenier ::: Think It Over
+blues.00071.wav ::: Clifton Chenier ::: Zodico Stomp
+blues.00072.wav ::: Clifton Chenier ::: The Cats Dreamin'
+blues.00073.wav ::: Buckwheat Zydeco ::: Turning Point
+blues.00074.wav ::: Buckwheat Zydeco ::: Zydeco Boogaloo
+blues.00075.wav ::: Buckwheat Zydeco ::: Ya Ya
+blues.00076.wav ::: Buckwheat Zydeco ::: Buck's Nouvelle Jole Blon
+blues.00077.wav ::: Buckwheat Zydeco ::: On A Night Like This 
+blues.00078.wav ::: Buckwheat Zydeco ::: Hot Tamale Baby
+blues.00079.wav ::: Buckwheat Zydeco ::: Ma Tit Fille
+blues.00080.wav ::: Buckwheat Zydeco ::: Hey Good Lookin'
+blues.00081.wav ::: Buckwheat Zydeco ::: Buck's Hot Rod
+blues.00082.wav ::: Buckwheat Zydeco ::: Why Does Love Got to Be So Sad
+blues.00083.wav ::: Buckwheat Zydeco ::: Drivin' Old Grey
+blues.00084.wav ::: Buckwheat Zydeco ::: Zydeco Honky Tonk
+blues.00085.wav ::: Hot Toddy ::: Crow Jane
+blues.00086.wav ::: Hot Toddy ::: Cross Cut Saw
+blues.00087.wav ::: Hot Toddy ::: Right From The Start
+blues.00088.wav ::: Hot Toddy ::: She's My Girl
+blues.00089.wav ::: Hot Toddy ::: I Wish You Would
+blues.00090.wav ::: Hot Toddy ::: One More Night
+blues.00091.wav ::: Hot Toddy ::: Rescue Me
+blues.00092.wav ::: Hot Toddy ::: Neighbors Land
+blues.00093.wav ::: Hot Toddy ::: Mermaids Flirt With Me
+blues.00094.wav ::: Hot Toddy ::: My Babe
+blues.00095.wav ::: Hot Toddy ::: Down By The Riverside
+blues.00096.wav ::: Hot Toddy ::: Long Distance
+blues.00097.wav ::: Hot Toddy ::: T-Bone Shuffle
+blues.00098.wav ::: Albert Collins ::: Iceman
+blues.00099.wav ::: Albert Collins ::: Lights Are On But Nobody's Home
+classical.00000.wav ::: Johann Sebastian Bach ::: Concert for oboe, BWV 1053, I. Allegro
+classical.00001.wav ::: Johann Sebastian Bach ::: Concert for oboe, BWV 1053, II. Sicilliano
+classical.00002.wav ::: Johann Sebastian Bach ::: Concert for oboe, BWV 1053, III. Allegro
+classical.00003.wav ::: Johann Sebastian Bach ::: Ich steh mit einem Fuss im Grabe, BWV 156 Sinfonia
+classical.00004.wav ::: Johann Sebastian Bach ::: Canonic Trio in F, BWV 1040
+classical.00005.wav ::: Carl Philipp Emanuel Bach ::: Oboe Concerto in E Flat Major, Wq 165, Allegro
+classical.00006.wav ::: Carl Philipp Emanuel Bach ::: Oboe Concerto in E Flat Major, Wq 165, Adagio Ma Non Troppo
+classical.00007.wav ::: Carl Philipp Emanuel Bach ::: Oboe Concerto in E Flat Major, Wq 165, Allegro Ma Non Troppo
+classical.00008.wav ::: Carl Philipp Emanuel Bach ::: Oboe Concerto in B Flat Major, Wq 164, Allegretto
+classical.00009.wav ::: Carl Philipp Emanuel Bach ::: Oboe Concerto in B Flat Major, Wq 164, Largo E Mesto
+classical.00010.wav ::: Carl Philipp Emanuel Bach ::: Oboe Concerto in B Flat Major, Wq 164, Allegro Moderato
+classical.00011.wav ::: Wofgang Amadeus Mozart ::: Symphony No.36 in C, K.425, "Linz", Adagio, Allegro spiritoso
+classical.00012.wav ::: Wofgang Amadeus Mozart ::: Symphony No.36 in C, K.425, "Linz", Andante
+classical.00013.wav ::: Wofgang Amadeus Mozart ::: Symphony No.36 in C, K.425, "Linz", Menuetto
+classical.00014.wav ::: Wofgang Amadeus Mozart ::: Symphony No.36 in C, K.425, "Linz", Finale (Presto)
+classical.00015.wav ::: Wofgang Amadeus Mozart ::: Symphony No.38 in D, K.504, "Prague", Adagio, Allegro
+classical.00016.wav ::: Wofgang Amadeus Mozart ::: Symphony No.38 in D, K.504, "Prague", Andante
+classical.00017.wav ::: Wofgang Amadeus Mozart ::: Symphony No.38 in D, K.504, "Prague", Finale (Presto)
+classical.00018.wav ::: Wofgang Amadeus Mozart ::: Symphony No.39 in E flat, K.543, Adagio, Allegro
+classical.00019.wav ::: Wofgang Amadeus Mozart ::: Symphony No.39 in E flat, K.543, Andante con moto
+classical.00020.wav ::: Wofgang Amadeus Mozart ::: Symphony No.39 in E flat, K.543, Menuetto (Allegretto)
+classical.00021.wav ::: Wofgang Amadeus Mozart ::: Symphony No.39 in E flat, K.543, Finale (Allegro)
+classical.00022.wav ::: Wofgang Amadeus Mozart ::: Symphony No.40 in G minor, K.550, Molto allegro
+classical.00023.wav ::: Wofgang Amadeus Mozart ::: Symphony No.40 in G minor, K.550, Andante
+classical.00024.wav ::: Wofgang Amadeus Mozart ::: Symphony No.40 in G minor, K.550, Menuetto (Allegretto)
+classical.00025.wav ::: Wofgang Amadeus Mozart ::: Symphony No.40 in G minor, K.550, Finale (Allegro assai)
+classical.00026.wav ::: Wofgang Amadeus Mozart ::: Symphony No.41 in C, K.551, "Jupiter", Allegro vivace
+classical.00027.wav ::: Wofgang Amadeus Mozart ::: Symphony No.41 in C, K.551, "Jupiter", Andante cantabile
+classical.00028.wav ::: Wofgang Amadeus Mozart ::: Symphony No.41 in C, K.551, "Jupiter", Menuetto (Allegretto)
+classical.00029.wav ::: Wofgang Amadeus Mozart ::: Symphony No.41 in C, K.551, "Jupiter", Molto allegro
+classical.00030.wav ::: Claude Debussy ::: Quartet in G minor for Strings, Op. 10, Anime et tres decide
+classical.00031.wav ::: Claude Debussy ::: Quartet in G minor for Strings, Op. 10, Assez vif et bien rythme
+classical.00032.wav ::: Claude Debussy ::: Quartet in G minor for Strings, Op. 10, Andantino, doucement expressif
+classical.00033.wav ::: Claude Debussy ::: Quartet in G minor for Strings, Op. 10, Tres modere, Tres mouvemente et avec passion, Tres anime, Tres vii
+classical.00034.wav ::: Maurice Ravel ::: Quartet in F Major for Strings, Allegro moderato. Tres doux
+classical.00035.wav ::: Maurice Ravel ::: Quartet in F Major for Strings, Assez vif - Tres rythme
+classical.00036.wav ::: Maurice Ravel ::: Quartet in F Major for Strings, Tres lent
+classical.00037.wav ::: Maurice Ravel ::: Quartet in F Major for Strings, Vif et agite
+classical.00038.wav ::: Henri Dutilleux ::: Ainsi la nuit for String Quartet: I. Nocturne
+classical.00039.wav ::: Henri Dutilleux ::: Ainsi la nuit for String Quartet: II. Miroir d'espace
+classical.00040.wav ::: Henri Dutilleux ::: Ainsi la nuit for String Quartet: IV. Litanies 2
+classical.00041.wav ::: Henri Dutilleux ::: Ainsi la nuit for String Quartet: VII. Temps suspendu
+classical.00042.wav ::: Giovanni Gabrieli ::: Canzon XIII
+classical.00043.wav ::: Richard Strauss ::: Konzert Fur Waldhorn Mit Orchester, Op. 11, Allegro
+classical.00044.wav ::: George Gershwin ::: Rhapsody in Blue (v1)
+classical.00045.wav ::: Richard Strauss ::: Fuge Fur Klavier
+classical.00046.wav ::: Karol Szymanowski ::: Violin Concerto No. 1, Op. 35
+classical.00047.wav ::: Leonard Bernstein ::: On the Town, Three Dance Episodes, Lonely town
+classical.00048.wav ::: George Gershwin ::: Rhapsody in Blue (v2)
+classical.00049.wav ::: Ludwig van Beethoven ::: Symphony No.1 in C, Op.21, Finale (Adagio - Allegro molto e vivace)
+classical.00050.wav ::: Samuel Barber ::: Adagio for Strings
+classical.00051.wav ::: Pyotr Ilyich Tchaikovsky ::: Symphony 6, mvt. 1
+classical.00052.wav ::: Leonard Bernstein ::: Candide Overture
+classical.00053.wav ::: Giovanni Gabrieli ::: Canzon XIII
+classical.00054.wav ::: Giuseppe Verdi ::: Rigoletto, Act 2, Tutte le feste al tiempo
+classical.00055.wav ::: Leonard Bernstein ::: Symphonic dances from West Side Story, Somewhere
+classical.00056.wav ::: Giovanni Rovetta ::: Solemn Mass for Feast of Santa Maria della Salute
+classical.00057.wav ::: Leonard Bernstein ::: Symphonic dances from West Side Story, Scherzo
+classical.00058.wav ::: Erik Satie :::  Gymnopedies no. 3
+classical.00059.wav ::: Erik Satie ::: Mercure, Marche-Ouverture
+classical.00060.wav ::: Erik Satie ::: La Belle Excentrique
+classical.00061.wav ::: ::: 
+classical.00062.wav ::: :::
+classical.00063.wav ::: Franz Schubert ::: Piano Sonata No.21 in B flat, D.960, Molto moderato
+classical.00064.wav ::: Franz Schubert ::: Piano Sonata No.21 in B flat, D.960, Andante sostenuto
+classical.00065.wav ::: Franz Schubert ::: Piano Sonata No.21 in B flat, D.960, Scherzo
+classical.00066.wav ::: Franz Schubert ::: Piano Sonata No.21 in B flat, D.960, Allegro ma non troppo
+classical.00067.wav ::: Franz Schubert ::: Fantasy In C Major, "Wanderer", Allegro Con Fuoco Ma Non Troppo
+classical.00068.wav ::: Franz Joseph Haydn ::: Symphony No. 26 in D minor, "Lamentatione", Allegro assai con spirito
+classical.00069.wav ::: Franz Joseph Haydn ::: Symphony No. 26 in D minor, "Lamentatione", Adagio
+classical.00070.wav ::: Franz Joseph Haydn ::: Symphony No. 26 in D minor, "Lamentatione", Minuet and Trio
+classical.00071.wav ::: Franz Joseph Haydn ::: Symphony No. 35 in B flat major, Allegro di molto
+classical.00072.wav ::: Franz Joseph Haydn ::: Symphony No. 35 in B flat major, Andante
+classical.00073.wav ::: Franz Joseph Haydn ::: Symphony No. 35 in B flat major, Minuet and Trio
+classical.00074.wav ::: Franz Joseph Haydn ::: Symphony No. 35 in B flat major, Presto
+classical.00075.wav ::: Franz Joseph Haydn ::: Symphony No. 49 in F minor, Adagio
+classical.00076.wav ::: Franz Joseph Haydn ::: Symphony No. 49 in F minor, Allegro di molto
+classical.00077.wav ::: Ludwig van Beethoven ::: Piano Sonata No.8, "Pathetique", Grave
+classical.00078.wav ::: Ludwig van Beethoven ::: Piano Sonata No.8, "Pathetique", Adagio cantabile
+classical.00079.wav ::: Ludwig van Beethoven ::: Piano Sonata No.8, "Pathetique", Rondo, allegro
+classical.00080.wav ::: Pyotr Ilyich Tchaikovsky ::: Symphony 6, mvt. 1
+classical.00081.wav ::: Pyotr Ilyich Tchaikovsky ::: Symphony 6, mvt. 2
+classical.00082.wav ::: Percy Grainger ::: Hill-Song No. 2
+classical.00083.wav ::: Percy Grainger ::: Ye Banks and Braes o'Bonnie Doon
+classical.00084.wav ::: Percy Grainger ::: Let's Dance Gay in Green Meadow
+classical.00085.wav ::: Percy Grainger ::: Lads of Wamphray March
+classical.00086.wav ::: Percy Grainger ::: Shepherd's Hey
+classical.00087.wav ::: Percy Grainger ::: The Merry King
+classical.00088.wav ::: Percy Grainger ::: Molly on the Shore
+classical.00089.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Spring: Allegro I.
+classical.00090.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Spring: Largo e pianissimo sempre II.
+classical.00091.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Spring: Allegro III.
+classical.00092.wav ::: Antonio Vivaldi ::: Piccolo Concerto in A Minor, RV 445: Larghetto
+classical.00093.wav ::: Antonio Vivaldi :::
+classical.00094.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Summer: Allegro non molto; Allegro I.
+classical.00095.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Summer: Adaio; Presto II.
+classical.00096.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Summer: Presto - Tempo impetuoso d'estate III.
+classical.00097.wav ::: Antonio Vivaldi ::: Violin Concerto in A minor Op. 3 No. 6, first movement
+classical.00098.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Autumn: Allegro I.
+classical.00099.wav ::: Antonio Vivaldi ::: The Four Seasons, Op. 8: Autumn: Adagio molto II.
+country.00000.wav ::: Faith Hill ::: Just To Hear You Say That You Love Me
+country.00001.wav ::: Patty Loveless ::: That's the Kind of Mood I'm In
+country.00002.wav ::: ::: I Wish I Had A Nickel
+country.00003.wav ::: Garth Brooks ::: If tomorrow never comes
+country.00004.wav ::: Suzy Bogguss ::: Outbound Plane
+country.00005.wav ::: Shania Twain ::: You Win My Love
+country.00006.wav ::: John Anderson ::: Straight Tequila Night
+country.00007.wav ::: Travis Tritt ::: Best Of Intentions
+country.00008.wav ::: Vince Gill ::: Never Knew Lonely
+country.00009.wav ::: The Clark Family Experience ::: Meanwhile, back at the ranch
+country.00010.wav ::: Don Gibson ::: I Can't Stop Loving You
+country.00011.wav ::: Patsy Cline ::: A Church, a Courtroom, and Then Goodbye
+country.00012.wav ::: Billy Joe Shaver ::: Music City
+country.00013.wav ::: Loretta Lynn ::: Let Your Love Flow
+country.00014.wav ::: Nina Martinique ::: Silver Threads And Golden Needles
+country.00015.wav ::: George Jones ::: White Lightening
+country.00016.wav ::: Johnny Cash ::: I Walk The Line
+country.00017.wav ::: Floyd Cramer ::: San Antonio Rose
+country.00018.wav ::: Billie Jo Spears ::: I'm Gonna Be A Country Girl Again
+country.00019.wav ::: Willie Nelson ::: Shelter Of My Arms
+country.00020.wav ::: Ray Peterson ::: Tell Laura I Love Her
+country.00021.wav ::: Burt Bacharach ::: Raindrops Keep Falling on my Head
+country.00022.wav ::: Karl Denver ::: Love Me With All Your Heart
+country.00023.wav ::: Kenny Rogers ::: Today I Started Loving You Again
+country.00024.wav ::: Hank Williams ::: Your Cheatin' Heart
+country.00025.wav ::: Emmylou Harris ::: Love Hurts
+country.00026.wav ::: Willie Nelson ::: Home Is Where You're Happy
+country.00027.wav ::: Billy Joe Shaver ::: Chicken On The Ground
+country.00028.wav ::: Jerry Lee Lewis ::: Would You Take Another Chance On Me
+country.00029.wav ::: Johnny Rodriguez ::: Ridin' My Thumb To Mexico
+country.00030.wav ::: :::
+country.00031.wav ::: Jo El Sonnier ::: Come On Joe
+country.00032.wav ::: Sonny Throckmorton ::: The Last Cheaters Waltz
+country.00033.wav ::: The Kendalls ::: Teach me to cheat
+country.00034.wav ::: Merle Haggard ::: Sally let your bangs hang down
+country.00035.wav ::: The Statler Brothers ::: Oh Baby Mine (I Get So Lonely)
+country.00036.wav ::: Johnny Paycheck ::: Old Violin
+country.00037.wav ::: Larry Boone ::: Don't give candy to a stranger
+country.00038.wav ::: Los Lobos ::: Our Last Night
+country.00039.wav ::: Wayne Toups & Zydecajun ::: Johnnie Can't Dance
+country.00040.wav ::: Kentucky Headhunters ::: Dumas Walker
+country.00041.wav ::: Johnny Cash ::: Goin' By The Book
+country.00042.wav ::: Normaltown Flyers ::: Rockin' The Love Boat
+country.00043.wav ::: Sammy Kershaw ::: Cadillac Style
+country.00044.wav ::: Wesley Dennis ::: It Ain't Fair
+country.00045.wav ::: Shania Twain ::: Any Man Of Mine
+country.00046.wav ::: Jimmie Skinner ::: I Found My Girl In The USA
+country.00047.wav ::: Connie Hall ::: I'm the Girl in the USA
+country.00048.wav ::: Johnny Preston ::: Running Bear
+country.00049.wav ::: George Jones ::: Out Of Control
+country.00050.wav ::: Vince Gill ::: Never Alone
+country.00051.wav ::: Vince Gill ::: Never Knew Lonely
+country.00052.wav ::: Vince Gill ::: When I Call Your Name
+country.00053.wav ::: Vince Gill ::: Liza Jane
+country.00054.wav ::: Vince Gill ::: Look At Us
+country.00055.wav ::: Vince Gill ::: Take Your Memory With You
+country.00056.wav ::: Vince Gill ::: Pocket Full Of Gold
+country.00057.wav ::: Vince Gill ::: The Heart Won't Lie
+country.00058.wav ::: Vince Gill ::: Don't Let Our Love Start Slippin' Away
+country.00059.wav ::: Vince Gill ::: I Still Believe In You
+country.00060.wav ::: Vince Gill ::: No Future In The Past
+country.00061.wav ::: Vince Gill ::: Tryin' To Get Over You
+country.00062.wav ::: Vince Gill ::: One More Last Chance
+country.00063.wav ::: Vince Gill ::: I Can't Tell You Why
+country.00064.wav ::: Vince Gill ::: I Will Always Love You
+country.00065.wav ::: Willie Nelson ::: Blue Eyes Crying In The Rain
+country.00066.wav ::: Willie Nelson ::: If You've Got The Money I've Got The Time
+country.00067.wav ::: Willie Nelson ::: Georgia On My Mind
+country.00068.wav ::: Willie Nelson ::: Blue Skies
+country.00069.wav ::: Willie Nelson ::: My Heroes Have Always Been Cowboys
+country.00070.wav ::: Willie Nelson ::: On the road again
+country.00071.wav ::: Willie Nelson ::: Always On My Mind
+country.00072.wav ::: Willie Nelson ::: City Of New Orleans
+country.00073.wav ::: Willie Nelson ::: Forgiving You Was Easy
+country.00074.wav ::: Willie Nelson ::: Living In The Promiseland
+country.00075.wav ::: Willie Nelson ::: Midnight Rider
+country.00076.wav ::: Willie Nelson ::: Remember Me (When The Candle Lights Are Gleaming)
+country.00077.wav ::: Willie Nelson ::: Uncloudy Day
+country.00078.wav ::: Willie Nelson ::: Angel Flying Too Close To The Ground
+country.00079.wav ::: Willie Nelson ::: The Last Thing I Needed First Thing This Morning
+country.00080.wav ::: Willie Nelson ::: Nothing I Can Do About It Now
+country.00081.wav ::: Brad Paisley ::: Long Sermon
+country.00082.wav ::: Brad Paisley ::: Me Neither
+country.00083.wav ::: Brad Paisley ::: Who Needs Pictures
+country.00084.wav ::: Brad Paisley ::: Don't Breathe
+country.00085.wav ::: Brad Paisley ::: He Didn't Have To Be
+country.00086.wav ::: Brad Paisley ::: It Never Woulda Worked Out Anyway
+country.00087.wav ::: Brad Paisley ::: Holdin' On To You
+country.00088.wav ::: Brad Paisley ::: I've Been Better
+country.00089.wav ::: Brad Paisley ::: We Danced
+country.00090.wav ::: Brad Paisley ::: Sleepin' On The Foldout
+country.00091.wav ::: Brad Paisley ::: Cloud Of Dust
+country.00092.wav ::: Brad Paisley ::: The Nervous Breakdown
+country.00093.wav ::: Brad Paisley ::: In the Garden
+country.00094.wav ::: George Strait ::: I Just Want To Dance With You
+country.00095.wav ::: George Strait ::: One Step At A Time
+country.00096.wav ::: George Strait ::: True
+country.00097.wav ::: George Strait ::: Remember The Alamo
+country.00098.wav ::: George Strait ::: Maria
+country.00099.wav ::: George Strait ::: We Really Shouldn't Be Doing This
+disco.00000.wav ::: Boz Scaggs ::: Lowdown
+disco.00001.wav ::: Gloria Gaynor ::: I Will Survive
+disco.00002.wav ::: Archie Bell and The Drells ::: Look Back Over Your Shoulder
+disco.00003.wav ::: Don Armando ::: Deputy of Love
+disco.00004.wav ::: Carl Douglas ::: Run Back
+disco.00005.wav ::: Odyssey ::: Native New Yorker
+disco.00006.wav ::: Alec R. Costandinos ::: Romeo And Juliet 
+disco.00007.wav ::: Miquel Brown ::: So Many Men, So Little Time
+disco.00008.wav ::: Ashford & Simpson ::: Found A Cure
+disco.00009.wav ::: Osibisa ::: Get Up
+disco.00010.wav ::: Cheryl Lynn ::: Encore
+disco.00011.wav ::: Billy Ocean ::: Can You Feel It
+disco.00012.wav ::: Carl Carlton ::: She's A Bad Mama Jama
+disco.00013.wav ::: Donna Summer ::: Back Off Boogaloo
+disco.00014.wav ::: Bee Gees ::: Staying Alive
+disco.00015.wav ::: Heatwave ::: Boogie Nights
+disco.00016.wav ::: Earth, Wind & Fire ::: Sing a Song
+disco.00017.wav ::: Ottawan ::: You're Ok
+disco.00018.wav ::: Sabrina ::: S.E.X.
+disco.00019.wav ::: New York City ::: I'm Doing Fine Now
+disco.00020.wav ::: Clarence Carter ::: Patches
+disco.00021.wav ::: Gloria Gaynor ::: Never Can Say Goodbye
+disco.00022.wav ::: The Gibson Brothers ::: Ooh! What A Life
+disco.00023.wav ::: Latoya Jackson ::: Playboy (Be Me)
+disco.00024.wav ::: Ottawan ::: Help, Get Me Some Help
+disco.00025.wav ::: Evelyn Thomas ::: High Energy
+disco.00026.wav ::: Latoya Jackson ::: (Baby) Do The Salsa
+disco.00027.wav ::: The Sugarhill Gang ::: Rapper's Delight
+disco.00028.wav ::: The Gibson Brothers ::: Better Do It Salsa
+disco.00029.wav ::: Evelyn Thomas ::: Heartless
+disco.00030.wav ::: The Gibson Brothers ::: Latin America 
+disco.00031.wav ::: The Three Degrees ::: My Simple Heart
+disco.00032.wav ::: David Christie ::: Saddle Up
+disco.00033.wav ::: The Tymes ::: You Little Trustmaker
+disco.00034.wav ::: Evelyn Thomas ::: Reflections
+disco.00035.wav ::: The Gibson Brothers ::: Cuba
+disco.00036.wav ::: Brenda Reid ::: Reaching For The Best
+disco.00037.wav ::: The Gibson Brothers ::: Que Sera Mi Vida
+disco.00038.wav ::: Gloria Gaynor ::: I Am What I Am
+disco.00039.wav ::: George McCrae ::: I Can't Leave You Alone
+disco.00040.wav ::: David Christie ::: Stress
+disco.00041.wav ::: Heatwave ::: Always and Forever
+disco.00042.wav ::: Disco-Tex and the Sex-O-Lettes ::: I Wanna Dance Wit' Choo
+disco.00043.wav ::: Harold Melvin & the Blue Notes ::: Satisfaction Guaranteed
+disco.00044.wav ::: Ottawan ::: Hands Up (Give Me Your Heart)
+disco.00045.wav ::: Ottawan ::: D.i.s.c.o.
+disco.00046.wav ::: Donna Summer ::: Hot Stuff
+disco.00047.wav ::: Barbra Streisand; Donna Summer ::: No More Tears (Enough Is Enough)
+disco.00048.wav ::: Carl Douglas ::: Kung Fu Fighting
+disco.00049.wav ::: KC and the Sunshine Band ::: Boogie Shoes
+disco.00050.wav ::: KC and the Sunshine Band ::: That's The Way (I Like It)
+disco.00051.wav ::: KC and the Sunshine Band ::: That's The Way (I Like It)
+disco.00052.wav ::: Village People ::: In the Navy
+disco.00053.wav ::: Amii Stewart ::: Knock On Wood
+disco.00054.wav ::: Chic ::: I Want Your Love
+disco.00055.wav ::: The Trammps ::: Disco Inferno
+disco.00056.wav ::: Earth, Wind & Fire ::: Fantasy
+disco.00057.wav ::: Boney M. ::: Auld Lang Syne
+disco.00058.wav ::: Earth, Wind & Fire ::: Boogie Wonderland
+disco.00059.wav ::: Earth, Wind & Fire ::: Let's Groove Tonight
+disco.00060.wav ::: The Trammps ::: Disco Inferno
+disco.00061.wav ::: Anita Ward ::: Ring My Bell
+disco.00062.wav ::: Peter Brown ::: Dance With Me
+disco.00063.wav ::: Boney M. ::: She's Crazy Like a Fool
+disco.00064.wav ::: Lipps, Inc. ::: Funkytown
+disco.00065.wav ::: Evelyn 'Champagne' King ::: Shame
+disco.00066.wav ::: Peaches & Herb ::: Shake Your Groove Thing
+disco.00067.wav ::: ABBA ::: Dancing Queen
+disco.00068.wav ::: ABBA ::: Take A Chance On Me
+disco.00069.wav ::: KC and the Sunshine Band ::: Shake, Shake, Shake
+disco.00070.wav ::: KC and the Sunshine Band ::: That's The Way (I Like It)
+disco.00071.wav ::: KC and the Sunshine Band ::: Get Down Tonight
+disco.00072.wav ::: ABBA ::: Mamma Mia
+disco.00073.wav ::: KC and the Sunshine Band ::: I'm Your Boogie Man
+disco.00074.wav ::: KC and the Sunshine Band ::: Get Down Tonight
+disco.00075.wav ::: Village People ::: Macho Man
+disco.00076.wav ::: Love & Kisses ::: Thank God It's Friday
+disco.00077.wav ::: Tavares ::: Heaven must be missing an angel
+disco.00078.wav ::: Gloria Gaynor ::: I Am What I Am
+disco.00079.wav ::: Peter Brown ::: Love Is Just The Game
+disco.00080.wav ::: Dazzle You ::: Dazzle
+disco.00081.wav ::: Serge Ponsar ::: Out In The Night [Extended Version]
+disco.00082.wav ::: GQ ::: Disco Nights (Rock-Freak)
+disco.00083.wav ::: Rick Dees ::: Disco Duck
+disco.00084.wav ::: :::
+disco.00085.wav ::: Tom Tom Club ::: Wordy Rappinghood
+disco.00086.wav ::: Alicia Bridges ::: I love the night life
+disco.00087.wav ::: The Supremes ::: He's My Man
+disco.00088.wav ::: Meco ::: Star Wars Theme
+disco.00089.wav ::: The Trammps ::: Disco Inferno
+disco.00090.wav ::: Village People ::: Fire Island
+disco.00091.wav ::: Silver Convention ::: Fly Robin Fly
+disco.00092.wav ::: Blondie ::: Heart Of Glass
+disco.00093.wav ::: Van McCoy ::: The Hustle
+disco.00094.wav ::: Bronski Beat ::: WHY?
+disco.00095.wav ::: Donna Summer ::: Bad Girls
+disco.00096.wav ::: Shirley & Company ::: Shame, Shame, Shame
+disco.00097.wav ::: Patrick Cowley; Sylvester ::: Do You Wanna Funk?
+disco.00098.wav ::: Boney M. ::: Rasputin
+disco.00099.wav ::: Boney M. ::: Rasputin
+hiphop.00000.wav ::: Afrika Bambaataa ::: Looking for the Perfect Beat
+hiphop.00001.wav ::: Wu-Tang Clan ::: Triumph
+hiphop.00002.wav ::: De La Soul ::: Buddy
+hiphop.00003.wav ::: Ice Cube ::: Friday
+hiphop.00004.wav ::: De La Soul ::: It Ain't All Good
+hiphop.00005.wav ::: Ice Cube ::: We Be Clubbin' (DMX Jungle remix)
+hiphop.00006.wav ::: Ice Cube ::: You Can Do It
+hiphop.00007.wav ::: Wu-Tang Clan ::: Gravel Pit
+hiphop.00008.wav ::: Beastie Boys ::: Slow And Low
+hiphop.00009.wav ::: Beastie Boys ::: Shake Your Rump
+hiphop.00010.wav ::: Beastie Boys ::: Skills To Pay The Bills
+hiphop.00011.wav ::: Beastie Boys ::: Root Down
+hiphop.00012.wav ::: Beastie Boys ::: Sure Shot
+hiphop.00013.wav ::: Beastie Boys ::: Body Movin' (Fatboy Slim Remix)
+hiphop.00014.wav ::: Beastie Boys ::: Fight For Your Right
+hiphop.00015.wav ::: Beastie Boys ::: Bodhisattva Vow
+hiphop.00016.wav ::: Beastie Boys ::: Alive
+hiphop.00017.wav ::: Beastie Boys ::: Jimmy James
+hiphop.00018.wav ::: Beastie Boys ::: Three MC's and One DJ
+hiphop.00019.wav ::: Beastie Boys ::: Shadrach
+hiphop.00020.wav ::: Beastie Boys ::: Brass Monkey
+hiphop.00021.wav ::: Beastie Boys ::: The Negotiation Limerick File
+hiphop.00022.wav ::: Beastie Boys ::: Get It Together
+hiphop.00023.wav ::: Beastie Boys ::: Remote Control
+hiphop.00024.wav ::: Beastie Boys ::: Hey Ladies
+hiphop.00025.wav ::: Beastie Boys ::: Intergalactic
+hiphop.00026.wav ::: 3LW ::: No More (Baby I'ma Do Right)
+hiphop.00027.wav ::: The Ambassador ::: One-Two
+hiphop.00028.wav ::: Dirt ::: Divine Lines
+hiphop.00029.wav ::: Aaliyah ::: Try Again
+hiphop.00030.wav ::: Ram Jam World ::: Bluesy Baby (Ed Rush & Optical Remix)
+hiphop.00031.wav ::: Pink ::: Can't Take Me Home
+hiphop.00032.wav ::: De La Soul; Jungle Brothers; Q-Tip; Queen Latifah; Monie Love ::: Buddy (Native Tongue Decision)
+hiphop.00033.wav ::: Dr Dre ::: The Next Episode
+hiphop.00034.wav ::: Nice & Smooth ::: Hip Hop Junkies
+hiphop.00035.wav ::: Allen Iverson ::: 40 Bars
+hiphop.00036.wav ::: Beastie Boys ::: Brass Monkey
+hiphop.00037.wav ::: Lil Bow Wow ::: Bounce With Me
+hiphop.00038.wav ::: 2Pac ::: California Love
+hiphop.00039.wav ::: Lauryn Hill ::: Every Ghetto, Every City
+hiphop.00040.wav ::: Lauryn Hill ::: Ex-Factor
+hiphop.00041.wav ::: Wu-Tang Clan ::: Dog Shit
+hiphop.00042.wav ::: Wu-Tang Clan ::: Triumph
+hiphop.00043.wav ::: Wyclef Jean ::: Anything Can Happen
+hiphop.00044.wav ::: Wyclef Jean ::: Guantanamera
+hiphop.00045.wav ::: Lauryn Hill ::: Every Ghetto, Every City
+hiphop.00046.wav ::: A Tribe Called Quest ::: Check The Rhime
+hiphop.00047.wav ::: A Tribe Called Quest ::: Award Tour
+hiphop.00048.wav ::: A Tribe Called Quest ::: Can I Kick It?
+hiphop.00049.wav ::: A Tribe Called Quest ::: Scenario
+hiphop.00050.wav ::: A Tribe Called Quest ::: Electric Relaxation
+hiphop.00051.wav ::: A Tribe Called Quest ::: Luck Of Lucien
+hiphop.00052.wav ::: Young MC ::: After School
+hiphop.00053.wav ::: Young MC ::: The Right One
+hiphop.00054.wav ::: Young MC ::: The Um Dee Dum Song
+hiphop.00055.wav ::: Cypress Hill ::: I want to get high
+hiphop.00056.wav ::: Cypress Hill ::: I Ain't Goin' Out Like That
+hiphop.00057.wav ::: Cypress Hill ::: Lick A Shot
+hiphop.00058.wav ::: Cypress Hill ::: Lil' Putos
+hiphop.00059.wav ::: Cypress Hill ::: Hits From The Bong
+hiphop.00060.wav ::: Cypress Hill ::: What Go Around Come Around, Kid
+hiphop.00061.wav ::: Cypress Hill ::: A to the K
+hiphop.00062.wav ::: A Tribe Called Quest ::: Keeping It Moving
+hiphop.00063.wav ::: A Tribe Called Quest ::: Find A Way
+hiphop.00064.wav ::: A Tribe Called Quest ::: Sucka Nigga
+hiphop.00065.wav ::: A Tribe Called Quest ::: Check The Rhime
+hiphop.00066.wav ::: A Tribe Called Quest ::: Bonita Applebum
+hiphop.00067.wav ::: A Tribe Called Quest ::: Award Tour
+hiphop.00068.wav ::: A Tribe Called Quest ::: Can I Kick It?
+hiphop.00069.wav ::: A Tribe Called Quest ::: Scenario
+hiphop.00070.wav ::: A Tribe Called Quest ::: Buggin' Out
+hiphop.00071.wav ::: A Tribe Called Quest ::: If The Papes Come
+hiphop.00072.wav ::: A Tribe Called Quest ::: Electric Relaxation
+hiphop.00073.wav ::: A Tribe Called Quest ::: Jazz (We've Got)
+hiphop.00074.wav ::: A Tribe Called Quest ::: I Left My Wallet In El Segundo
+hiphop.00075.wav ::: A Tribe Called Quest ::: Stressed Out
+hiphop.00076.wav ::: 50 Cent ::: Thug Love
+hiphop.00077.wav ::: Busta Rhymes ::: What's It Gonna Be?
+hiphop.00078.wav ::: 50 Cent ::: Thug Love
+hiphop.00079.wav ::: Eminem ::: The Real Slim Shady
+hiphop.00080.wav ::: Eminem ::: Marshall Mathers
+hiphop.00081.wav ::: Public Enemy ::: Contract on the World Love Jam
+hiphop.00082.wav ::: Public Enemy ::: Brothers Gonna Work It Out
+hiphop.00083.wav ::: Public Enemy ::: 911 Is A Joke
+hiphop.00084.wav ::: Public Enemy ::: Incident At 66.6 FM
+hiphop.00085.wav ::: Public Enemy ::: Welcome To The Terrordome
+hiphop.00086.wav ::: Public Enemy ::: Pollywanacraka
+hiphop.00087.wav ::: Public Enemy ::: Anti-Nigger Machine
+hiphop.00088.wav ::: Public Enemy ::: Burn Hollywood Burn
+hiphop.00089.wav ::: Public Enemy ::: Power To The People
+hiphop.00090.wav ::: Public Enemy ::: Who Stole the Soul
+hiphop.00091.wav ::: Public Enemy ::: Fear of a Black Planet
+hiphop.00092.wav ::: Public Enemy ::: Revolutionary Generation
+hiphop.00093.wav ::: Public Enemy ::: Can't Do Nuttin' For Ya, Man!
+hiphop.00094.wav ::: Public Enemy ::: Reggie Jax
+hiphop.00095.wav ::: Public Enemy ::: Leave This off Your Fu*kin Charts
+hiphop.00096.wav ::: Public Enemy ::: B Side Wins Again
+hiphop.00097.wav ::: Public Enemy ::: War At 33 1/3
+hiphop.00098.wav ::: Public Enemy ::: Fight the Power
+hiphop.00099.wav ::: RUN-DMC ::: Let's Stay Together (Together Forever)
+jazz.00000.wav ::: Leonard Bernstein ::: On the Town: Three Dance Episodes, The great lover
+jazz.00001.wav ::: Leonard Bernstein ::: Symphonic dances from West Side Story, Prologue
+jazz.00002.wav ::: James Carter ::: 'Round Midnight
+jazz.00003.wav ::: James Carter ::: You Never Told Me That You Care
+jazz.00004.wav ::: James Carter ::: The Intimacy Of My Woman's Beautiful Eyes
+jazz.00005.wav ::: James Carter ::: 1944 Stomp
+jazz.00006.wav ::: James Carter ::: The Stevedore's Serenade
+jazz.00007.wav ::: James Carter ::: Born To Be Blue
+jazz.00008.wav ::: James Carter ::: Deep Throat Blues
+jazz.00009.wav ::: James Carter ::: A Ballad For A Doll
+jazz.00010.wav ::: James Carter ::: Eventide
+jazz.00011.wav ::: Joe Lovano ::: Lonnie's Lament
+jazz.00012.wav ::: Joe Lovano ::: Reflections
+jazz.00013.wav ::: Joe Lovano ::: Little Willie Leaps
+jazz.00014.wav ::: Joe Lovano ::: This Is All I Ask
+jazz.00015.wav ::: Joe Lovano ::: 26-2 
+jazz.00016.wav ::: Joe Lovano ::: Duke Ellington's Sound Of Love
+jazz.00017.wav ::: Joe Lovano ::: Sounds Of Joy
+jazz.00018.wav ::: Joe Lovano ::: Fort Worth
+jazz.00019.wav ::: Joe Lovano ::: Birds Of Springtimes Gone By
+jazz.00020.wav ::: Joe Lovano ::: I Can't Get Started
+jazz.00021.wav ::: Joe Lovano ::: Uprising
+jazz.00022.wav ::: Joe Lovano ::: Sail Away
+jazz.00023.wav ::: Joe Lovano ::: Blues Not to Lose
+jazz.00024.wav ::: Joe Lovano ::: Song And Dance
+jazz.00025.wav ::: Branford Marsalis Trio ::: Roused About
+jazz.00026.wav ::: Branford Marsalis Trio ::: The Beautyful Ones Are Not Yet Born
+jazz.00027.wav ::: Branford Marsalis Trio ::: Xavier's Lair
+jazz.00028.wav ::: Branford Marsalis Trio ::: Cain & Abel
+jazz.00029.wav ::: Branford Marsalis Trio ::: Citizen Tain
+jazz.00030.wav ::: Branford Marsalis Trio ::: Gilligan's Isle
+jazz.00031.wav ::: Branford Marsalis Trio ::: Dewey Baby
+jazz.00032.wav ::: Branford Marsalis Trio ::: Beat's Remark
+jazz.00033.wav ::: Coleman Hawkins ::: Body and Soul
+jazz.00034.wav ::: Coleman Hawkins ::: Dinah
+jazz.00035.wav ::: Coleman Hawkins ::: April in Paris
+jazz.00036.wav ::: Coleman Hawkins ::: Sugar Foot Stomp
+jazz.00037.wav ::: Coleman Hawkins ::: I've Got the World On a String
+jazz.00038.wav ::: Coleman Hawkins ::: Under Paris Skies
+jazz.00039.wav ::: Coleman Hawkins ::: When Lights Are Low
+jazz.00040.wav ::: Coleman Hawkins ::: She's Funny That Way
+jazz.00041.wav ::: Coleman Hawkins ::: My Blue Heaven
+jazz.00042.wav ::: Coleman Hawkins ::: Say It Isn't So
+jazz.00043.wav ::: Coleman Hawkins ::: I Love Paris
+jazz.00044.wav ::: Coleman Hawkins ::: Sweet Lorraine
+jazz.00045.wav ::: Coleman Hawkins ::: How Strange
+jazz.00046.wav ::: Coleman Hawkins ::: Spotlite
+jazz.00047.wav ::: :::
+jazz.00048.wav ::: :::
+jazz.00049.wav ::: Sarah Vaughan ::: April in Paris
+jazz.00050.wav ::: :::
+jazz.00051.wav ::: Coleman Hawkins ::: Body and Soul
+jazz.00052.wav ::: Terell Stafford ::: Dear Rudy
+jazz.00053.wav ::: Coleman Hawkins ::: Dinah
+jazz.00054.wav ::: :::
+jazz.00055.wav ::: Coleman Hawkins ::: April in Paris
+jazz.00056.wav ::: :::
+jazz.00057.wav ::: Coleman Hawkins ::: There Will Never Be Another You
+jazz.00058.wav ::: Coleman Hawkins ::: Sugar Foot Stomp
+jazz.00059.wav ::: Charles Lloyd ::: Georgia
+jazz.00060.wav ::: Coleman Hawkins ::: I've Got the World On a String
+jazz.00061.wav ::: :::
+jazz.00062.wav ::: Coleman Hawkins ::: Under Paris Skies
+jazz.00063.wav ::: Sun Ra Arekstra ::: I'll Never Be the Same
+jazz.00064.wav ::: :::
+jazz.00065.wav ::: Coleman Hawkins ::: When Lights Are Low
+jazz.00066.wav ::: :::
+jazz.00067.wav ::: Coleman Hawkins ::: She's Funny That Way
+jazz.00068.wav ::: Coleman Hawkins ::: Say It Isn't So
+jazz.00069.wav ::: Coleman Hawkins ::: I Love Paris
+jazz.00070.wav ::: Coleman Hawkins ::: Sweet Lorraine
+jazz.00071.wav ::: Coleman Hawkins ::: How Strange
+jazz.00072.wav ::: Coleman Hawkins ::: Spotlite
+jazz.00073.wav ::: Dexter Gordon ::: Scrapple From The Apple
+jazz.00074.wav ::: Dexter Gordon ::: Willow Weep For Me
+jazz.00075.wav ::: Dexter Gordon ::: Broadway
+jazz.00076.wav ::: Dexter Gordon ::: Stairway To The Stars
+jazz.00077.wav ::: Dexter Gordon ::: A Night In Tunisia
+jazz.00078.wav ::: Dexter Gordon ::: Our Love Is Here to Stay
+jazz.00079.wav ::: Tony Williams ::: Sister Cheryl
+jazz.00080.wav ::: Tony Williams ::: Life of the Party
+jazz.00081.wav ::: Tony Williams ::: Geo Rose
+jazz.00082.wav ::: Tony Williams ::: The Slump
+jazz.00083.wav ::: Tony Williams ::: Red Mask
+jazz.00084.wav ::: Tony Williams ::: Juicy Fruit
+jazz.00085.wav ::: Tony Williams ::: Crystal Palace
+jazz.00086.wav ::: Tony Williams ::: Blackbird
+jazz.00087.wav ::: Miles Davis ::: So What
+jazz.00088.wav ::: Miles Davis ::: Freddie Freeloader
+jazz.00089.wav ::: Miles Davis ::: Blue in Green
+jazz.00090.wav ::: Miles Davis ::: All Blues
+jazz.00091.wav ::: Miles Davis ::: Flamenco Sketches
+jazz.00092.wav ::: Miles Davis ::: Flamenco Sketches (alternate)
+jazz.00093.wav ::: :::
+jazz.00094.wav ::: Joe Henderson ::: Miles Ahead
+jazz.00095.wav ::: Joe Henderson ::: Joshua
+jazz.00096.wav ::: Joe Henderson ::: Pfrancing (No Blues)
+jazz.00097.wav ::: Joe Henderson ::: Flamenco Sketches
+jazz.00098.wav ::: Joe Henderson ::: Milestones
+jazz.00099.wav ::: Joe Henderson ::: Teo
+metal.00000.wav ::: Falconer ::: Mindtraveller
+metal.00001.wav ::: Gamma Ray ::: Beyond The Black Hole
+metal.00002.wav ::: Iron Maiden ::: Flight of Icarus
+metal.00003.wav ::: Anthrax ::: Metal Thrashing Mad
+metal.00004.wav ::: Dark Tranquillity ::: Of Chaos And Eternal Night
+metal.00005.wav ::: Iron Maiden ::: Wasted Years
+metal.00006.wav ::: Blind Guardian ::: Theatre of Pain
+metal.00007.wav ::: Coroner ::: Die By My Hand
+metal.00008.wav ::: Accept ::: Balls to the Wall
+metal.00009.wav ::: Tvangeste ::: Angel's Retreat
+metal.00010.wav ::: Dark Tranquillity ::: My Faeryland Forgotten
+metal.00011.wav ::: :::
+metal.00012.wav ::: Dark Tranquillity ::: Away, Delight, Away
+metal.00013.wav ::: Dark Tranquillity ::: Of Chaos And Eternal Night
+metal.00014.wav ::: Dark Tranquillity ::: With The Flaming Shades Of Fall
+metal.00015.wav ::: Dark Tranquillity ::: Nightfall By The Shore Of Time
+metal.00016.wav ::: Slayer ::: Disciple
+metal.00017.wav ::: Slayer ::: Angel of death
+metal.00018.wav ::: Slayer ::: Darkness of Christ
+metal.00019.wav ::: Slayer ::: Piece by Piece
+metal.00020.wav ::: Slayer ::: Necrophobic
+metal.00021.wav ::: Creed ::: I'm Eighteen
+metal.00022.wav ::: Ozzy Osbourne ::: Crazy Train
+metal.00023.wav ::: :::
+metal.00024.wav ::: Jacobs Dream ::: Kinescope
+metal.00025.wav ::: Megadeth ::: Peace Sells
+metal.00026.wav ::: Anthrax ::: Across the River
+metal.00027.wav ::: Anthrax ::: Got the Time
+metal.00028.wav ::: Motorhead ::: Ace Of Spades
+metal.00029.wav ::: Living Colour ::: Glamour Boys
+metal.00030.wav ::: Megadeth ::: Trust
+metal.00031.wav ::: Motorhead ::: Born To Raise Hell
+metal.00032.wav ::: Scorpions ::: Blackout
+metal.00033.wav ::: Metallica ::: Enter Sandman
+metal.00034.wav ::: Iron Maiden ::: The Trooper
+metal.00035.wav ::: Slayer ::: Bloodline
+metal.00036.wav ::: Slayer ::: In-a-gadda-da-vida
+metal.00037.wav ::: Saxon ::: And the Bands Played On
+metal.00038.wav ::: Metallica ::: ...And Justice For All
+metal.00039.wav ::: Metallica ::: Star Wars Imperial March 
+metal.00040.wav ::: Dio ::: Stand Up And Shout
+metal.00041.wav ::: Dio ::: Gypsy
+metal.00042.wav ::: Dio ::: Caught In The Middle
+metal.00043.wav ::: Dio ::: Straight Through The Heart
+metal.00044.wav ::: Dio ::: Rainbow In The Dark
+metal.00045.wav ::: Dio ::: Shame On The Night
+metal.00046.wav ::: New Bomb Turks ::: Hammerless Nail
+metal.00047.wav ::: New Bomb Turks ::: Bachelor's High
+metal.00048.wav ::: New Bomb Turks ::: Professional Againster
+metal.00049.wav ::: New Bomb Turks ::: Cultural Elite Sign-Up Sheet
+metal.00050.wav ::: New Bomb Turks ::: Jukebox Lean
+metal.00051.wav ::: New Bomb Turks ::: Jeers Of A Clown
+metal.00052.wav ::: New Bomb Turks ::: Look Alive Jive
+metal.00053.wav ::: New Bomb Turks ::: Staring Down The Gift Horse
+metal.00054.wav ::: New Bomb Turks ::: Shoot The Offshoot
+metal.00055.wav ::: New Bomb Turks ::: Drop What You're Doin'
+metal.00056.wav ::: New Bomb Turks ::: Telephone Numbrrr
+metal.00057.wav ::: New Bomb Turks ::: Wrest Your Hands
+metal.00058.wav ::: Queen ::: Tie Your Mother Down
+metal.00059.wav ::: Queen ::: Tear it up
+metal.00060.wav ::: Queen ::: We Will Rock You
+metal.00061.wav ::: Dio ::: Stand Up And Shout
+metal.00062.wav ::: Dio ::: Gypsy
+metal.00063.wav ::: Dio ::: Caught In The Middle
+metal.00064.wav ::: Dio ::: Straight Through The Heart
+metal.00065.wav ::: Dio ::: Rainbow In The Dark
+metal.00066.wav ::: Dio ::: Shame On The Night
+metal.00067.wav ::: AC/DC ::: Big Gun
+metal.00068.wav ::: Judas Priest ::: Breaking the Law
+metal.00069.wav ::: Black Sabbath ::: Paranoid
+metal.00070.wav ::: AC/DC ::: Highway To Hell
+metal.00071.wav ::: Def Leppard ::: Pour Some Sugar On Me
+metal.00072.wav ::: Deep Purple ::: Smoke On The Water
+metal.00073.wav ::: Metallica ::: The Memory Remains
+metal.00074.wav ::: Johnny Crass ::: Internet Sandman
+metal.00075.wav ::: Metallica ::: Until It Sleeps
+metal.00076.wav ::: Metallica ::: Seek and Destroy
+metal.00077.wav ::: Judas Priest ::: Hell Patrol
+metal.00078.wav ::: Metallica ::: Prince Charming
+metal.00079.wav ::: Def Leppard ::: Photograph
+metal.00080.wav ::: Def Leppard ::: Rocket
+metal.00081.wav ::: Guns N' Roses ::: Live and Let Die
+metal.00082.wav ::: Guns N' Roses ::: Welcome To The Jungle
+metal.00083.wav ::: Metallica ::: For Whom The Bell Tolls
+metal.00084.wav ::: Black Sabbath ::: Shock the Monkey
+metal.00085.wav ::: Ozzy Osbourne; Dweezil Zappa ::: Staying Alive
+metal.00086.wav ::: Bon Jovi ::: You Give Love A Bad Name
+metal.00087.wav ::: Metallica ::: So What
+metal.00088.wav ::: Danzig ::: Twist of Cain
+metal.00089.wav ::: Danzig ::: Apokalips
+metal.00090.wav ::: Black Sabbath ::: Symptom Of The Universe
+metal.00091.wav ::: Black Sabbath ::: Sabbath Bloody Sabbath
+metal.00092.wav ::: Iron Maiden ::: Run to the Hills
+metal.00093.wav ::: Iron Maiden ::: Phantom Of The Opera
+metal.00094.wav ::: Iron Maiden ::: The Trooper
+metal.00095.wav ::: Rage Against the Machine ::: Bombtrack
+metal.00096.wav ::: Rage Against the Machine ::: Killing In The Name
+metal.00097.wav ::: Rage Against the Machine ::: Wake Up
+metal.00098.wav ::: Rage Against the Machine ::: Fistful Of Steel
+metal.00099.wav ::: Rage Against the Machine ::: Freedom
+pop.00000.wav ::: Mandy Moore ::: Saturate Me
+pop.00001.wav ::: Spice Girls ::: Wasting My Time
+pop.00002.wav ::: Mariah Carey ::: My All
+pop.00003.wav ::: Alanis Morissette ::: Hand in my pocket
+pop.00004.wav ::: Alanis Morissette ::: Head Over Feet
+pop.00005.wav ::: Alanis Morissette ::: Ironic
+pop.00006.wav ::: Alanis Morissette ::: Thank U
+pop.00007.wav ::: Alanis Morissette ::: Uninvited
+pop.00008.wav ::: Alanis Morissette ::: You Learn
+pop.00009.wav ::: Alanis Morissette ::: You Oughta Know
+pop.00010.wav ::: The Police ::: Every Breath You Take (Sting Unplugged)
+pop.00011.wav ::: Celine Dion ::: The Prayer
+pop.00012.wav ::: Aretha Franklin; Celine Dion; Mariah Carey; Shania Twain; Gloria Estefan ::: You Make Me Feel Like A Natural Woman
+pop.00013.wav ::: Babyface ::: Every Time I Close My Eyes
+pop.00014.wav ::: ::: Every Breath You Take
+pop.00015.wav ::: Britney Spears ::: (You Drive Me) Crazy
+pop.00016.wav ::: Britney Spears ::: (I Can't Get No) Satisfaction
+pop.00017.wav ::: Britney Spears ::: (I Can't Get No) Satisfaction (Live at the 2000 MTV VMAs)
+pop.00018.wav ::: Britney Spears ::: Autumn Goodbye
+pop.00019.wav ::: Britney Spears ::: Baby One More Time
+pop.00020.wav ::: Britney Spears ::: Can't Make You Love Me
+pop.00021.wav ::: Britney Spears ::: (You Drive Me) Crazy
+pop.00022.wav ::: Britney Spears ::: (You Drive Me) Crazy
+pop.00023.wav ::: Britney Spears ::: I'm So Curious
+pop.00024.wav ::: Britney Spears ::: Deep in my heart
+pop.00025.wav ::: Britney Spears ::: From The Bottom Of My Broken Heart
+pop.00026.wav ::: Britney Spears ::: I'll Never Stop Loving You
+pop.00027.wav ::: Britney Spears ::: Born To Make You Happy
+pop.00028.wav ::: Britney Spears ::: I Will Be There
+pop.00029.wav ::: Britney Spears ::: I Will Still Love You
+pop.00030.wav ::: Britney Spears ::: Lucky
+pop.00031.wav ::: Britney Spears ::: Lucky
+pop.00032.wav ::: Britney Spears ::: Oops I did it again
+pop.00033.wav ::: Britney Spears ::: Pepsi Now and Then
+pop.00034.wav ::: Britney Spears ::: Sometimes
+pop.00035.wav ::: Britney Spears ::: Stronger
+pop.00036.wav ::: Britney Spears ::: Thinkin' About You
+pop.00037.wav ::: Britney Spears ::: (You Drive Me) Crazy (Radio Rip)
+pop.00038.wav ::: Britney Spears ::: What U See (is what you get)
+pop.00039.wav ::: Celine Dion ::: Dreamin' Of You
+pop.00040.wav ::: Celine Dion ::: I want you to need me
+pop.00041.wav ::: Peabo Bryson; Regina Belle ::: A Whole New World
+pop.00042.wav ::: Celine Dion ::: That's The Way It Is
+pop.00043.wav ::: Cher ::: Believe
+pop.00044.wav ::: Christina Aguilera ::: Come On Over (All I Want Is You)
+pop.00045.wav ::: Christina Aguilera ::: Genie In A Bottle
+pop.00046.wav ::: Christina Aguilera ::: Genie In A Bottle
+pop.00047.wav ::: Christina Aguilera ::: Lady Marmalade
+pop.00048.wav ::: Christina Aguilera ::: Lady Marmalade
+pop.00049.wav ::: Christina Aguilera ::: Pero Me Acuerdo De Ti
+pop.00050.wav ::: Christina Aguilera ::: What a girl wants
+pop.00051.wav ::: Christina Aguilera ::: Lady Marmalade
+pop.00052.wav ::: Destiny's Child ::: Bootylicious
+pop.00053.wav ::: Destiny's Child ::: Outro Amazing Grace
+pop.00054.wav ::: Destiny's Child ::: Bootylicious
+pop.00055.wav ::: Destiny's Child ::: Bug A Boo
+pop.00056.wav ::: Destiny's Child ::: Jumpin', Jumpin'
+pop.00057.wav ::: Destiny's Child ::: Bootylicious
+pop.00058.wav ::: Destiny's Child ::: Independent Women Part I
+pop.00059.wav ::: Destiny's Child ::: Jumpin', Jumpin'
+pop.00060.wav ::: Destiny's Child ::: Bootylicious
+pop.00061.wav ::: Destiny's Child ::: Apple Pie a La Mode
+pop.00062.wav ::: Destiny's Child ::: Survivor
+pop.00063.wav ::: Diana Ross ::: Ain't No Mountain High Enough
+pop.00064.wav ::: Abigail ::: If It Don't Fit (Thunderpuss 2000 Club Mix)
+pop.00065.wav ::: Prince ::: The Beautiful Ones
+pop.00066.wav ::: Enrique Iglesias ::: Could I Have This Kiss Forever
+pop.00067.wav ::: Janet Jackson ::: All For You
+pop.00068.wav ::: Janet Jackson ::: Someone To Call My Lover
+pop.00069.wav ::: Janet Jackson ::: If
+pop.00070.wav ::: Janet Jackson ::: I Get Lonely
+pop.00071.wav ::: Janet Jackson ::: All For You
+pop.00072.wav ::: Janet Jackson ::: Miss You Much
+pop.00073.wav ::: Janet Jackson ::: Someone To Call My Lover
+pop.00074.wav ::: Jennifer Lopez; Ja Rule ::: I'm Real (Murder Remix)
+pop.00075.wav ::: Jennifer Lopez ::: If You Had My Love
+pop.00076.wav ::: Jennifer Lopez ::: Dance With Me
+pop.00077.wav ::: Jennifer Lopez ::: I'm Real
+pop.00078.wav ::: Jennifer Lopez ::: Play
+pop.00079.wav ::: Kate Bush ::: Couldbusting
+pop.00080.wav ::: Christina Aguilera ::: Lady Marmalade
+pop.00081.wav ::: Ladysmith Black Mambazo ::: Leaning On The Everlasting Arm
+pop.00082.wav ::: Jennifer Lopez ::: If You Had My Love (Pablo Flores Remix)
+pop.00083.wav ::: Madonna ::: American Pie
+pop.00084.wav ::: Madonna ::: Don't Tell Me
+pop.00085.wav ::: Madonna ::: Music
+pop.00086.wav ::: Madonna ::: Cherish
+pop.00087.wav ::: Mandy Moore ::: Crush
+pop.00088.wav ::: Mandy Moore ::: Candy (Wade Robson Remix)
+pop.00089.wav ::: Mandy Moore ::: Candy
+pop.00090.wav ::: Mandy Moore ::: Crush
+pop.00091.wav ::: Mandy Moore ::: Everything My Heart Desires
+pop.00092.wav ::: Mandy Moore ::: In My Pocket
+pop.00093.wav ::: Mandy Moore ::: I Wanna Be With You (Soul Solution Remix)
+pop.00094.wav ::: Mandy Moore ::: I Wanna Be With You
+pop.00095.wav ::: Mandy Moore ::: Love You for Always
+pop.00096.wav ::: Mandy Moore ::: Quit Breaking My Heart
+pop.00097.wav ::: Mariah Carey ::: Sweetheart
+pop.00098.wav ::: Mariah Carey ::: Emotions
+pop.00099.wav ::: Mariah Carey ::: Always Be My Baby
+reggae.00000.wav ::: Bob Marley ::: Is This Love
+reggae.00001.wav ::: Bob Marley ::: No Woman No Cry
+reggae.00002.wav ::: Bob Marley ::: Could You Be Loved
+reggae.00003.wav ::: Bob Marley ::: Three Little Birds
+reggae.00004.wav ::: Bob Marley ::: Buffalo Soldier
+reggae.00005.wav ::: Bob Marley ::: Get Up, Stand Up
+reggae.00006.wav ::: Bob Marley ::: Stir it Up
+reggae.00007.wav ::: Bob Marley ::: One Love
+reggae.00008.wav ::: Bob Marley ::: I shot the Sheriff
+reggae.00009.wav ::: Bob Marley ::: Waiting in vain
+reggae.00010.wav ::: Bob Marley ::: Redemption Song
+reggae.00011.wav ::: Bob Marley ::: Satisfy My Soul
+reggae.00012.wav ::: Bob Marley ::: Exodus
+reggae.00013.wav ::: Bob Marley ::: Jamming
+reggae.00014.wav ::: Bob Marley ::: Natural Mystic
+reggae.00015.wav ::: Bob Marley ::: Easy Skanking
+reggae.00016.wav ::: Bob Marley ::: Iron Lion Zion
+reggae.00017.wav ::: Bob Marley ::: Crazy Baldhead
+reggae.00018.wav ::: Bob Marley ::: So Much Trouble In The World
+reggae.00019.wav ::: Bob Marley ::: War
+reggae.00020.wav ::: Bob Marley ::: Africa Unite
+reggae.00021.wav ::: Bob Marley ::: Trenchtown Rock
+reggae.00022.wav ::: Bob Marley ::: Keep On Moving
+reggae.00023.wav ::: Bob Marley ::: Sun Is Shining
+reggae.00024.wav ::: Bob Marley ::: Who The Cap Fits
+reggae.00025.wav ::: Bob Marley ::: One Drop
+reggae.00026.wav ::: Bob Marley ::: Roots, Rock, Reggae
+reggae.00027.wav ::: Bob Marley ::: Pimper's Paradise
+reggae.00028.wav ::: Burning Spear ::: Dub Creation
+reggae.00029.wav ::: Burning Spear ::: African Dub
+reggae.00030.wav ::: Burning Spear ::: Stand
+reggae.00031.wav ::: Burning Spear ::: Smart Dub
+reggae.00032.wav ::: Burning Spear ::: Remember
+reggae.00033.wav ::: Burning Spear ::: Burning Dub
+reggae.00034.wav ::: Burning Spear ::: Chanting Home
+reggae.00035.wav ::: Burning Spear ::: Dub Old Timer
+reggae.00036.wav ::: Burning Spear ::: Subjective Dub
+reggae.00037.wav ::: Burning Spear ::: Friendly Dub
+reggae.00038.wav ::: Burning Spear ::: Investigation Dub
+reggae.00039.wav ::: Burning Spear ::: World Dub
+reggae.00040.wav ::: Burning Spear ::: Loving Dub
+reggae.00041.wav ::: Desmond Dekker ::: Israelites
+reggae.00042.wav ::: Burning Spear ::: Dry and Heavy
+reggae.00043.wav ::: The Ethiopians ::: Reggae Hit the Town
+reggae.00044.wav ::: Burning Spear ::: Burning Reggae
+reggae.00045.wav ::: The Heptones ::: Unfaithful Baby
+reggae.00046.wav ::: Dennis Brown ::: It's Magic
+reggae.00047.wav ::: Dennis Brown ::: Money in My Pocket
+reggae.00048.wav ::: Dennis Brown ::: Westbound Train
+reggae.00049.wav ::: Desmond Dekker ::: Shanty Town
+reggae.00050.wav ::: Burning Spear ::: Identity
+reggae.00051.wav ::: Amand Van Helden & DJ Sneak::: Psychic Bounty Killaz
+reggae.00052.wav ::: Pras ::: Ghetto Superstar (That Is What You Are)
+reggae.00053.wav ::: Augustus Pablo ::: Stop Them Jah
+reggae.00054.wav ::: Bob Marley ::: Three Little Birds
+reggae.00055.wav ::: Bob Marley ::: Sun Is Shining (Funkstar Deluxe Remix)
+reggae.00056.wav ::: Bob Marley ::: Get Up, Stand Up
+reggae.00057.wav ::: Bob Marley ::: I shot the Sheriff
+reggae.00058.wav ::: Bob Marley ::: Jamming
+reggae.00059.wav ::: Bob Marley ::: One Love
+reggae.00060.wav ::: Bob Marley ::: Redemption Song
+reggae.00061.wav ::: Bounty Killer ::: Living Dangerously
+reggae.00062.wav ::: Burning Spear ::: Jah Is My Driver
+reggae.00063.wav ::: Burning Spear ::: Marcus Garvey
+reggae.00064.wav ::: Dennis Brown ::: Make It Easy
+reggae.00065.wav ::: Dennis Brown ::: Rub a Dub All the Time
+reggae.00066.wav ::: Dennis Brown ::: Sitting And Watching
+reggae.00067.wav ::: Dennis Brown ::: Some like it hot
+reggae.00068.wav ::: Dennis Brown ::: Wolf and Leopards
+reggae.00069.wav ::: Desmond Dekker ::: Israelites
+reggae.00070.wav ::: Gregory Isaacs ::: John Law
+reggae.00071.wav ::: Dennis Brown ::: Big Ships
+reggae.00072.wav ::: Freddie McGregor ::: Prophecy
+reggae.00073.wav ::: Bounty Killer ::: Hip-Hopera
+reggae.00074.wav ::: Bounty Killer ::: Hip-Hopera
+reggae.00075.wav ::: Peter Tosh ::: Legalize It
+reggae.00076.wav ::: Gregory Isaacs ::: Night Nurse
+reggae.00077.wav ::: Gregory Isaacs ::: The Border
+reggae.00078.wav ::: Gregory Isaacs ::: Universal Tribulation
+reggae.00079.wav ::: Niney the Observer ::: Chicken Halk Dub
+reggae.00080.wav ::: Ini Kamoze ::: Here Comes The Hot Stepper(remix)
+reggae.00081.wav ::: Ini Kamoze ::: Here Comes The Hot Stepper(remix)
+reggae.00082.wav ::: Ini Kamoze ::: Here Comes The Hot Stepper(remix)
+reggae.00083.wav ::: Jimmy Cliff ::: Many Rivers To Cross
+reggae.00084.wav ::: Jimmy Cliff ::: The Harder They Come
+reggae.00085.wav ::: Prince Buster ::: Judge Dread
+reggae.00086.wav ::: King Tubby ::: Splash Out Dub
+reggae.00087.wav ::: Lauryn Hill; Bob Marley ::: Turn Your Lights Down Low
+reggae.00088.wav ::: Marcia Griffiths ::: Electric Boogie
+reggae.00089.wav ::: The Now Generation ::: Boney Dog
+reggae.00090.wav ::: Peter Tosh ::: Ketchy Shuby (Instrumental)
+reggae.00091.wav ::: Peter Tosh ::: Legalize It
+reggae.00092.wav ::: Peter Tosh ::: Legalize It
+reggae.00093.wav ::: Peter Tosh; Mick Jagger ::: Don't Look Back
+reggae.00094.wav ::: Prince Buster ::: Ten Commandments
+reggae.00095.wav ::: Prince Buster ::: Madness
+reggae.00096.wav ::: Prince Buster ::: Barrister Pardon
+reggae.00097.wav ::: Prince Buster ::: Here Comes The Bride
+reggae.00098.wav ::: Prince Buster ::: Rude Rude Rudee 
+reggae.00099.wav ::: Prince Buster ::: Al Capone
+rock.00000.wav ::: Morphine ::: Potion
+rock.00001.wav ::: Morphine ::: I Know You Pt. III
+rock.00002.wav ::: Morphine ::: Early To Bed
+rock.00003.wav ::: Morphine ::: Wishing Well
+rock.00004.wav ::: Morphine ::: Like Swimming
+rock.00005.wav ::: Morphine ::: Murder For The Money
+rock.00006.wav ::: Morphine ::: French Fries with Pepper
+rock.00007.wav ::: Morphine ::: Empty Box
+rock.00008.wav ::: Morphine ::: Eleven O'Clock
+rock.00009.wav ::: Morphine ::: Hanging On A Curtain
+rock.00010.wav ::: Ani DiFranco ::: Worthy
+rock.00011.wav ::: Ani DiFranco ::: Cradle and All
+rock.00012.wav ::: Ani DiFranco ::: Shy
+rock.00013.wav ::: Ani DiFranco ::: 32 Flavors
+rock.00014.wav ::: Ani DiFranco ::: Asking Too Much
+rock.00015.wav ::: Ani DiFranco ::: Coming Up
+rock.00016.wav ::: Queen ::: Tie Your Mother Down
+rock.00017.wav ::: Queen ::: Under Pressure
+rock.00018.wav ::: Queen ::: Another One Bites the Dust
+rock.00019.wav ::: Queen ::: I Want To Break Free 
+rock.00020.wav ::: Queen ::: (You're So Square) Baby I Don't Care
+rock.00021.wav ::: Queen ::: Hello Mary Lou (Goodbye Heart)
+rock.00022.wav ::: Queen ::: Tutti Frutti
+rock.00023.wav ::: Queen ::: Bohemian rhapsody
+rock.00024.wav ::: Queen ::: Crazy Little Thing Called Love
+rock.00025.wav ::: Queen ::: Big spender
+rock.00026.wav ::: Queen ::: Radio Ga Ga
+rock.00027.wav ::: The Beach Boys ::: Good Vibrations
+rock.00028.wav ::: The Rolling Stones ::: Jumpin' Jack Flash
+rock.00029.wav ::: The Rolling Stones ::: Street Fighting Man
+rock.00030.wav ::: The Rolling Stones ::: Sympathy for the devil
+rock.00031.wav ::: The Rolling Stones ::: Honky Tonk Women
+rock.00032.wav ::: Led Zeppelin ::: All my love
+rock.00033.wav ::: The Rolling Stones ::: Gimme Shelter
+rock.00034.wav ::: David Bowie ::: Major Tom
+rock.00035.wav ::: The Rolling Stones ::: Midnight Rambler
+rock.00036.wav ::: Billy Joel ::: Movin' Out
+rock.00037.wav ::: The Rolling Stones ::: Brown Sugar
+rock.00038.wav ::: Guns N' Roses ::: Knockin' On Heaven's Door
+rock.00039.wav ::: Led Zeppelin ::: The Song Remains The Same
+rock.00040.wav ::: Led Zeppelin ::: The Crunge
+rock.00041.wav ::: Led Zeppelin ::: Dancing Days
+rock.00042.wav ::: Led Zeppelin ::: D'yer Mak'er
+rock.00043.wav ::: Led Zeppelin ::: The Ocean
+rock.00044.wav ::: Led Zeppelin ::: Down By The Seaside
+rock.00045.wav ::: Led Zeppelin ::: Ten Years Gone
+rock.00046.wav ::: Led Zeppelin ::: Night Flight
+rock.00047.wav ::: Led Zeppelin ::: The Wanton Song
+rock.00048.wav ::: Led Zeppelin ::: Boogie With Stu
+rock.00049.wav ::: Simple Minds ::: Real Life
+rock.00050.wav ::: Simple Minds ::: See The Lights
+rock.00051.wav ::: Simple Minds ::: Let There Be Love
+rock.00052.wav ::: Simple Minds ::: Woman
+rock.00053.wav ::: Simple Minds ::: Stand By Love
+rock.00054.wav ::: Simple Minds ::: Let the Children Speak 
+rock.00055.wav ::: Simple Minds ::: African Skies
+rock.00056.wav ::: Simple Minds ::: Ghostrider
+rock.00057.wav ::: Sting ::: If you love somebody set them free
+rock.00058.wav ::: Sting ::: Russians
+rock.00059.wav ::: Sting ::: Children's Crusade
+rock.00060.wav ::: Sting ::: Shadows In The Rain
+rock.00061.wav ::: Sting ::: We Work The Black Seam
+rock.00062.wav ::: Sting ::: Consider Me Gone
+rock.00063.wav ::: Sting ::: Moon Over Bourbon Street
+rock.00064.wav ::: Jethro Tull ::: Living In The Past
+rock.00065.wav ::: Jethro Tull ::: Aqualung
+rock.00066.wav ::: Jethro Tull ::: Too Old To Rock 'N' Roll, Too Young To Die
+rock.00067.wav ::: Jethro Tull ::: Bungle In The Jungle
+rock.00068.wav ::: Jethro Tull ::: Sweet Dream
+rock.00069.wav ::: Jethro Tull ::: Witches Promise
+rock.00070.wav ::: Jethro Tull ::: Life Is A Long Song
+rock.00071.wav ::: Simply Red ::: Something Got Me Started
+rock.00072.wav ::: Simply Red ::: Stars
+rock.00073.wav ::: Simply Red ::: Thrill Me
+rock.00074.wav ::: Simply Red ::: Your Mirror
+rock.00075.wav ::: Simply Red ::: She's Got It Bad
+rock.00076.wav ::: Simply Red ::: For Your Babies
+rock.00077.wav ::: Simply Red ::: Freedom
+rock.00078.wav ::: Simply Red ::: Wonderland
+rock.00079.wav ::: Survivor ::: High On You
+rock.00080.wav ::: Survivor ::: Is This Love
+rock.00081.wav ::: Survivor ::: Poor Man's Son
+rock.00082.wav ::: Survivor ::: Burning Heart
+rock.00083.wav ::: Survivor ::: Desparate Dreams
+rock.00084.wav ::: Survivor ::: How Much Love
+rock.00085.wav ::: Survivor ::: Man Against The World
+rock.00086.wav ::: Rick Springfield ::: Jessie's Girl
+rock.00087.wav ::: Neil Young ::: Rockin' In The Free World
+rock.00088.wav ::: Billy Squier ::: The Stroke
+rock.00089.wav ::: Bob Seger ::: Against The Wind
+rock.00090.wav ::: The Tokens ::: The Lion Sleeps Tonight
+rock.00091.wav ::: The Stone Roses ::: She Bangs The Drums
+rock.00092.wav ::: The Stone Roses ::: Elephant Stone
+rock.00093.wav ::: The Stone Roses ::: Waterfall
+rock.00094.wav ::: The Stone Roses ::: Don't Stop
+rock.00095.wav ::: The Stone Roses ::: Bye Bye Bad Man
+rock.00096.wav ::: The Stone Roses ::: (Song For My) Sugar Spun Sister
+rock.00097.wav ::: The Stone Roses ::: Made Of Stone
+rock.00098.wav ::: The Stone Roses ::: Shoot You Down
+rock.00099.wav ::: The Stone Roses ::: This Is The One

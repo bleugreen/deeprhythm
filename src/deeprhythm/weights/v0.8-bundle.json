@@ -1,0 +1,21 @@
+{
+  "version": "0.8",
+  "architecture": "shared-stft-hierarchical-metrical-fusion",
+  "sample_rate": 22050,
+  "clip_seconds": 8,
+  "files": {
+    "hierarchical-v0.8.pt": {
+      "bytes": 5711882,
+      "sha256": "0376ceb3754a7fed328163910ad7f089896a336dde10e013948707f0da2ed1f9"
+    },
+    "temporal-beat-v0.8.pt": {
+      "bytes": 1179883,
+      "sha256": "8ab487d268adae4137a958e8f19b14c69e5f310d775777d1c54a9a46c5761a98"
+    },
+    "shared-fusion-v0.8.pt": {
+      "bytes": 89587,
+      "sha256": "c6dbca521383eb80713352997d9d00f55d40db45d5d1625fb0820639e5ef613f"
+    }
+  },
+  "evaluation": "docs/research/results/production-v08-qualification.json"
+}

@@ -10,6 +10,7 @@ from deeprhythm.audio_proc.hcqm import compute_hcqm, make_kernels
 from deeprhythm.batch_infer import get_audio_files
 from deeprhythm.batch_infer import main as batch_infer_main
 from deeprhythm.model.frame_cnn import DeepRhythmModel
+from deeprhythm.model.results import shape_prediction
 from deeprhythm.utils import class_to_bpm, get_device, get_weights, load_and_split_audio, split_audio
 
 
@@ -39,7 +40,9 @@ class DeepRhythmPredictor:
         """Initialize HCQM computation kernels."""
         return make_kernels(device=self.device)
 
-    def _process_clips(self, clips: Tensor, include_confidence: bool = False) -> Union[float, Tuple[float, float]]:
+    def _process_clips(
+        self, clips: Tensor, include_confidence: bool = False, include_details: bool = False, top_k: int = 5
+    ):
         """Process audio clips and return BPM prediction.
 
         Args:
@@ -54,13 +57,15 @@ class DeepRhythmPredictor:
         with torch.no_grad():
             outputs = self.model(input_batch.to(device=self.device))
             probabilities = torch.softmax(outputs, dim=1)
-            mean_probabilities = probabilities.mean(dim=0)
-            confidence_score, predicted_class = torch.max(mean_probabilities, 0)
-            predicted_bpm = class_to_bpm(predicted_class.item())
+            details = shape_prediction(probabilities, top_k=top_k)
             
-        return (predicted_bpm, confidence_score.item()) if include_confidence else predicted_bpm
+        if include_details:
+            return details
+        return (details["bpm"], details["confidence"]) if include_confidence else details["bpm"]
 
-    def predict(self, filename: str, include_confidence: bool = False) -> Union[float, Tuple[float, float]]:
+    def predict(
+        self, filename: str, include_confidence: bool = False, include_details: bool = False, top_k: int = 5
+    ):
         """Predict BPM from an audio file.
 
         Args:
@@ -71,11 +76,12 @@ class DeepRhythmPredictor:
             Predicted BPM or tuple of (BPM, confidence)
         """
         clips = load_and_split_audio(filename, sr=22050)
-        return self._process_clips(clips, include_confidence)
+        return self._process_clips(clips, include_confidence, include_details, top_k)
     
     def predict_from_audio(
-        self, audio: List[float], sr: int, include_confidence: bool = False
-    ) -> Union[float, Tuple[float, float]]:
+        self, audio: List[float], sr: int, include_confidence: bool = False,
+        include_details: bool = False, top_k: int = 5
+    ):
         """Predict BPM from audio tensor.
 
         Args:
@@ -87,7 +93,7 @@ class DeepRhythmPredictor:
             Predicted BPM or tuple of (BPM, confidence)
         """
         clips = split_audio(audio, sr)
-        return self._process_clips(clips, include_confidence)
+        return self._process_clips(clips, include_confidence, include_details, top_k)
 
     def predict_per_frame(
         self, filename: str, include_confidence: bool = False

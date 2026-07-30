@@ -76,6 +76,11 @@ def compute_hcqm(y, stft_spec, band_filter, cqt_specs):
     - hcqm (Tensor): The computed HCQM of shape (batch_size, N_BINS, N_BANDS, N_HARMONICS)
     """
     stft = stft_spec(y)
+    return compute_hcqm_from_stft(stft, band_filter, cqt_specs)
+
+
+def compute_hcqm_from_stft(stft, band_filter, cqt_specs):
+    """Compute HCQM from a magnitude STFT shared with another rhythm branch."""
     stft_bands = apply_log_filter(stft, band_filter)
     stft_bands_flat = stft_bands.reshape(stft.size(0)*stft_bands.size(1), stft_bands.size(2))
     osf_flat = onset_strength(y=stft_bands_flat)

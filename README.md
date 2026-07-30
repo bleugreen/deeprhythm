@@ -48,6 +48,29 @@ pip install deeprhythm
 
 ## Usage
 
+### Opt-in v0.8 metrical predictor
+
+v0.8 separates rhythmic rate from metrical level and adds a frozen temporal
+beat representation. Its metrical fusion was distilled from a stronger
+beat-rate teacher, but inference remains self-contained and does not load that
+teacher or Phasefinder. Both branches reuse one decoded waveform and one
+nnAudio STFT. The versioned weights are bundled with the package and recorded
+in `src/deeprhythm/weights/v0.8-bundle.json`.
+
+```python
+from deeprhythm.model import MetricalDeepRhythmPredictor
+
+predictor = MetricalDeepRhythmPredictor(device="mps")
+bpm = predictor.predict("/path/to/song.wav")
+details = predictor.predict("/path/to/song.wav", include_details=True)
+```
+
+The original `DeepRhythmPredictor` remains unchanged. v0.8 is opt-in because
+its measured metrical correction is a modest net improvement and can still
+change an individually correct octave decision. It aggregates every complete
+eight-second clip after removing the first and last clips from tracks longer
+than 40 seconds, matching the frozen model's training and evaluation path.
+
 ### CLI Inference
 
 #### Single

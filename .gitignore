@@ -1,8 +1,13 @@
-data/
+data/*
+!data/splits/
+!data/splits/**
 data/fma
 experiments/
 *.hdf5
 *.json
+!src/deeprhythm/weights/v0.8-bundle.json
+!docs/research/results/*.json
+!docs/research/results/**/*.jsonl
 __pycache__
 *.pyc
 *.pyo
