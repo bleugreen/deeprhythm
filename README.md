@@ -51,9 +51,11 @@ pip install deeprhythm
 ### Opt-in v0.8 metrical predictor
 
 v0.8 separates rhythmic rate from metrical level and adds a frozen temporal
-beat representation. Both branches reuse one decoded waveform and one nnAudio
-STFT. The versioned weights are bundled with the package and recorded in
-`src/deeprhythm/weights/v0.8-bundle.json`.
+beat representation. Its metrical fusion was distilled from a stronger
+beat-rate teacher, but inference remains self-contained and does not load that
+teacher or Phasefinder. Both branches reuse one decoded waveform and one
+nnAudio STFT. The versioned weights are bundled with the package and recorded
+in `src/deeprhythm/weights/v0.8-bundle.json`.
 
 ```python
 from deeprhythm.model import MetricalDeepRhythmPredictor

@@ -29,7 +29,7 @@ def test_packaged_v08_qualification_matches_bundled_weights():
 
     assert result["tracks"] == 798
     assert len(result["predictions"]) == result["tracks"]
-    assert result["summary"]["canonical-test"]["overall"]["acc1"] == 0.7820069204152249
+    assert result["summary"]["canonical-test"]["overall"]["acc1"] == 0.7975778546712803
     for filename, digest in result["weights"].items():
         weights = root / "src/deeprhythm/weights" / filename
         assert hashlib.sha256(weights.read_bytes()).hexdigest() == digest
